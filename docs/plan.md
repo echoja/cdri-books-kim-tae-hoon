@@ -27,7 +27,6 @@
 - font-weight: `700`
 - font-style: `Bold`
 - font-size: `24px`
-- leading-trim: `NONE`
 - line-height: `24px`
 - letter-spacing: `0%`
 
@@ -37,7 +36,6 @@
 - font-weight: `700`
 - font-style: `Bold`
 - font-size: `22px`
-- leading-trim: `NONE`
 - line-height: `24px`
 - letter-spacing: `0%`
 
@@ -47,7 +45,6 @@
 - font-weight: `700`
 - font-style: `Bold`
 - font-size: `18px`
-- leading-trim: `NONE`
 - line-height: `18px`
 - letter-spacing: `0%`
 
@@ -57,7 +54,6 @@
 - font-weight: `500`
 - font-style: `Medium`
 - font-size: `14px`
-- leading-trim: `NONE`
 - line-height: `14px`
 - letter-spacing: `0%`
 
@@ -67,7 +63,6 @@
 - font-weight: `700`
 - font-style: `Bold`
 - font-size: `14px`
-- leading-trim: `NONE`
 - line-height: `14px`
 - letter-spacing: `0%`
 
@@ -77,7 +72,6 @@
 - font-weight: `500`
 - font-style: `Medium`
 - font-size: `16px`
-- leading-trim: `NONE`
 - line-height: `16px`
 - letter-spacing: `0%`
 
@@ -87,7 +81,6 @@
 - font-weight: `500`
 - font-style: `Medium`
 - font-size: `10px`
-- leading-trim: `NONE`
 - line-height: `10px`
 - letter-spacing: `0%`
 
@@ -102,10 +95,6 @@
 - `Palette/LightGray`: `#F2F4F6`
 - `Palette/Primary`: `#4880EE`
 - `Palette/Red`: `#E84118`
-
-### 색상 유의사항
-
-- `fill=\"none\"`은 투명값으로 색상 토큰이 아닌 렌더링 속성으로 분리 관리합니다.
 
 ### 공통 헤더
 
