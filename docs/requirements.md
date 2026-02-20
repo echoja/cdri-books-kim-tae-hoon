@@ -5,11 +5,13 @@
 - 작업 대화에서 확정된 내용은 `docs/requirements.md`의 요구사항/유의사항/에셋 섹션에 계속 반영합니다.
 - 신규 요청은 성격에 맞게 `요구사항` 또는 `유의사항`으로 즉시 정리합니다.
 - `docs/mission.md`는 수정하지 않고 참조 전용으로 유지합니다.
-- 디자인 상 의문사항/어색한 포인트는 `docs/questions.md`에 누적 기록합니다.
+- 디자인 상 참고사항/논의사항/어색한 포인트는 `docs/questions.md`에 누적 기록합니다.
 
 ### 요구사항
 
 - 타이포그래피(Title/Body/Caption/Small) 폰트 스타일은 디자인 시스템 토큰으로 정의하고 전역에서 재사용해야 합니다.
+- 전체 페이지의 가로 사이즈는 데스크탑 기준 `960px`로 구현합니다.
+- 모바일은 추후 반응형 레이아웃을 제공합니다. (현재 단계에서는 데스크탑 기준 우선)
 - 페이지는 총 2개 화면으로 구성합니다.
   - `도서 검색` 화면
   - `내가 찜한 책` 화면
@@ -37,10 +39,7 @@
   - 배경색: `Secondary/Light 2` (Figma 기준)
   - 좌측 아이콘: `search svg` (`30x30`, 색상 `Text/Default`)
   - 형태: full-rounded
-- `상세검색` 버튼 스타일은 다음을 따릅니다.
-  - `1px` border, `8px` radius, padding `5px 10px`
-  - 텍스트 색상: `Text/Subtitle`
-  - border 색상: `Text/Subtitle`
+- `상세검색` 버튼 스타일은 `버튼` 섹션 기준을 따릅니다.
 - 일반 검색은 별도 검색 버튼 없이 `Enter` 입력으로 실행합니다.
 - 검색창 placeholder는 `검색어 입력`으로 고정합니다.
 - 검색 기록 저장 기능을 제공합니다. (최대 8개)
@@ -85,6 +84,108 @@
   - 펼침 상태에서는 원가와 할인가를 모두 노출합니다.
   - 할인가가 없는 경우에는 할인가 항목을 노출하지 않습니다.
 - `구매하기` 버튼 클릭 시 새 탭에서 해당 책의 다음 책 상세페이지로 이동해야 합니다.
+- `BookListItem` 접힘 상태 기준값(디자인 노드 `2143:449`)은 다음 수치를 기준으로 구현합니다.
+  - 아이템 높이: `100`
+  - 아이템 내부 패딩: 상하 `16px`, 좌 `48px`, 우 `16px`
+  - 하단 divider: `height=1`, 색상 `#D2D6DA` (`Palette/Divider`)
+  - 도서 썸네일: `48x68`
+  - 찜 아이콘(하트): 썸네일 프레임 우상단 오버레이, `16x16`, `right 0`, `top 0`
+  - 썸네일과 텍스트 블록 사이 간격: `48px`
+  - 텍스트 블록: `408x18`
+  - 제목(`Title3`): `18px Bold`, 색상 `Text/Primary`
+  - 작가(`Body2`): 제목 우측 `16px` 간격, `14px Medium`, 색상 `Text/Secondary`
+  - 텍스트 블록과 가격 사이 간격: `22px`
+  - 가격(`Title3`): 우측 정렬, 색상 `Text/Primary`
+  - 가격과 우측 액션 버튼 그룹 사이 간격: `56px`
+  - 우측 액션 버튼 간 간격: `8px`
+  - 버튼 스타일은 `버튼` 섹션 기준을 따릅니다.
+  - 텍스트/가격/버튼은 아이템 높이 기준 수직 중앙 정렬
+- `BookListItem` 펼침 상태 기준값(디자인 노드 `2143:567`, `docs/BookListItemDetail.json`)은 다음 수치를 기준으로 구현합니다.
+  - 아코디언이 펼쳐지면 아이템 높이는 콘텐츠에 맞춰 확장됩니다.
+  - 아이템 내부 패딩: 상 `24px`, 좌 `54px`, 우 `16px`
+  - 하단 divider: `height=1`, 색상 `#D2D6DA` (`Palette/Divider`)
+  - 좌측 도서 이미지: `210x280`
+  - 찜 아이콘(하트): `24x24`, 이미지 우상단 오버레이, `right 8px`, `top 8px`
+  - 도서 이미지와 중앙 상세 정보 영역 간격: `32px`
+  - 중앙 상세 정보 영역: 제목/작가 행 + 책 소개 영역으로 구성
+  - 제목과 작가 간격: `16px`
+  - 제목/작가 행과 책 소개 영역 간격: `16px`
+  - 책 소개 제목과 본문 간격: `12px`
+  - 책 소개 본문: `10px`, `line-height 16px`, 색상 `Text/Primary`
+  - 중앙 상세 정보 영역과 우측 가격/액션 영역 간격: `163px`
+  - 우측 가격 영역: 원가 행 + 할인가 행(행 간격 `8px`)
+  - 가격 행 내부: 라벨과 가격 간격 `8px`
+  - 가격 라벨(`원가`, `할인가`): `10px`, 색상 `Text/Subtitle`
+  - 가격 값: `18px`, 색상 `Text/Primary`
+  - 가격 영역과 `구매하기` 버튼 간 간격: `28px`
+  - 우측 상단 `상세보기` 버튼(chevron up)과 하단 `구매하기` 버튼은 모두 `버튼` 섹션 기준을 따릅니다.
+  - 펼침 상태 `구매하기` 버튼은 우측 액션 영역 폭을 채우는 블록형으로 배치합니다.
+
+#### BookListItem 요소 트리 (Parent-Children / Layout Direction / Gap)
+
+- 접힘 상태 (`2143:449`) 트리
+```text
+BookListItemCollapsed [dir=column]
+├─ ContentRow [dir=row, align=center]
+│  ├─ ThumbnailWrap [dir=overlay]
+│  │  ├─ BookImage (48x68)
+│  │  └─ LikeBadge (16x16, top 0 / right 0)
+│  ├─ MetaRow [dir=row, gap=16]
+│  │  ├─ Title
+│  │  └─ Author
+│  └─ PriceAndActions [dir=row, gap=56]
+│     ├─ Price
+│     └─ ActionButtons [dir=row, gap=8]
+│        ├─ BuyButton
+│        └─ DetailButton (text-chevron gap=19)
+├─ InterGroupGap: ThumbnailWrap ↔ MetaRow = 48
+└─ InterGroupGap: MetaRow ↔ PriceAndActions = 22
+```
+- 펼침 상태 (`2143:567`, `docs/BookListItemDetail.json`) 트리
+```text
+BookListItemExpanded [dir=column]
+├─ ContentRow [dir=row, align=start]
+│  ├─ ThumbnailWrap [dir=overlay]
+│  │  ├─ BookImage (210x280)
+│  │  └─ LikeBadge (24x24, top 8 / right 8)
+│  ├─ MainInfoColumn [dir=column, gap=16]
+│  │  ├─ MetaRow [dir=row, gap=16]
+│  │  │  ├─ Title
+│  │  │  └─ Author
+│  │  └─ IntroColumn [dir=column, gap=12]
+│  │     ├─ IntroLabel
+│  │     └─ IntroText
+│  └─ RightColumn [dir=column]
+│     ├─ DetailButton (chevron up)
+│     ├─ PriceColumn [dir=column, gap=8]
+│     │  ├─ OriginPriceRow [dir=row, gap=8]
+│     │  └─ SalePriceRow [dir=row, gap=8]
+│     └─ BuyButton (block)
+├─ InterGroupGap: ThumbnailWrap ↔ MainInfoColumn = 32
+└─ InterGroupGap: MainInfoColumn ↔ RightColumn = 163
+```
+
+#### 버튼
+
+- 모든 버튼은 고정 `width/height`가 아닌 상하좌우 `padding`으로 크기를 결정합니다.
+- 버튼 공통 스타일
+  - border-radius: `8px`
+  - 타이포그래피: `Caption` (`16px`, `Medium`)
+- `도서검색 BOX`의 `상세검색` 버튼
+  - padding: 상하 `5px`, 좌우 `10px`
+  - border: `1px solid Text/Subtitle`
+  - 텍스트 색상: `Text/Subtitle`
+  - 배경: `Palette/White`
+- BookListItem `구매하기` 버튼
+  - padding: 상하 `16px`, 좌우 `28px`
+  - 배경: `Palette/Primary`
+  - 텍스트 색상: `#FFFFFF`
+- BookListItem `상세보기` 버튼
+  - padding: 상하 `16px`, 좌우 `20px`
+  - 배경: `Palette/LightGray`
+  - 텍스트 색상: `Text/Secondary`
+  - chevron 색상: `#B1B8C0` (`Icon/Muted`)
+  - 텍스트와 chevron 간 간격: `19px`
 
 #### 찜 버튼 (내용 추가 예정)
 
@@ -103,9 +204,11 @@
 - 드롭다운이 열리면 기준 선택 영역 바로 아래에 옵션 리스트가 표시되어야 합니다.
 - 상세검색 모달 배치는 제공된 참조 이미지와 동일한 구조를 따릅니다.
 
-#### 내가 찜한 책 관련 (내용 아직 많이 추가해야 함)
+#### 내가 찜한 책 관련
 
-- 화면 상세 요구사항은 추후 추가합니다.
+- `내가 찜한 책` 리스트 아이템은 `북 검색 결과 리스트`의 `BookListItem`과 기능/디자인이 동일해야 합니다.
+- 접힘/펼침 레이아웃, 가격 노출 규칙, 버튼 구성(`구매하기`, `상세보기`), 애니메이션 규칙을 동일하게 적용합니다.
+- 구현은 동일 컴포넌트 재사용을 기본으로 하며, 데이터 소스만 `찜한 책 목록`으로 변경합니다.
 
 ### 컴포넌트 설계 원칙
 
@@ -205,6 +308,8 @@
 - `Palette/LightGray`: `#F2F4F6`
 - `Palette/Primary`: `#4880EE`
 - `Palette/Red`: `#E84118`
+- `Palette/Divider`: `#D2D6DA` (BookListItem 행 구분선)
+- `Icon/Muted`: `#B1B8C0` (`상세보기` chevron)
 
 ### 공통 헤더
 
