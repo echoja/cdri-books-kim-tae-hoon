@@ -93,17 +93,15 @@
 
 ### 색상 토큰 (Style.svg 기준)
 
-- `Color.Black`: `#000000` (`black`)
-- `Color.White`: `#FFFFFF` (`white`)
-- `Color.Neutral.900`: `#222222`
-- `Color.Neutral.800`: `#353C49`
-- `Color.Neutral.600`: `#6D7582`
-- `Color.Neutral.500`: `#8D94A0`
-- `Color.Neutral.200`: `#DADADA`
-- `Color.Neutral.100`: `#F2F4F6`
-- `Color.Primary.Blue`: `#4880EE`
-- `Color.Primary.Red`: `#E84118`
-- `Color.Background.Info`: `#EAF3FE`
+- `Palette/White`: `#FFFFFF` (`white`)
+- `Palette/Black`: `#222222`
+- `Text/Primary`: `#353C49`
+- `Text/Secondary`: `#6D7582`
+- `Text/Subtitle`: `#8D94A0`
+- `Palette/Gray`: `#DADADA`
+- `Palette/LightGray`: `#F2F4F6`
+- `Palette/Primary`: `#4880EE`
+- `Palette/Red`: `#E84118`
 
 ### 색상 유의사항
 
