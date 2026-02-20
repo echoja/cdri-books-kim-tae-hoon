@@ -91,7 +91,7 @@
 - line-height: `10px`
 - letter-spacing: `0%`
 
-### 색상 토큰 (Style.svg 기준)
+### 색상 토큰
 
 - `Palette/White`: `#FFFFFF` (`white`)
 - `Palette/Black`: `#222222`
@@ -105,7 +105,7 @@
 
 ### 색상 유의사항
 
-- `Style.svg`에 있는 `fill=\"none\"`은 투명값으로 색상 토큰이 아닌 렌더링 속성으로 분리 관리합니다.
+- `fill=\"none\"`은 투명값으로 색상 토큰이 아닌 렌더링 속성으로 분리 관리합니다.
 
 ### 공통 헤더
 
