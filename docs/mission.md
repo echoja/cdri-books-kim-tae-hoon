@@ -5,6 +5,7 @@
   - API 문서 링크 : API 발급 튜토리얼, 다음 검색 - 책
   - https://developers.kakao.com/docs/latest/ko/getting-started/quick-start
   - https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
+  - 타이포그래피(Title/Body) 폰트 스타일은 디자인 시스템 토큰으로 정의하고 전역에서 재사용해야 함
 - 기술 스택 가이드
   - 필수: React.js, TypeScript, React Query
   - 자유 선택: 스타일링 및 기타 라이브러리는 자유롭게 선택 가능
