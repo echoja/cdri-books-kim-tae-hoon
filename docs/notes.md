@@ -30,3 +30,18 @@
 
 - 구현 방침: BookListItem 아코디언 펼침/접힘 전환 시 애니메이션을 적용합니다.
 - 논의 포인트: 애니메이션 duration/easing, opacity 동시 적용 여부, reduced-motion 대응 기준을 확정해야 합니다.
+
+### 6. 도서검색 BOX 간격/입력창 높이 보정
+
+- 기존 논의값 `2줄-3줄 간격 25px`은 레이아웃 일관성을 위해 `24px`로 보정했습니다.
+- 검색 input 높이는 초기 논의값 `50px` 대신 `radius 24px` 기준에 맞춰 `48px`로 보정했습니다.
+
+### 7. 상세보기 chevron 아이콘 소스
+
+- `상세보기`의 chevron은 디자인 가이드에 별도 컴포넌트 정의가 없어 `lucide-react` 아이콘(`ChevronDown`, `ChevronUp`)으로 통일합니다.
+- 본 항목은 디자인 가이드 미정 영역에 대한 구현 결정입니다. (피그마에 없음)
+
+### 8. 색상 토큰 임의 추가 (`Text/Title`, `Text/Default`)
+
+- 디자인 가이드에 없는 `Text/Title`, `Text/Default`를 추가했습니다.
+- 확정값: `Text/Title=#1A1E27`, `Text/Default=#353C49`
