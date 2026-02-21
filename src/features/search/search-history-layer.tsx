@@ -37,7 +37,7 @@ export function SearchHistoryLayer({
   return (
     <section
       className={cn(
-        "rounded-pill bg-surface-secondary absolute top-13.25 left-0 z-20",
+        "rounded-pill bg-palette-light-gray absolute top-13.25 left-0 z-20",
         "max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4",
         "max-md:w-full",
         className,
@@ -55,7 +55,7 @@ export function SearchHistoryLayer({
             <button
               type="button"
               className={cn(
-                "text-body-small text-text-primary",
+                "text-body-2 text-text-primary",
                 "cursor-pointer border-none bg-transparent",
               )}
               onMouseDown={(event) => event.preventDefault()}
@@ -67,7 +67,7 @@ export function SearchHistoryLayer({
               type="button"
               className={cn(
                 "text-text-primary inline-flex h-6 w-6 items-center justify-center rounded-md",
-                "hover:bg-surface-hover-soft cursor-pointer border-none bg-transparent",
+                "hover:bg-palette-light-gray-hover-soft cursor-pointer border-none bg-transparent",
               )}
               onMouseDown={(event) => event.preventDefault()}
               aria-label={`${record.keyword} 기록 삭제`}

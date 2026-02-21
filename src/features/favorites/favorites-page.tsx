@@ -42,8 +42,8 @@ export function FavoritesPage() {
   return (
     <section className="w-full">
       <div className="mb-3 flex flex-col items-start">
-        <h1 className="text-page-heading text-text-title m-0">내가 찜한 책</h1>
-        <div className="text-title text-text-primary mt-6 flex items-center gap-4">
+        <h1 className="text-title-2 text-text-title m-0">내가 찜한 책</h1>
+        <div className="text-title-3 text-text-primary mt-6 flex items-center gap-4">
           <span>찜한 책</span>
           <span>
             총 <strong className="text-palette-primary">{records.length}</strong>건
@@ -52,13 +52,11 @@ export function FavoritesPage() {
       </div>
 
       {favoritesQuery.isError ? (
-        <p className="text-body-small text-text-error mt-5">
-          {toUserMessage(favoritesQuery.error)}
-        </p>
+        <p className="text-body-2 text-palette-red mt-5">{toUserMessage(favoritesQuery.error)}</p>
       ) : null}
 
       {favoritesQuery.isLoading ? (
-        <p className="text-body-small mt-5">찜한 책을 불러오는 중입니다...</p>
+        <p className="text-body-2 mt-5">찜한 책을 불러오는 중입니다...</p>
       ) : null}
 
       {!favoritesQuery.isLoading && books.length > 0 ? (

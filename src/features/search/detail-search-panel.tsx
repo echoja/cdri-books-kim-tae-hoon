@@ -86,7 +86,7 @@ export function DetailSearchPanel({
               >
                 <Select.Trigger
                   className={cn(
-                    "border-divider bg-palette-white text-body-small text-text-primary inline-flex min-h-9 w-25",
+                    "border-palette-divider bg-palette-white text-body-2 text-text-primary inline-flex min-h-9 w-25",
                     "items-center justify-between rounded-lg border px-2.5",
                     "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
                     "max-md:w-full",
@@ -102,7 +102,7 @@ export function DetailSearchPanel({
                 <Select.Portal>
                   <Select.Content
                     className={cn(
-                      "border-divider bg-palette-white z-40 h-15 min-w-25",
+                      "border-palette-divider bg-palette-white z-40 h-15 min-w-25",
                       "overflow-hidden rounded-lg border",
                     )}
                     position="popper"
@@ -114,9 +114,9 @@ export function DetailSearchPanel({
                           key={option.value}
                           value={option.value}
                           className={cn(
-                            "text-body-small text-text-primary flex min-h-7.5 w-full",
+                            "text-body-2 text-text-primary flex min-h-7.5 w-full",
                             "cursor-pointer items-center justify-between px-2.5",
-                            "data-[highlighted]:bg-surface-secondary data-[highlighted]:outline-none",
+                            "data-[highlighted]:bg-palette-light-gray data-[highlighted]:outline-none",
                           )}
                         >
                           <Select.ItemText>{option.label}</Select.ItemText>
@@ -132,7 +132,7 @@ export function DetailSearchPanel({
 
               <input
                 className={cn(
-                  "border-divider text-text-primary placeholder:text-text-subtitle min-h-9 w-52",
+                  "border-palette-divider text-text-primary placeholder:text-text-subtitle min-h-9 w-52",
                   "rounded-lg border px-2.5",
                   "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
                   "max-md:w-full",

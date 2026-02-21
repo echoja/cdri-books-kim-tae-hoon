@@ -34,8 +34,8 @@ export function RootLayout() {
       <ErrorBoundary
         fallbackRender={() => (
           <section className="flex min-h-80 w-full flex-col items-center justify-center gap-2">
-            <h1 className="text-title text-text-title m-0">오류가 발생했습니다.</h1>
-            <p className="text-body-small text-text-secondary m-0">
+            <h1 className="text-title-3 text-text-title m-0">오류가 발생했습니다.</h1>
+            <p className="text-body-2 text-text-secondary m-0">
               페이지를 새로고침한 뒤 다시 시도해 주세요.
             </p>
           </section>
@@ -52,17 +52,17 @@ export function RootLayout() {
             unstyled: true,
             classNames: {
               toast:
-                "rounded-button border border-divider bg-surface-secondary text-text-primary px-4 py-3 shadow-none flex items-start gap-2",
-              title: "text-body-small text-text-primary font-medium leading-none",
+                "rounded-button border border-palette-divider bg-palette-light-gray text-text-primary px-4 py-3 shadow-none flex items-start gap-2",
+              title: "text-body-2 text-text-primary font-medium leading-none",
               description: "text-small text-text-secondary mt-1",
               content: "flex min-w-0 flex-1 flex-col gap-0",
               icon: "text-text-subtitle mt-0.25",
               success: "[&_[data-icon]]:text-palette-primary",
-              error: "[&_[data-icon]]:text-text-error",
+              error: "[&_[data-icon]]:text-palette-red",
               actionButton:
                 "rounded-button bg-palette-primary px-3 text-palette-white hover:bg-palette-primary-hover",
               cancelButton:
-                "rounded-button border border-divider bg-palette-white px-3 text-text-secondary hover:bg-surface-hover",
+                "rounded-button border border-palette-divider bg-palette-white px-3 text-text-secondary hover:bg-palette-light-gray-hover",
             },
           }}
         />

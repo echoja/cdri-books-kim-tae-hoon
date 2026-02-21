@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap");
+@import "./assets/fonts/noto-sans-kr/noto-sans-kr.css";
 @import "tailwindcss";
 
 @theme {
@@ -34,78 +34,109 @@
   --radius-pill: 24px;
   --radius-button: 8px;
 
-  --text-page-heading: 22px;
-  --leading-page-heading: 24px;
-  --text-title: 18px;
-  --leading-title: 18px;
-  --text-body: 20px;
-  --leading-body: 20px;
-  --text-body-small: 14px;
-  --leading-body-small: 14px;
-  --text-caption: 16px;
-  --leading-caption: 18px;
-  --text-small: 10px;
-  --leading-small: 16px;
-  --text-heading: 24px;
-  --leading-heading: 24px;
+  /* Typography tokens from docs/requirements.md */
+  --typography-title-1-size: 24px;
+  --typography-title-1-line-height: 24px;
+  --typography-title-1-weight: 700;
 
-  --color-palette-primary: #4880ee;
-  --color-palette-primary-hover: #3b6acd;
+  --typography-title-2-size: 22px;
+  --typography-title-2-line-height: 24px;
+  --typography-title-2-weight: 700;
+
+  --typography-title-3-size: 18px;
+  --typography-title-3-line-height: 18px;
+  --typography-title-3-weight: 700;
+
+  --typography-body-1-size: 20px;
+  --typography-body-1-line-height: 20px;
+  --typography-body-1-weight: 500;
+
+  --typography-body-2-size: 14px;
+  --typography-body-2-line-height: 14px;
+  --typography-body-2-weight: 500;
+
+  --typography-body-2-bold-size: 14px;
+  --typography-body-2-bold-line-height: 14px;
+  --typography-body-2-bold-weight: 700;
+
+  --typography-caption-size: 16px;
+  --typography-caption-line-height: 16px;
+  --typography-caption-weight: 500;
+
+  --typography-small-size: 10px;
+  --typography-small-line-height: 10px;
+  --typography-small-weight: 500;
+
+  /* Color tokens from docs/requirements.md */
   --color-palette-white: #ffffff;
-  --color-surface-secondary: #f2f4f6;
-  --color-surface-secondary-soft: #eceff2;
-  --color-surface-disabled: #f3f5f7;
-  --color-surface-hover: #e7ebef;
-  --color-surface-hover-soft: #e3e8ec;
-  --color-divider: #d2d6da;
+  --color-palette-black: #222222;
+  --color-palette-gray: #dadada;
+  --color-palette-light-gray: #f2f4f6;
+  --color-palette-primary: #4880ee;
+  --color-palette-red: #e84118;
+  --color-palette-divider: #d2d6da;
+
   --color-text-title: #1a1e27;
   --color-text-primary: #353c49;
+  --color-text-default: #353c49;
   --color-text-secondary: #6d7582;
   --color-text-subtitle: #8d94a0;
-  --color-text-muted: #b1b8c0;
-  --color-text-error: #b42318;
+  --color-icon-muted: #b1b8c0;
+
+  /* Derived tokens used in interactive states */
+  --color-palette-primary-hover: #3b6acd;
+  --color-palette-light-gray-soft: #eceff2;
+  --color-palette-light-gray-disabled: #f3f5f7;
+  --color-palette-light-gray-hover: #e7ebef;
+  --color-palette-light-gray-hover-soft: #e3e8ec;
 }
 
-@utility text-page-heading {
-  font-size: var(--text-page-heading);
-  line-height: var(--leading-page-heading);
-  font-weight: 700;
+@utility text-title-1 {
+  font-size: var(--typography-title-1-size);
+  line-height: var(--typography-title-1-line-height);
+  font-weight: var(--typography-title-1-weight);
 }
 
-@utility text-title {
-  font-size: var(--text-title);
-  line-height: var(--leading-title);
-  font-weight: 700;
+@utility text-title-2 {
+  font-size: var(--typography-title-2-size);
+  line-height: var(--typography-title-2-line-height);
+  font-weight: var(--typography-title-2-weight);
 }
 
-@utility text-body {
-  font-size: var(--text-body);
-  line-height: var(--leading-body);
-  font-weight: 500;
+@utility text-title-3 {
+  font-size: var(--typography-title-3-size);
+  line-height: var(--typography-title-3-line-height);
+  font-weight: var(--typography-title-3-weight);
 }
 
-@utility text-body-small {
-  font-size: var(--text-body-small);
-  line-height: var(--leading-body-small);
-  font-weight: 500;
+@utility text-body-1 {
+  font-size: var(--typography-body-1-size);
+  line-height: var(--typography-body-1-line-height);
+  font-weight: var(--typography-body-1-weight);
+}
+
+@utility text-body-2 {
+  font-size: var(--typography-body-2-size);
+  line-height: var(--typography-body-2-line-height);
+  font-weight: var(--typography-body-2-weight);
+}
+
+@utility text-body-2-bold {
+  font-size: var(--typography-body-2-bold-size);
+  line-height: var(--typography-body-2-bold-line-height);
+  font-weight: var(--typography-body-2-bold-weight);
 }
 
 @utility text-caption {
-  font-size: var(--text-caption);
-  line-height: var(--leading-caption);
-  font-weight: 500;
+  font-size: var(--typography-caption-size);
+  line-height: var(--typography-caption-line-height);
+  font-weight: var(--typography-caption-weight);
 }
 
 @utility text-small {
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
-  font-weight: 500;
-}
-
-@utility text-heading {
-  font-size: var(--text-heading);
-  line-height: var(--leading-heading);
-  font-weight: 700;
+  font-size: var(--typography-small-size);
+  line-height: var(--typography-small-line-height);
+  font-weight: var(--typography-small-weight);
 }
 
 @layer base {

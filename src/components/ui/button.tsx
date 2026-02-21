@@ -7,11 +7,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-palette-primary px-7 py-4 text-palette-white hover:bg-palette-primary-hover disabled:bg-surface-disabled aria-disabled:bg-surface-disabled",
+          "bg-palette-primary px-7 py-4 text-palette-white hover:bg-palette-primary-hover disabled:bg-palette-light-gray-disabled aria-disabled:bg-palette-light-gray-disabled",
         secondary:
-          "bg-surface-secondary px-5 py-4 text-text-secondary hover:bg-surface-hover disabled:bg-surface-disabled disabled:text-text-muted aria-disabled:bg-surface-disabled aria-disabled:text-text-muted [&_svg]:text-text-muted",
+          "bg-palette-light-gray px-5 py-4 text-text-secondary hover:bg-palette-light-gray-hover disabled:bg-palette-light-gray-disabled disabled:text-icon-muted aria-disabled:bg-palette-light-gray-disabled aria-disabled:text-icon-muted [&_svg]:text-icon-muted",
         outline:
-          "bg-palette-white px-2.5 py-1.25 text-text-subtitle border-text-subtitle hover:bg-surface-secondary disabled:border-divider disabled:text-text-muted aria-disabled:border-divider aria-disabled:text-text-muted",
+          "bg-palette-white px-2.5 py-1.25 text-text-subtitle border-text-subtitle hover:bg-palette-light-gray disabled:border-palette-divider disabled:text-icon-muted aria-disabled:border-palette-divider aria-disabled:text-icon-muted",
       },
     },
     defaultVariants: {

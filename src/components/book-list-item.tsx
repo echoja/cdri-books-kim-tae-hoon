@@ -119,7 +119,7 @@ export function BookListItem({
           <img
             className={cn(
               "h-book-thumb-small-height w-book-thumb-small-width",
-              "bg-surface-secondary-soft object-cover",
+              "bg-palette-light-gray-soft object-cover",
             )}
             src={thumbnailSrc}
             alt={`${book.title} 표지`}
@@ -142,8 +142,8 @@ export function BookListItem({
             "max-md:flex-col max-md:items-start max-md:gap-1.5",
           )}
         >
-          <p className="text-title text-text-primary m-0 line-clamp-1">{book.title}</p>
-          <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
+          <p className="text-title-3 text-text-primary m-0 line-clamp-1">{book.title}</p>
+          <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
         </div>
 
         <div
@@ -153,7 +153,7 @@ export function BookListItem({
             "max-md:justify-between max-md:gap-4",
           )}
         >
-          <p className="text-title text-text-primary m-0 text-right">
+          <p className="text-title-3 text-text-primary m-0 text-right">
             {formatPrice(getCollapsedDisplayPrice(book))}
           </p>
           <div className="flex items-center gap-2 max-md:gap-1.5">
@@ -192,7 +192,7 @@ export function BookListItem({
               <img
                 className={cn(
                   "h-book-thumb-large-height w-book-thumb-large-width",
-                  "bg-surface-secondary-soft object-cover",
+                  "bg-palette-light-gray-soft object-cover",
                 )}
                 src={thumbnailSrc}
                 alt={`${book.title} 표지 확대`}
@@ -216,12 +216,12 @@ export function BookListItem({
               )}
             >
               <div className="flex items-center gap-4">
-                <p className="text-title text-text-primary m-0 line-clamp-2">{book.title}</p>
-                <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
+                <p className="text-title-3 text-text-primary m-0 line-clamp-2">{book.title}</p>
+                <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
               </div>
 
               <section className="flex flex-col gap-3">
-                <h3 className="text-body-small text-text-secondary m-0 leading-4.5 font-bold">
+                <h3 className="text-body-2 text-text-secondary m-0 leading-4.5 font-bold">
                   책 소개
                 </h3>
                 <p
@@ -249,14 +249,14 @@ export function BookListItem({
               <div className="flex w-45 flex-col gap-2 max-md:w-full">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-small text-text-subtitle">원가</span>
-                  <strong className="text-title text-text-primary">
+                  <strong className="text-title-3 text-text-primary">
                     {formatPrice(book.price)}
                   </strong>
                 </div>
                 {hasSalePrice(book) ? (
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-small text-text-subtitle">할인가</span>
-                    <strong className="text-title text-text-primary">
+                    <strong className="text-title-3 text-text-primary">
                       {formatPrice(book.salePrice ?? 0)}
                     </strong>
                   </div>
@@ -276,7 +276,7 @@ export function BookListItem({
           </div>
         </div>
       ) : null}
-      <div className="bg-divider h-px w-full" />
+      <div className="bg-palette-divider h-px w-full" />
     </article>
   );
 }

@@ -143,7 +143,7 @@ export function SearchPage() {
   return (
     <section className="w-full">
       <div className="flex flex-col items-start">
-        <h1 className="text-page-heading text-text-title m-0">도서 검색</h1>
+        <h1 className="text-title-2 text-text-title m-0">도서 검색</h1>
 
         <div
           className={cn(
@@ -153,7 +153,7 @@ export function SearchPage() {
         >
           <form
             className={cn(
-              "h-search-input rounded-pill bg-surface-secondary relative m-0",
+              "h-search-input rounded-pill bg-palette-light-gray relative m-0",
               "flex w-120 items-center gap-2.75 px-4.5",
               "max-md:w-full",
             )}
@@ -200,7 +200,7 @@ export function SearchPage() {
           />
         </div>
 
-        <div className="gap-layout-gap-4 text-title text-text-primary mt-6 flex items-center">
+        <div className="gap-layout-gap-4 text-title-3 text-text-primary mt-6 flex items-center">
           <span>검색결과</span>
           <span>
             총 <strong className="text-palette-primary">{totalCount}</strong>건
@@ -208,7 +208,7 @@ export function SearchPage() {
           {sourceLabel ? (
             <span
               className={cn(
-                "border-divider text-small text-text-subtitle rounded-full",
+                "border-palette-divider text-small text-text-subtitle rounded-full",
                 "border px-2 py-0.75",
               )}
             >
@@ -219,11 +219,11 @@ export function SearchPage() {
       </div>
 
       {searchQuery.error ? (
-        <p className="text-body-small text-text-error mt-5">{toUserMessage(searchQuery.error)}</p>
+        <p className="text-body-2 text-palette-red mt-5">{toUserMessage(searchQuery.error)}</p>
       ) : null}
 
       {searchQuery.isFetching && hasSearched ? (
-        <p className="text-body-small mt-5">검색 중입니다...</p>
+        <p className="text-body-2 mt-5">검색 중입니다...</p>
       ) : null}
 
       {!searchQuery.isFetching && books.length > 0 ? (

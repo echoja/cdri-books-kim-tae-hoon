@@ -7,7 +7,7 @@ const NAV_ITEMS = [
 ] as const;
 
 const navLinkVariants = cva(
-  "border-b border-transparent pb-2 text-body text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-md:text-base",
+  "border-b border-transparent pb-2 text-body-1 text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-md:text-base",
   {
     variants: {
       active: {
@@ -30,7 +30,7 @@ export function AppHeader() {
     >
       <div
         className={cn(
-          "left-header-pad-desktop text-heading text-text-title absolute leading-6 font-bold",
+          "left-header-pad-desktop text-title-1 text-text-title absolute leading-6 font-bold",
           "max-xl:left-8",
           "max-md:static max-md:mr-auto max-md:text-lg max-md:font-semibold",
         )}
@@ -41,8 +41,6 @@ export function AppHeader() {
       <nav className="gap-nav-gap flex items-center max-md:gap-5" aria-label="주요 메뉴">
         {NAV_ITEMS.map((item) => {
           const active = pathname.startsWith(item.to);
-
-          console.log(pathname, item.to, active);
 
           return (
             <Link key={item.to} className={navLinkVariants({ active })} to={item.to}>
