@@ -1,6 +1,5 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { applyOptimisticFavorite } from "@/lib/favorites-utils";
 import type { Book, FavoriteRecord } from "@/lib/types";
 import { FavoritesRepository } from "@/repositories/favorites-repository";
 import { syncAdapter } from "@/adapters/sync-adapter";
@@ -59,9 +58,22 @@ export function useToggleFavorite() {
       const previousFavorites = queryClient.getQueryData(favoritesQueryOptions.queryKey) ?? [];
       const previousFavoriteIds = queryClient.getQueryData(favoriteIdsQueryOptions.queryKey) ?? [];
 
-      queryClient.setQueryData(favoritesQueryOptions.queryKey, (current = []) =>
-        applyOptimisticFavorite(current, book, willFavorite),
-      );
+      queryClient.setQueryData(favoritesQueryOptions.queryKey, (current = []) => {
+        if (willFavorite) {
+          const now = new Date().toISOString();
+          const next: FavoriteRecord = {
+            isbn: book.isbn,
+            book,
+            likedAt: now,
+            updatedAt: now,
+            syncStatus: "pending",
+          };
+
+          return [next, ...current.filter((entry) => entry.isbn !== book.isbn)];
+        }
+
+        return current.filter((entry) => entry.isbn !== book.isbn);
+      });
 
       queryClient.setQueryData(favoriteIdsQueryOptions.queryKey, (current = []) => {
         if (willFavorite) {
