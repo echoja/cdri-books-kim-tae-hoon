@@ -38,12 +38,7 @@ export function FavoriteBadge({
       aria-label={isFavorite ? "찜 해제" : "찜 추가"}
       {...props}
     >
-      <img
-        width={iconSize}
-        height={iconSize}
-        src={isFavorite ? fillHeart : lineHeart}
-        alt=""
-      />
+      <img width={iconSize} height={iconSize} src={isFavorite ? fillHeart : lineHeart} alt="" />
     </button>
   );
 }
