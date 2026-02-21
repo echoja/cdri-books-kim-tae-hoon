@@ -94,6 +94,7 @@ src/
 - 찜하기 `optimistic update` + 실패 시 롤백
 - `prefers-reduced-motion` 대응 애니메이션
 - 리스트/빈 상태 진입 시 부드러운 페이드인 애니메이션
+- 폰트는 로컬 `@font-face` + `unicode-range` 기반 dynamic subset으로 로딩해 렌더링 성능을 최적화
 
 ## 프로젝트 규칙
 
