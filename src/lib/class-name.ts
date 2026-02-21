@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-imports */
 import { cva, type VariantProps } from "class-variance-authority";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
