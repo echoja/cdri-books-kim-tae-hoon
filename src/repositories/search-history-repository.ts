@@ -23,7 +23,7 @@ function writeLocalHistory(records: SearchHistoryRecord[]): void {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
 
-export class SearchHistoryRepository {
+class SearchHistoryRepository {
   async list(): Promise<SearchHistoryRecord[]> {
     try {
       return await appDb.searchHistory.orderBy("searchedAt").reverse().limit(8).toArray();
@@ -56,8 +56,10 @@ export class SearchHistoryRepository {
       await appDb.searchHistory.delete(key);
       return this.list();
     } catch {
-      const next = readLocalHistory().filter((record) => record.key !== key);
-      writeLocalHistory(next.slice(0, getSearchHistoryLimit()));
+      const next = readLocalHistory()
+        .filter((record) => record.key !== key)
+        .slice(0, getSearchHistoryLimit());
+      writeLocalHistory(next);
       return next;
     }
   }

@@ -3,7 +3,7 @@ import type { SearchParams, SearchResult } from "@/domain/types";
 import { searchCacheRepository } from "@/repositories/search-cache-repository";
 import { kakaoBookClient } from "@/services/kakao-book-client";
 
-export class BookRepository {
+class BookRepository {
   async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResult> {
     try {
       const payload = await kakaoBookClient.search(
@@ -16,7 +16,11 @@ export class BookRepository {
         signal,
       );
 
-      await searchCacheRepository.set(params, payload);
+      try {
+        await searchCacheRepository.set(params, payload);
+      } catch {
+        /* cache write failure is non-critical */
+      }
 
       return {
         ...payload,
