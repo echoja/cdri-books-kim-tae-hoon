@@ -33,7 +33,40 @@ export default tseslint.config(
       ],
       '@typescript-eslint/no-empty-object-type': 'off',
       'react-hooks/set-state-in-effect': 'off',
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'clsx',
+              message: 'Use "@/lib/class-name" instead of importing clsx directly.',
+            },
+            {
+              name: 'tailwind-merge',
+              message: 'Use "@/lib/class-name" instead of importing tailwind-merge directly.',
+            },
+            {
+              name: 'class-variance-authority',
+              message:
+                'Use "@/lib/class-name" instead of importing class-variance-authority directly.',
+            },
+          ],
+        },
+      ],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "JSXAttribute[name.name='className'] TemplateLiteral",
+          message: 'Use cva()/cn() instead of template literals for className composition.',
+        },
+      ],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    },
+  },
+  {
+    files: ['src/lib/class-name.ts'],
+    rules: {
+      'no-restricted-imports': 'off',
     },
   },
 )

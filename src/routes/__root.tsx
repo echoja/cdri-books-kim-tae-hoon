@@ -73,9 +73,9 @@ function RootLayout() {
     <AppProviders>
       <ErrorBoundary
         fallbackRender={() => (
-          <section className="app-error-fallback">
-            <h1>오류가 발생했습니다.</h1>
-            <p>페이지를 새로고침한 뒤 다시 시도해 주세요.</p>
+          <section className="flex min-h-80 w-full flex-col items-center justify-center gap-2">
+            <h1 className="m-0">오류가 발생했습니다.</h1>
+            <p className="m-0">페이지를 새로고침한 뒤 다시 시도해 주세요.</p>
           </section>
         )}
       >

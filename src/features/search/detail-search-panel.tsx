@@ -5,6 +5,7 @@ import { Check, ChevronDown, X } from 'lucide-react'
 import { SEARCH_TARGET_OPTIONS } from '@/domain/search-utils'
 import type { SearchTarget } from '@/domain/types'
 import { motionDuration, safeAnimate } from '@/lib/animation'
+import { Button } from '@/components/ui/button'
 
 interface DetailSearchPanelProps {
   open: boolean
@@ -44,35 +45,53 @@ export function DetailSearchPanel({
   return (
     <Popover.Root open={open} onOpenChange={onOpenChange}>
       <Popover.Trigger asChild>
-        <button type="button" className="btn btn-outline">
+        <Button variant="outline" className="max-[767px]:self-end">
           상세검색
-        </button>
+        </Button>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content sideOffset={8} align="start" className="detail-search-popover" forceMount>
+        <Popover.Content
+          sideOffset={8}
+          align="start"
+          className="relative z-30 min-h-[160px] w-[360px] rounded-lg bg-white px-6 py-9 shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)] max-[767px]:w-[calc(100vw-32px)] max-[767px]:max-w-[360px]"
+          data-testid="detail-search-popover"
+          forceMount
+        >
           <div ref={contentRef}>
             <button
               type="button"
-              className="detail-close"
+              className="absolute right-2 top-2 cursor-pointer border-none bg-transparent text-[#6d7582]"
               aria-label="상세검색 닫기"
               onClick={() => onOpenChange(false)}
             >
               <X size={20} />
             </button>
 
-            <div className="detail-row">
+            <div className="flex items-center gap-1 max-[767px]:flex-wrap">
               <Select.Root value={target} onValueChange={(value) => onTargetChange(value as SearchTarget)}>
-                <Select.Trigger className="detail-select" aria-label="검색 기준">
+                <Select.Trigger
+                  className="inline-flex min-h-9 w-[100px] items-center justify-between rounded-lg border border-[#d2d6da] bg-white px-[10px] text-sm text-[#353c49] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4880ee] max-[767px]:w-full"
+                  aria-label="검색 기준"
+                  data-testid="detail-search-target"
+                >
                   <Select.Value placeholder="제목" />
                   <Select.Icon>
                     <ChevronDown size={16} />
                   </Select.Icon>
                 </Select.Trigger>
                 <Select.Portal>
-                  <Select.Content className="detail-select-content" position="popper" sideOffset={4}>
+                  <Select.Content
+                    className="z-40 h-[60px] min-w-[100px] overflow-hidden rounded-lg border border-[#d2d6da] bg-white"
+                    position="popper"
+                    sideOffset={4}
+                  >
                     <Select.Viewport>
                       {SEARCH_TARGET_OPTIONS.map((option) => (
-                        <Select.Item key={option.value} value={option.value} className="detail-select-item">
+                        <Select.Item
+                          key={option.value}
+                          value={option.value}
+                          className="flex min-h-[30px] w-full cursor-pointer items-center justify-between px-[10px] text-sm text-[#353c49] data-[highlighted]:bg-[#f2f4f6] data-[highlighted]:outline-none"
+                        >
                           <Select.ItemText>{option.label}</Select.ItemText>
                           <Select.ItemIndicator>
                             <Check size={14} />
@@ -85,21 +104,22 @@ export function DetailSearchPanel({
               </Select.Root>
 
               <input
-                className="detail-input"
+                className="min-h-9 w-[208px] rounded-lg border border-[#d2d6da] px-[10px] text-[#353c49] placeholder:text-[#8d94a0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4880ee] max-[767px]:w-full"
+                data-testid="detail-search-keyword"
                 value={keyword}
                 onChange={(event) => onKeywordChange(event.target.value)}
                 placeholder="검색어 입력"
-              onKeyDown={(event) => {
-                if (event.key === 'Enter') {
-                  onSearch(event.currentTarget.value)
-                }
-              }}
-            />
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    onSearch(event.currentTarget.value)
+                  }
+                }}
+              />
             </div>
 
-            <button type="button" className="btn btn-primary detail-submit" onClick={() => onSearch()}>
+            <Button variant="primary" className="mt-4 min-h-9 w-full p-0" onClick={() => onSearch()}>
               검색하기
-            </button>
+            </Button>
           </div>
         </Popover.Content>
       </Popover.Portal>

@@ -9,18 +9,26 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: 'list',
   use: {
-    baseURL: 'http://127.0.0.1:3000',
+    baseURL: 'http://127.0.0.1:3100',
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'VITE_KAKAO_REST_API_KEY=dummy-key npm run dev',
-    url: 'http://127.0.0.1:3000',
+    command: 'VITE_KAKAO_REST_API_KEY=dummy-key npx vite dev --port 3100',
+    url: 'http://127.0.0.1:3100',
     reuseExistingServer: false,
   },
   projects: [
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'mobile-chrome',
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'mobile-safari',
+      use: { ...devices['iPhone 12'] },
     },
   ],
 })

@@ -10,6 +10,7 @@ import { DetailSearchPanel } from '@/features/search/detail-search-panel'
 import { SearchHistoryLayer } from '@/features/search/search-history-layer'
 import { useToggleFavorite, useFavoriteIds } from '@/features/favorites/use-favorites'
 import { createBookSearchQueryKey, useBookSearch } from '@/features/search/use-book-search'
+import { Button } from '@/components/ui/button'
 import {
   useRemoveSearchHistory,
   useSearchHistory,
@@ -127,13 +128,13 @@ export function SearchPage() {
   }
 
   return (
-    <section className="page-section">
-      <div className="search-box">
-        <h1 className="page-title">도서 검색</h1>
+    <section className="w-full">
+      <div className="flex flex-col items-start">
+        <h1 className="m-0 text-[22px] leading-6 font-bold text-[#1a1e27]">도서 검색</h1>
 
-        <div className="search-input-row">
+        <div className="mt-4 flex items-center gap-4 max-[767px]:w-full max-[767px]:flex-col max-[767px]:items-stretch">
           <form
-            className="search-input-wrap"
+            className="relative m-0 flex h-12 w-[480px] items-center gap-[11px] rounded-[24px] bg-[#f2f4f6] px-[18px] max-[767px]:w-full"
             onSubmit={(event) => {
               event.preventDefault()
               executeSearch(inputKeyword, target)
@@ -143,6 +144,7 @@ export function SearchPage() {
             <input
               value={inputKeyword}
               placeholder="검색어 입력"
+              className="flex-1 border-none bg-transparent text-base text-[#353c49] outline-none placeholder:text-[#8d94a0] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4880ee]"
               onFocus={() => setIsHistoryOpen(true)}
               onBlur={() => {
                 window.setTimeout(() => setIsHistoryOpen(false), 100)
@@ -172,18 +174,22 @@ export function SearchPage() {
           />
         </div>
 
-        <div className="count-row">
+        <div className="mt-6 flex items-center gap-4 text-[18px] text-[#353c49]">
           <span>검색결과</span>
           <span>
-            총 <strong>{totalCount}</strong>건
+            총 <strong className="text-[#4880ee]">{totalCount}</strong>건
           </span>
-          {sourceLabel ? <span className="source-label">{sourceLabel}</span> : null}
+          {sourceLabel ? (
+            <span className="rounded-full border border-[#d2d6da] px-2 py-[3px] text-xs text-[#8d94a0]">
+              {sourceLabel}
+            </span>
+          ) : null}
         </div>
       </div>
 
-      {searchQuery.error ? <p className="error-message">{toUserMessage(searchQuery.error)}</p> : null}
+      {searchQuery.error ? <p className="mt-5 text-sm text-[#b42318]">{toUserMessage(searchQuery.error)}</p> : null}
 
-      {searchQuery.isFetching && hasSearched ? <p className="loading-message">검색 중입니다...</p> : null}
+      {searchQuery.isFetching && hasSearched ? <p className="mt-5 text-sm">검색 중입니다...</p> : null}
 
       {!searchQuery.isFetching && books.length > 0 ? (
         <>
@@ -199,26 +205,26 @@ export function SearchPage() {
             }
           />
 
-          <nav className="pagination" aria-label="검색 결과 페이지 이동">
-            <button
-              type="button"
-              className="btn btn-secondary pagination-btn"
+          <nav className="mt-5 flex items-center justify-center gap-3" aria-label="검색 결과 페이지 이동">
+            <Button
+              variant="secondary"
+              className="gap-0 px-[18px] py-[10px]"
               disabled={page <= 1}
               onClick={() => handlePageChange(page - 1)}
             >
               이전
-            </button>
+            </Button>
             <span>
               {page} / {totalPages}
             </span>
-            <button
-              type="button"
-              className="btn btn-secondary pagination-btn"
+            <Button
+              variant="secondary"
+              className="gap-0 px-[18px] py-[10px]"
               disabled={page >= totalPages}
               onClick={() => handlePageChange(page + 1)}
             >
               다음
-            </button>
+            </Button>
           </nav>
         </>
       ) : null}

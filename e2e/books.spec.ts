@@ -61,10 +61,10 @@ test('상세검색 선택/검색 동작', async ({ page }) => {
   await gotoReady(page)
 
   await page.getByRole('button', { name: '상세검색' }).click()
-  await expect(page.locator('.detail-search-popover')).toBeVisible()
-  await page.locator('.detail-select').click()
+  await expect(page.getByTestId('detail-search-popover')).toBeVisible()
+  await page.getByTestId('detail-search-target').click()
   await page.getByRole('option', { name: '저자명' }).click()
-  await page.locator('.detail-input').fill('무라카미')
+  await page.getByTestId('detail-search-keyword').fill('무라카미')
   await page.getByRole('button', { name: '검색하기' }).click()
 
   await expect(page.getByText('무라카미 도서 1', { exact: true })).toBeVisible()

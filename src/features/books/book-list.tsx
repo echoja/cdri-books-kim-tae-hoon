@@ -15,7 +15,7 @@ export function BookList({
   onToggleFavorite,
 }: BookListProps) {
   return (
-    <section className="book-list" aria-live="polite">
+    <section className="mt-9" aria-live="polite">
       {books.map((book) => (
         <BookListItem
           key={`${book.isbn}-${book.title}`}

@@ -23,7 +23,7 @@ export function SearchHistoryLayer({
     }
 
     safeAnimate({
-      targets: listRef.current.querySelectorAll('.history-row'),
+      targets: listRef.current.querySelectorAll('[data-history-row]'),
       opacity: [0, 1],
       translateY: [6, 0],
       duration: motionDuration(180),
@@ -33,13 +33,20 @@ export function SearchHistoryLayer({
   }, [records])
 
   return (
-    <section className="search-history-layer" aria-label="검색 기록">
-      <ul ref={listRef}>
+    <section
+      className="absolute left-0 top-[53px] z-20 max-h-[153px] min-h-[153px] w-[480px] overflow-y-auto rounded-[24px] bg-[#f2f4f6] px-5 py-4 max-[767px]:w-full"
+      aria-label="검색 기록"
+    >
+      <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">
         {records.map((record) => (
-          <li key={record.key} className="history-row">
+          <li
+            key={record.key}
+            data-history-row
+            className="flex min-h-7 items-center justify-between opacity-0"
+          >
             <button
               type="button"
-              className="history-keyword"
+              className="cursor-pointer border-none bg-transparent text-sm text-[#353c49]"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => onSelect(record)}
             >
@@ -47,7 +54,7 @@ export function SearchHistoryLayer({
             </button>
             <button
               type="button"
-              className="history-remove"
+              className="inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-[#353c49] hover:bg-[#e3e8ec]"
               onMouseDown={(event) => event.preventDefault()}
               aria-label={`${record.keyword} 기록 삭제`}
               onClick={() => onRemove(record.key)}

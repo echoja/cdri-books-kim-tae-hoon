@@ -6,9 +6,12 @@ interface EmptyStateProps {
 
 export function EmptyState({ message = '검색된 결과가 없습니다' }: EmptyStateProps) {
   return (
-    <section className="empty-state" aria-live="polite">
+    <section
+      className="flex min-h-[calc(100vh-320px)] flex-col items-center justify-center gap-6 text-center"
+      aria-live="polite"
+    >
       <img src={emptyBookIcon} width={80} height={80} alt="도서 아이콘" />
-      <p>{message}</p>
+      <p className="m-0 text-2xl text-[#353c49]">{message}</p>
     </section>
   )
 }
