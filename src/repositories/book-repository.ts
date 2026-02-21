@@ -1,11 +1,8 @@
 import { AppError } from "@/lib/errors";
-import type { SearchParams, SearchResult } from "@/lib/types";
+import type { BookSearchParams, SearchResult } from "@/lib/types";
 
 interface BookSearchClient {
-  search(
-    options: { query: string; page?: number; size?: number; target?: string },
-    signal?: AbortSignal,
-  ): Promise<SearchResult>;
+  search(options: BookSearchParams, signal?: AbortSignal): Promise<SearchResult>;
 }
 
 export class BookRepository {
@@ -15,17 +12,9 @@ export class BookRepository {
     this.client = client;
   }
 
-  async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResult> {
+  async search(params: BookSearchParams, signal?: AbortSignal): Promise<SearchResult> {
     try {
-      return await this.client.search(
-        {
-          query: params.query,
-          page: params.page,
-          size: params.size,
-          target: params.target,
-        },
-        signal,
-      );
+      return await this.client.search(params, signal);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         throw error;

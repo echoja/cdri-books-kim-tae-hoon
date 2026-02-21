@@ -1,11 +1,11 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { SearchParams } from "@/lib/types";
+import type { BookSearchParams } from "@/lib/types";
 import { BookRepository } from "@/repositories/book-repository";
 import { kakaoBookClient } from "@/services/kakao-book-client";
 
 const bookRepository = new BookRepository(kakaoBookClient);
 
-export function bookSearchQueryOptions(params: SearchParams | null) {
+export function bookSearchQueryOptions(params: BookSearchParams | null) {
   return queryOptions({
     queryKey: ["book-search", params] as const,
     queryFn: ({ signal }) => {
@@ -20,6 +20,6 @@ export function bookSearchQueryOptions(params: SearchParams | null) {
   });
 }
 
-export function useBookSearch(params: SearchParams | null) {
+export function useBookSearch(params: BookSearchParams | null) {
   return useQuery(bookSearchQueryOptions(params));
 }

@@ -13,7 +13,7 @@ export interface Book {
   datetime?: string;
 }
 
-export interface SearchParams {
+export interface BookSearchParams {
   query: string;
   page: number;
   size: 10;

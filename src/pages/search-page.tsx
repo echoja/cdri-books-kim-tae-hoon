@@ -3,7 +3,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import searchIcon from "@/assets/icons/search.svg";
 import { toUserMessage } from "@/lib/errors";
-import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/lib/types";
+import type { BookSearchParams, SearchHistoryRecord, SearchTarget } from "@/lib/types";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
 import { DetailSearchPanel } from "@/components/detail-search-panel";
@@ -31,7 +31,7 @@ export function SearchPage() {
 
   const trimmed = search.query.trim();
   // eslint-disable-next-line react-hooks/exhaustive-deps -- React Compiler handles memoization
-  const params: SearchParams | null = trimmed
+  const params: BookSearchParams | null = trimmed
     ? { query: trimmed, page: search.page, size: PAGE_SIZE, target: search.target }
     : null;
 
@@ -72,7 +72,7 @@ export function SearchPage() {
       return;
     }
 
-    const nextPageParams: SearchParams = {
+    const nextPageParams: BookSearchParams = {
       ...params,
       page: params.page + 1,
     };
@@ -80,7 +80,7 @@ export function SearchPage() {
     void queryClient.prefetchQuery(bookSearchQueryOptions(nextPageParams));
   }, [params, queryClient, searchQuery.data]);
 
-  const setSearchParams = (next: { query: string; target: SearchTarget; page: number }) => {
+  const setBookSearchParams = (next: { query: string; target: SearchTarget; page: number }) => {
     void navigate({
       to: "/search",
       search: next,
@@ -98,7 +98,7 @@ export function SearchPage() {
       return;
     }
 
-    const next: SearchParams = {
+    const next: BookSearchParams = {
       query: trimmed,
       target: nextTarget,
       page: nextPage,
@@ -116,7 +116,7 @@ export function SearchPage() {
 
     setDetailKeyword(trimmed);
     setIsDetailOpen(false);
-    setSearchParams({
+    setBookSearchParams({
       query: trimmed,
       target: nextTarget,
       page: nextPage,
@@ -141,7 +141,7 @@ export function SearchPage() {
       return;
     }
 
-    setSearchParams({
+    setBookSearchParams({
       query: params.query,
       target: params.target ?? "title",
       page: nextPage,
@@ -200,7 +200,7 @@ export function SearchPage() {
             target={search.target}
             keyword={detailKeyword}
             onTargetChange={(nextTarget) =>
-              setSearchParams({
+              setBookSearchParams({
                 query: search.query,
                 page: 1,
                 target: nextTarget,
