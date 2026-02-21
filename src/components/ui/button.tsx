@@ -2,7 +2,7 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, PropsWithChildren, Ref
 import { cn, cva } from '@/lib/class-name'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-[19px] rounded-button border border-transparent typography-caption text-text-title transition-colors duration-[160ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center gap-[19px] rounded-button border border-transparent text-caption text-text-title transition-colors duration-[160ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed',
   {
     variants: {
       variant: {

@@ -128,12 +128,12 @@ export function BookListItem({
         </div>
 
         <div className="mr-[22px] flex w-[408px] items-center gap-4 max-[767px]:mr-0 max-[767px]:w-[calc(100%-68px)] max-[767px]:flex-col max-[767px]:items-start max-[767px]:gap-[6px]">
-          <p className="m-0 line-clamp-1 typography-title text-text-primary">{book.title}</p>
-          <p className="m-0 line-clamp-1 typography-body-small text-text-secondary">{authors}</p>
+          <p className="m-0 line-clamp-1 text-title text-text-primary">{book.title}</p>
+          <p className="m-0 line-clamp-1 text-body-small text-text-secondary">{authors}</p>
         </div>
 
         <div className="ml-auto flex items-center gap-14 max-[767px]:ml-0 max-[767px]:w-full max-[767px]:justify-between max-[767px]:gap-4">
-          <p className="m-0 text-right typography-title text-text-primary">
+          <p className="m-0 text-right text-title text-text-primary">
             {formatPrice(getCollapsedDisplayPrice(book))}
           </p>
           <div className="flex items-center gap-2 max-[767px]:gap-[6px]">
@@ -176,13 +176,13 @@ export function BookListItem({
 
             <section className="mr-[163px] flex w-[324px] flex-col gap-4 max-[1279px]:mr-12 max-[767px]:mr-0 max-[767px]:w-full">
               <div className="flex items-center gap-4">
-                <p className="m-0 line-clamp-2 typography-page-heading text-text-primary">{book.title}</p>
-                <p className="m-0 line-clamp-1 typography-body-small text-text-secondary">{authors}</p>
+                <p className="m-0 line-clamp-2 text-page-heading text-text-primary">{book.title}</p>
+                <p className="m-0 line-clamp-1 text-body-small text-text-secondary">{authors}</p>
               </div>
 
               <section className="flex flex-col gap-3">
-                <h3 className="m-0 text-base leading-[18px] text-text-secondary">책 소개</h3>
-                <p className="m-0 line-clamp-8 typography-small text-text-primary max-[767px]:line-clamp-6">
+                <h3 className="m-0 text-caption leading-[18px] text-text-secondary">책 소개</h3>
+                <p className="m-0 line-clamp-8 text-small text-text-primary max-[767px]:line-clamp-6">
                   {book.contents || '책 소개 정보가 없습니다.'}
                 </p>
               </section>
@@ -196,15 +196,15 @@ export function BookListItem({
 
               <div className="flex w-[180px] flex-col gap-2 max-[767px]:w-full">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="typography-small text-text-subtitle">원가</span>
-                  <strong className="typography-title text-text-primary">
+                  <span className="text-small text-text-subtitle">원가</span>
+                  <strong className="text-title text-text-primary">
                     {formatPrice(book.price)}
                   </strong>
                 </div>
                 {hasSalePrice(book) ? (
                   <div className="flex items-center justify-between gap-2">
-                    <span className="typography-small text-text-subtitle">할인가</span>
-                    <strong className="typography-title text-text-primary">
+                    <span className="text-small text-text-subtitle">할인가</span>
+                    <strong className="text-title text-text-primary">
                       {formatPrice(book.salePrice ?? 0)}
                     </strong>
                   </div>

@@ -34,18 +34,20 @@
   --radius-pill: 24px;
   --radius-button: 8px;
 
-  --font-size-title-2: 22px;
-  --line-height-title-2: 24px;
-  --font-size-title-3: 18px;
-  --line-height-title-3: 18px;
-  --font-size-body-1: 20px;
-  --line-height-body-1: 20px;
-  --font-size-body-2: 14px;
-  --line-height-body-2: 14px;
-  --font-size-caption: 16px;
-  --line-height-caption: 18px;
-  --font-size-small: 10px;
-  --line-height-small: 16px;
+  --text-page-heading: 22px;
+  --leading-page-heading: 24px;
+  --text-title: 18px;
+  --leading-title: 18px;
+  --text-body: 20px;
+  --leading-body: 20px;
+  --text-body-small: 14px;
+  --leading-body-small: 14px;
+  --text-caption: 16px;
+  --leading-caption: 18px;
+  --text-small: 10px;
+  --leading-small: 16px;
+  --text-heading: 24px;
+  --leading-heading: 24px;
 
   --color-palette-primary: #4880ee;
   --color-palette-primary-hover: #3b6acd;
@@ -64,40 +66,46 @@
   --color-text-error: #b42318;
 }
 
-@utility typography-page-heading {
-  font-size: var(--font-size-title-2);
-  line-height: var(--line-height-title-2);
+@utility text-page-heading {
+  font-size: var(--text-page-heading);
+  line-height: var(--leading-page-heading);
   font-weight: 700;
 }
 
-@utility typography-title {
-  font-size: var(--font-size-title-3);
-  line-height: var(--line-height-title-3);
+@utility text-title {
+  font-size: var(--text-title);
+  line-height: var(--leading-title);
   font-weight: 700;
 }
 
-@utility typography-body {
-  font-size: var(--font-size-body-1);
-  line-height: var(--line-height-body-1);
+@utility text-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
   font-weight: 500;
 }
 
-@utility typography-body-small {
-  font-size: var(--font-size-body-2);
-  line-height: var(--line-height-body-2);
+@utility text-body-small {
+  font-size: var(--text-body-small);
+  line-height: var(--leading-body-small);
   font-weight: 500;
 }
 
-@utility typography-caption {
-  font-size: var(--font-size-caption);
-  line-height: var(--line-height-caption);
+@utility text-caption {
+  font-size: var(--text-caption);
+  line-height: var(--leading-caption);
   font-weight: 500;
 }
 
-@utility typography-small {
-  font-size: var(--font-size-small);
-  line-height: var(--line-height-small);
+@utility text-small {
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
   font-weight: 500;
+}
+
+@utility text-heading {
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+  font-weight: 700;
 }
 
 @layer base {

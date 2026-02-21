@@ -74,8 +74,8 @@ function RootLayout() {
       <ErrorBoundary
         fallbackRender={() => (
           <section className="flex min-h-80 w-full flex-col items-center justify-center gap-2">
-            <h1 className="m-0 typography-title text-text-title">오류가 발생했습니다.</h1>
-            <p className="m-0 typography-body-small text-text-secondary">페이지를 새로고침한 뒤 다시 시도해 주세요.</p>
+            <h1 className="m-0 text-title text-text-title">오류가 발생했습니다.</h1>
+            <p className="m-0 text-body-small text-text-secondary">페이지를 새로고침한 뒤 다시 시도해 주세요.</p>
           </section>
         )}
       >

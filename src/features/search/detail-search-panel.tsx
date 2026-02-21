@@ -70,7 +70,7 @@ export function DetailSearchPanel({
             <div className="flex items-center gap-1 max-[767px]:flex-wrap">
               <Select.Root value={target} onValueChange={(value) => onTargetChange(value as SearchTarget)}>
                 <Select.Trigger
-                  className="inline-flex min-h-9 w-[100px] items-center justify-between rounded-lg border border-divider bg-palette-white px-[10px] text-sm text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-[767px]:w-full"
+                  className="inline-flex min-h-9 w-[100px] items-center justify-between rounded-lg border border-divider bg-palette-white px-[10px] text-body-small text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-[767px]:w-full"
                   aria-label="검색 기준"
                   data-testid="detail-search-target"
                 >
@@ -90,7 +90,7 @@ export function DetailSearchPanel({
                         <Select.Item
                           key={option.value}
                           value={option.value}
-                          className="flex min-h-[30px] w-full cursor-pointer items-center justify-between px-[10px] text-sm text-text-primary data-[highlighted]:bg-surface-secondary data-[highlighted]:outline-none"
+                          className="flex min-h-[30px] w-full cursor-pointer items-center justify-between px-[10px] text-body-small text-text-primary data-[highlighted]:bg-surface-secondary data-[highlighted]:outline-none"
                         >
                           <Select.ItemText>{option.label}</Select.ItemText>
                           <Select.ItemIndicator>

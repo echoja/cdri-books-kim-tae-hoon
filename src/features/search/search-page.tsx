@@ -130,7 +130,7 @@ export function SearchPage() {
   return (
     <section className="w-full">
       <div className="flex flex-col items-start">
-        <h1 className="m-0 typography-page-heading text-text-title">도서 검색</h1>
+        <h1 className="m-0 text-page-heading text-text-title">도서 검색</h1>
 
         <div className="mt-4 flex items-center gap-4 max-[767px]:w-full max-[767px]:flex-col max-[767px]:items-stretch">
           <form
@@ -144,7 +144,7 @@ export function SearchPage() {
             <input
               value={inputKeyword}
               placeholder="검색어 입력"
-              className="flex-1 border-none bg-transparent text-base text-text-primary outline-none placeholder:text-text-subtitle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary"
+              className="flex-1 border-none bg-transparent text-caption text-text-primary outline-none placeholder:text-text-subtitle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary"
               onFocus={() => setIsHistoryOpen(true)}
               onBlur={() => {
                 window.setTimeout(() => setIsHistoryOpen(false), 100)
@@ -174,22 +174,22 @@ export function SearchPage() {
           />
         </div>
 
-        <div className="mt-6 flex items-center gap-layout-gap-4 typography-title text-text-primary">
+        <div className="mt-6 flex items-center gap-layout-gap-4 text-title text-text-primary">
           <span>검색결과</span>
           <span>
             총 <strong className="text-palette-primary">{totalCount}</strong>건
           </span>
           {sourceLabel ? (
-            <span className="rounded-full border border-divider px-2 py-[3px] typography-small text-text-subtitle">
+            <span className="rounded-full border border-divider px-2 py-[3px] text-small text-text-subtitle">
               {sourceLabel}
             </span>
           ) : null}
         </div>
       </div>
 
-      {searchQuery.error ? <p className="mt-5 text-sm text-text-error">{toUserMessage(searchQuery.error)}</p> : null}
+      {searchQuery.error ? <p className="mt-5 text-body-small text-text-error">{toUserMessage(searchQuery.error)}</p> : null}
 
-      {searchQuery.isFetching && hasSearched ? <p className="mt-5 text-sm">검색 중입니다...</p> : null}
+      {searchQuery.isFetching && hasSearched ? <p className="mt-5 text-body-small">검색 중입니다...</p> : null}
 
       {!searchQuery.isFetching && books.length > 0 ? (
         <>

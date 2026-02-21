@@ -46,7 +46,7 @@ export function SearchHistoryLayer({
           >
             <button
               type="button"
-              className="cursor-pointer border-none bg-transparent text-sm text-text-primary"
+              className="cursor-pointer border-none bg-transparent text-body-small text-text-primary"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => onSelect(record)}
             >
