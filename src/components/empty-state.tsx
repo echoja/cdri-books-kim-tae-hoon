@@ -1,13 +1,18 @@
-import { useEffect, useRef } from "react";
+import { type ComponentProps, useEffect, useRef } from "react";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
 import { motionDuration, runAnimate } from "@/lib/animation";
 import { cn } from "@/lib/class-name";
 
-interface EmptyStateProps {
+interface EmptyStateProps extends Omit<ComponentProps<"section">, "children"> {
   message?: string;
 }
 
-export function EmptyState({ message = "검색된 결과가 없습니다" }: EmptyStateProps) {
+export function EmptyState({
+  message = "검색된 결과가 없습니다",
+  className,
+  style,
+  ...props
+}: EmptyStateProps) {
   const ref = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -29,9 +34,11 @@ export function EmptyState({ message = "검색된 결과가 없습니다" }: Emp
       className={cn(
         "flex min-h-[calc(100vh-320px)] flex-col items-center justify-center",
         "gap-6 text-center",
+        className,
       )}
       aria-live="polite"
-      style={{ opacity: 0 }}
+      style={{ opacity: 0, ...style }}
+      {...props}
     >
       <img src={emptyBookIcon} width={80} height={80} alt="도서 아이콘" />
       <p className="text-heading text-text-primary m-0">{message}</p>

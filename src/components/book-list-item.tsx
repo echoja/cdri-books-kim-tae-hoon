@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ComponentProps, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import lineHeart from "@/assets/icons/line.svg";
 import fillHeart from "@/assets/icons/fill.svg";
@@ -24,7 +24,7 @@ const favoriteBadgeVariants = cva(
   },
 );
 
-interface BookListItemProps {
+interface BookListItemProps extends Omit<ComponentProps<"article">, "children"> {
   book: Book;
   isFavorite: boolean;
   favoriteDisabled?: boolean;
@@ -36,6 +36,8 @@ export function BookListItem({
   isFavorite,
   favoriteDisabled = false,
   onToggleFavorite,
+  className,
+  ...props
 }: BookListItemProps) {
   const [expanded, setExpanded] = useState(false);
   const [renderExpanded, setRenderExpanded] = useState(false);
@@ -106,7 +108,7 @@ export function BookListItem({
   };
 
   return (
-    <article className="w-full">
+    <article className={cn("w-full", className)} {...props}>
       <div
         className={cn(
           "flex min-h-25 items-center px-4 py-4 pl-12",

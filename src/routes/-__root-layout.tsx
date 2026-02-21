@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useMemo } from "react";
+import { type ComponentProps, useEffect, useMemo } from "react";
 import { Outlet } from "@tanstack/react-router";
 import { ErrorBoundary } from "react-error-boundary";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -8,7 +8,9 @@ import { AppShell } from "@/components/app-shell";
 import { queryClient } from "@/lib/query-client";
 import { createQueryPersister } from "@/lib/query-persistence";
 
-export function AppProviders({ children }: { children: ReactNode }) {
+interface AppProvidersProps extends ComponentProps<"div"> {}
+
+export function AppProviders({ children }: AppProvidersProps) {
   const persister = useMemo(() => createQueryPersister(), []);
 
   useEffect(() => {

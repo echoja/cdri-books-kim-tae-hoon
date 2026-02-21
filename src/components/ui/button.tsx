@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, PropsWithChildren, Ref } from "react";
+import type { ComponentProps } from "react";
 import { cn, cva } from "@/lib/class-name";
 
 const buttonVariants = cva(
@@ -22,50 +22,34 @@ const buttonVariants = cva(
 
 type ButtonVariant = NonNullable<Parameters<typeof buttonVariants>[0]>["variant"];
 
-interface ButtonProps
-  extends PropsWithChildren, Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className"> {
-  className?: string;
-  ref?: Ref<HTMLButtonElement>;
+interface ButtonProps extends ComponentProps<"button"> {
   variant?: ButtonVariant;
 }
 
-interface LinkButtonProps
-  extends PropsWithChildren, Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "className"> {
-  className?: string;
+interface LinkButtonProps extends ComponentProps<"a"> {
   disabled?: boolean;
-  ref?: Ref<HTMLAnchorElement>;
   variant?: ButtonVariant;
 }
 
 export function Button({
   variant = "secondary",
   className,
-  ref,
   type = "button",
   ...props
 }: ButtonProps) {
-  return (
-    <button
-      ref={ref}
-      type={type}
-      className={cn(buttonVariants({ variant }), className)}
-      {...props}
-    />
-  );
+  return <button type={type} className={cn(buttonVariants({ variant }), className)} {...props} />;
 }
 
 export function LinkButton({
   variant = "primary",
   className,
   disabled = false,
-  ref,
   onClick,
   tabIndex,
   ...props
 }: LinkButtonProps) {
   return (
     <a
-      ref={ref}
       {...props}
       tabIndex={disabled ? -1 : tabIndex}
       className={cn(

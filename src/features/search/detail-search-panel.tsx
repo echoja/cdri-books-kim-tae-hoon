@@ -1,6 +1,6 @@
 import * as Popover from "@radix-ui/react-popover";
 import * as Select from "@radix-ui/react-select";
-import { useEffect, useRef } from "react";
+import { type ComponentProps, useEffect, useRef } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 import { SEARCH_TARGET_OPTIONS } from "@/domain/search-utils";
 import type { SearchTarget } from "@/domain/types";
@@ -8,7 +8,10 @@ import { motionDuration, runAnimate } from "@/lib/animation";
 import { cn } from "@/lib/class-name";
 import { Button } from "@/components/ui/button";
 
-interface DetailSearchPanelProps {
+interface DetailSearchPanelProps extends Omit<
+  ComponentProps<"div">,
+  "children" | "onChange" | "onSearch"
+> {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   target: SearchTarget;
@@ -26,6 +29,8 @@ export function DetailSearchPanel({
   onTargetChange,
   onKeywordChange,
   onSearch,
+  className,
+  ...props
 }: DetailSearchPanelProps) {
   const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -61,7 +66,7 @@ export function DetailSearchPanel({
           data-testid="detail-search-popover"
           forceMount
         >
-          <div ref={contentRef}>
+          <div ref={contentRef} className={className} {...props}>
             <button
               type="button"
               className={cn(
@@ -111,7 +116,7 @@ export function DetailSearchPanel({
                           className={cn(
                             "text-body-small text-text-primary flex min-h-7.5 w-full",
                             "cursor-pointer items-center justify-between px-2.5",
-                            "data-highlighted:bg-surface-secondary data-highlighted:outline-none",
+                            "data-[highlighted]:bg-surface-secondary data-[highlighted]:outline-none",
                           )}
                         >
                           <Select.ItemText>{option.label}</Select.ItemText>

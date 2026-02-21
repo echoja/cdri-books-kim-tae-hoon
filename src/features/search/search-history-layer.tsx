@@ -1,17 +1,23 @@
-import { useEffect, useRef } from "react";
+import { type ComponentProps, useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { stagger } from "animejs";
 import { motionDuration, runAnimate } from "@/lib/animation";
 import type { SearchHistoryRecord } from "@/domain/types";
 import { cn } from "@/lib/class-name";
 
-interface SearchHistoryLayerProps {
+interface SearchHistoryLayerProps extends Omit<ComponentProps<"section">, "children" | "onSelect"> {
   records: SearchHistoryRecord[];
   onSelect: (record: SearchHistoryRecord) => void;
   onRemove: (key: string) => void;
 }
 
-export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistoryLayerProps) {
+export function SearchHistoryLayer({
+  records,
+  onSelect,
+  onRemove,
+  className,
+  ...props
+}: SearchHistoryLayerProps) {
   const listRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
@@ -34,8 +40,10 @@ export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistor
         "rounded-pill bg-surface-secondary absolute top-13.25 left-0 z-20",
         "max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4",
         "max-md:w-full",
+        className,
       )}
       aria-label="검색 기록"
+      {...props}
     >
       <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">
         {records.map((record) => (

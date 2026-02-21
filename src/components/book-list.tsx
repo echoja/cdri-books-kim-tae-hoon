@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { type ComponentProps, useEffect, useRef } from "react";
 import { stagger } from "animejs";
 import type { Book } from "@/domain/types";
 import { BookListItem } from "./book-list-item";
 import { motionDuration, runAnimate } from "@/lib/animation";
+import { cn } from "@/lib/class-name";
 
-interface BookListProps {
+interface BookListProps extends Omit<ComponentProps<"section">, "children"> {
   books: Book[];
   favoriteIds: string[];
   favoriteDisabled?: boolean;
@@ -16,6 +17,8 @@ export function BookList({
   favoriteIds,
   favoriteDisabled = false,
   onToggleFavorite,
+  className,
+  ...props
 }: BookListProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -40,7 +43,7 @@ export function BookList({
   }, [books]);
 
   return (
-    <section ref={sectionRef} className="mt-9" aria-live="polite">
+    <section ref={sectionRef} className={cn("mt-9", className)} aria-live="polite" {...props}>
       {books.map((book) => (
         <BookListItem
           key={`${book.isbn}-${book.title}`}
