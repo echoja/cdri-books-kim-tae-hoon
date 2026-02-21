@@ -10,19 +10,17 @@ export function AppHeader() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   return (
-    <header
-      className={cn("h-header px-header-inset relative flex w-full", "items-center justify-center")}
-    >
+    <header className={cn("relative flex h-21 w-full px-40", "items-center justify-center")}>
       <div
         className={cn(
           "text-title-1 text-text-title absolute",
-          "lg:left-header-inset top-6 left-6 leading-6 font-bold",
+          "top-6 left-6 leading-6 font-bold lg:left-40",
         )}
         aria-label="CERTICOS BOOKS"
       >
         CERTICOS BOOKS
       </div>
-      <nav className="gap-nav-spacing flex items-center" aria-label="주요 메뉴">
+      <nav className="flex items-center gap-14" aria-label="주요 메뉴">
         {NAV_ITEMS.map((item) => {
           const active = pathname.startsWith(item.to);
 

@@ -45,10 +45,10 @@ export function RootLayout() {
         )}
       >
         <AppHeader />
-        <main className="pb-page-bottom flex w-full justify-center">
+        <main className="flex w-full justify-center pb-15">
           <div
             className={cn(
-              "mt-page-top max-w-page-content",
+              "max-w-page-content mt-20",
               "w-[calc(100%-var(--spacing-page-pad-trim))]",
             )}
           >

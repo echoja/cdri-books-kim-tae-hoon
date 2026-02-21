@@ -151,7 +151,7 @@ export function SearchPage() {
           <form
             className={cn(
               "rounded-pill bg-palette-light-gray relative m-0",
-              "group h-search-input w-120 flex-col items-center gap-2.75 px-4.5",
+              "group h-12 w-120 flex-col items-center gap-2.75 px-4.5",
             )}
             onSubmit={(event) => {
               event.preventDefault();
@@ -166,7 +166,7 @@ export function SearchPage() {
                 placeholder="검색어 입력"
                 className={cn(
                   "text-caption text-text-primary placeholder:text-text-subtitle flex-1 border-none bg-transparent",
-                  "focus-visible:outline-palette-primary h-search-input outline-none",
+                  "focus-visible:outline-palette-primary h-12 outline-none",
                   "focus-visible:outline-2 focus-visible:outline-offset-2",
                 )}
               />
@@ -194,7 +194,7 @@ export function SearchPage() {
 
         <div
           className={cn(
-            "gap-layout-4 text-title-3 text-text-primary mt-6",
+            "text-title-3 text-text-primary mt-6 gap-4",
             "flex items-center font-medium",
           )}
         >

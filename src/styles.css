@@ -5,18 +5,7 @@
   --font-family-sans: "Noto Sans KR", sans-serif;
 
   --spacing-page-content: 960px;
-  --spacing-page-top: 80px;
-  --spacing-page-bottom: 60px;
   --spacing-page-pad-trim: 64px;
-
-  --spacing-header-inset: 160px;
-
-  --spacing-layout-4: 16px;
-  --spacing-layout-5: 22px;
-  --spacing-nav-spacing: 56px;
-
-  --spacing-header: 84px;
-  --spacing-search-input: 48px;
 
   --radius-pill: 24px;
   --radius-button: 8px;
