@@ -22,9 +22,9 @@ export function BookList({
 
   return (
     <section className={cn("mt-9", className)} aria-live="polite" {...props}>
-      {books.map((book) => (
+      {books.map((book, index) => (
         <BookListItem
-          key={`${book.isbn}-${book.title}`}
+          key={`${book.isbn}-${index}`}
           book={book}
           expanded={expandedIsbn === book.isbn}
           onToggleExpanded={() =>

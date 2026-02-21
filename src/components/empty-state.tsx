@@ -24,7 +24,7 @@ export function EmptyState({
       {...props}
     >
       <img src={emptyBookIcon} width={80} height={80} alt="도서 아이콘" />
-      <p className="text-title-1 text-text-primary m-0">{message}</p>
+      <p className="text-caption text-text-secondary m-0">{message}</p>
     </section>
   );
 }
