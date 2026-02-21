@@ -44,29 +44,11 @@ function toBook(doc: z.infer<typeof kakaoDocumentSchema>): Book {
   };
 }
 
-// Kakao REST API Retry-After policy:
-// - Book search API (Daum Search): 30,000 requests/day, 50,000/day across all search types
-// - Monthly cap: 3,000,000 requests across all APIs
+// Kakao REST API rate limits (ref: https://developers.kakao.com/docs/latest/ko/getting-started/quota):
+// - Book search (Daum Search): 30,000 req/day, 50,000/day across all search types
+// - Monthly cap: 3,000,000 req across all APIs
 // - Returns 429 when per-second or daily quota is exceeded
-// - Official docs do NOT guarantee a Retry-After header on 429 responses;
-//   we parse it defensively in case Kakao adds it in the future.
-// Ref: https://developers.kakao.com/docs/latest/ko/getting-started/quota
-function parseRetryAfter(response: Response): number | undefined {
-  const header = response.headers.get("Retry-After");
-
-  if (!header) {
-    return undefined;
-  }
-
-  const seconds = Number(header);
-
-  if (Number.isNaN(seconds) || seconds <= 0) {
-    return undefined;
-  }
-
-  return seconds * 1000;
-}
-
+// - Kakao does NOT provide a Retry-After header on 429 responses.
 async function parseResponse(response: Response): Promise<SearchResultPayload> {
   if (!response.ok) {
     if (response.status === 401 || response.status === 403) {
@@ -74,12 +56,7 @@ async function parseResponse(response: Response): Promise<SearchResultPayload> {
     }
 
     if (response.status === 429) {
-      const retryAfter = parseRetryAfter(response);
-      const message = retryAfter
-        ? `요청 제한에 도달했습니다. ${Math.ceil(retryAfter / 1000)}초 후 다시 시도해 주세요.`
-        : "요청 제한에 도달했습니다.";
-
-      throw new AppError("RATE_LIMIT", message, response.status);
+      throw new AppError("RATE_LIMIT", "요청 제한에 도달했습니다.", response.status);
     }
 
     if (response.status >= 500) {
