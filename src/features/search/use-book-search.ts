@@ -3,7 +3,7 @@ import type { SearchParams } from "@/domain/types";
 import { BookRepository } from "@/repositories/book-repository";
 import { kakaoBookClient } from "@/services/kakao-book-client";
 
-export const bookRepository = new BookRepository(kakaoBookClient);
+const bookRepository = new BookRepository(kakaoBookClient);
 
 export function bookSearchQueryOptions(params: SearchParams | null) {
   return queryOptions({
