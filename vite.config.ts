@@ -9,7 +9,11 @@ const config = defineConfig({
     tanstackRouter(),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
-    viteReact(),
+    viteReact({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
   ],
 });
 

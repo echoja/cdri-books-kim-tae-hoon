@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import searchIcon from "@/assets/icons/search.svg";
@@ -29,20 +29,11 @@ export function SearchPage() {
   const [detailKeyword, setDetailKeyword] = useState(search.query);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-  const params = useMemo<SearchParams | null>(() => {
-    const trimmed = search.query.trim();
-
-    if (!trimmed) {
-      return null;
-    }
-
-    return {
-      query: trimmed,
-      page: search.page,
-      size: PAGE_SIZE,
-      target: search.target,
-    };
-  }, [search.page, search.query, search.target]);
+  const trimmed = search.query.trim();
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- React Compiler handles memoization
+  const params: SearchParams | null = trimmed
+    ? { query: trimmed, page: search.page, size: PAGE_SIZE, target: search.target }
+    : null;
 
   const searchQuery = useBookSearch(params);
   const historyQuery = useSearchHistory();
@@ -58,13 +49,7 @@ export function SearchPage() {
   const hasSearched = search.query.trim().length > 0;
 
   const page = params?.page ?? 1;
-  const totalPages = useMemo(() => {
-    if (totalCount === 0) {
-      return 1;
-    }
-
-    return Math.ceil(totalCount / PAGE_SIZE);
-  }, [totalCount]);
+  const totalPages = totalCount === 0 ? 1 : Math.ceil(totalCount / PAGE_SIZE);
 
   const sourceLabel = searchQuery.data?.source === "cache" ? "캐시 데이터" : null;
 
