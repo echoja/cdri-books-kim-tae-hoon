@@ -84,6 +84,7 @@ src/
 - `lucide-react`: 경량 아이콘 라이브러리. tree-shaking으로 사용한 아이콘만 번들에 포함
 - `sonner`: 경량 토스트 알림. unstyled 모드로 프로젝트 디자인에 맞게 커스터마이징
 - `react-error-boundary`: 선언적 에러 바운더리로 런타임 에러 격리
+- `React Compiler`: 빌드 타임 자동 메모이제이션으로 수동 useMemo/useCallback 제거
 - `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 ESLint + Prettier를 선택했다.
 - `knip`: 미사용 파일/의존성/export 탐지로 코드베이스 청결 유지
 - `Playwright`: 실제 사용자 플로우 E2E 검증
