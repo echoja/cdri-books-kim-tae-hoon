@@ -6,7 +6,15 @@ import { kakaoBookClient } from "@/services/kakao-book-client";
 export class BookRepository {
   async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResult> {
     try {
-      const payload = await kakaoBookClient.search(params, signal);
+      const payload = await kakaoBookClient.search(
+        {
+          query: params.query,
+          page: params.page,
+          size: params.size,
+          target: params.target,
+        },
+        signal,
+      );
 
       await searchCacheRepository.set(params, payload);
 
