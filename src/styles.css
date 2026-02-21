@@ -1,4 +1,4 @@
-@import "./assets/fonts/noto-sans-kr/noto-sans-kr.css";
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -6,30 +6,17 @@
 
   --spacing-page-content: 960px;
   --spacing-page-top: 80px;
-  --spacing-page-top-mobile: 48px;
   --spacing-page-bottom: 60px;
   --spacing-page-pad-trim: 64px;
-  --spacing-page-pad-trim-mobile: 32px;
 
   --spacing-header-pad-desktop: 160px;
-  --spacing-header-pad-tablet: 32px;
-  --spacing-header-pad-mobile: 16px;
 
   --spacing-layout-gap-4: 16px;
   --spacing-layout-gap-5: 22px;
-  --spacing-layout-gap-6: 24px;
-  --spacing-layout-gap-7: 32px;
-  --spacing-layout-gap-8: 36px;
   --spacing-nav-gap: 56px;
 
   --spacing-header-height: 84px;
-  --spacing-header-height-mobile: 76px;
   --spacing-search-input-height: 48px;
-  --spacing-search-target-height: 36px;
-  --spacing-book-thumb-small-width: 48px;
-  --spacing-book-thumb-small-height: 68px;
-  --spacing-book-thumb-large-width: 210px;
-  --spacing-book-thumb-large-height: 280px;
 
   --radius-pill: 24px;
   --radius-button: 8px;
@@ -69,8 +56,6 @@
 
   /* Color tokens from docs/requirements.md */
   --color-palette-white: #ffffff;
-  --color-palette-black: #222222;
-  --color-palette-gray: #dadada;
   --color-palette-light-gray: #f2f4f6;
   --color-palette-primary: #4880ee;
   --color-palette-red: #e84118;
@@ -78,13 +63,12 @@
 
   --color-text-title: #1a1e27;
   --color-text-primary: #353c49;
-  --color-text-default: #353c49;
   --color-text-secondary: #6d7582;
   --color-text-subtitle: #8d94a0;
   --color-icon-muted: #b1b8c0;
 
   /* Derived tokens used in interactive states */
-  --color-palette-primary-hover: #3b6acd;
+  --color-palette-primary-hover: color-mix(in oklab, var(--color-palette-primary) 85%, black);
   --color-palette-light-gray-soft: #eceff2;
   --color-palette-light-gray-disabled: #f3f5f7;
   --color-palette-light-gray-hover: #e7ebef;
