@@ -49,6 +49,9 @@ npx tsc --noEmit
 # 린트
 npm run lint
 
+# 미사용 의존성 검증
+npm run knip
+
 # 빌드
 npm run build
 
@@ -61,6 +64,7 @@ npm run test:e2e
 
 ```text
 src/
+  assets/          # 이미지, 아이콘 등 정적 에셋
   adapters/        # SyncAdapter(no-op)
   components/      # 공통 UI(헤더, 레이아웃, empty)
   db/              # Dexie 스키마
@@ -80,6 +84,7 @@ src/
 - `@radix-ui/*`: 접근성 있는 popover/select 구현
 - `anime.js`: 핵심 인터랙션 애니메이션 품질 확보
 - `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 ESLint + Prettier를 선택했다.
+- `knip`: 미사용 파일/의존성/export 탐지로 코드베이스 청결 유지
 - `Playwright`: 실제 사용자 플로우 E2E 검증
 
 ## 강조 기능
@@ -90,40 +95,33 @@ src/
 - `prefers-reduced-motion` 대응 애니메이션
 - 리스트/빈 상태 진입 시 부드러운 페이드인 애니메이션
 
-## 요구사항 준수 체크리스트
-
-| 요구사항 | 상태 |
-|---------|------|
-| React.js + TypeScript + React Query | OK |
-| 카카오 도서 검색 API 연동 | OK |
-| `.env` API 키 관리 + `.gitignore` | OK |
-| 타이포그래피 토큰 (Title/Body/Caption/Small) | OK |
-| 데스크톱 우선 960px 콘텐츠 영역 | OK |
-| 헤더: 전폭, 로고 왼쪽, GNB 중앙 | OK |
-| GNB: 2항목, 56px 간격, active 밑줄 | OK |
-| 검색박스: 3줄 구조, Enter 검색 | OK |
-| 검색 입력: 480x48, pill 라운드, 돋보기 | OK |
-| 상세검색 패널: 360x160, 그림자, 드롭다운 | OK |
-| 검색 기록: 최대 8개, 영속, 개별 삭제 | OK |
-| BookListItem 접힘/펼침 레이아웃 | OK |
-| 가격 규칙 (할인가 우선) | OK |
-| 아코디언 애니메이션 | OK |
-| 찜 페이지: 동일 레이아웃, 동일 BookListItem | OK |
-| 빈 상태: icon_book.png 80x80 + 텍스트 | OK |
-| 버튼 스타일 (primary/secondary/outline) | OK |
-| 찜 하트 아이콘 (line.svg/fill.svg) | OK |
-| 반응형 브레이크포인트 (1280/768/767) | OK |
-| 색상 토큰 | OK |
-| 키보드 접근성 (tab/enter/ESC, focus-visible) | OK |
-| `prefers-reduced-motion` 지원 | OK |
-| 네트워크 오류 시 캐시 fallback + 배지 | OK |
-
 ## 프로젝트 규칙
 
+### 커밋
 - 커밋 메시지는 한글로 작성합니다.
 - 커밋 메시지 형식은 `유형: 변경 요약`을 권장합니다.
 - 예시: `문서: 과제 설명 문서 추가`
+- 내용이 많은 경우 주제별로 나눠서 커밋합니다.
+
+### 문서
 - `docs/mission.md`는 기준 문서로 고정하며 수정하지 않습니다.
 - 작업 중 확정된 요구사항/유의사항/에셋 정보는 `docs/requirements.md`에 누적 관리합니다.
 - 디자인 상 참고사항/논의사항은 `docs/notes.md`에서 별도 관리합니다.
+
+### 코드 스타일
 - 코드 주석은 JSDoc(`/** */`) 형식으로 작성합니다.
+- `==`, `!=` 금지. 항상 `===`, `!==` 사용 (`eqeqeq` 규칙).
+- `curly` 규칙 적용 — `if`/`else`/`for`/`while` 등에 항상 중괄호를 사용합니다.
+- Prettier 설정: `semi: true`, `singleQuote: false`.
+- Tailwind 클래스는 canonical 값을 사용합니다 (예: `gap-[6px]` → `gap-1.5`).
+- `className`에 template literal 금지 — `cva()`/`cn()`을 사용합니다.
+- `clsx`, `tailwind-merge`, `class-variance-authority` 직접 import 금지 — `@/lib/class-name`을 사용합니다.
+
+### 임포트
+- 에셋(이미지, 아이콘)은 `src/assets/` 에 배치하고, `@/assets/...` 절대경로로 임포트합니다.
+- 상대경로 임포트는 같은 디렉토리 또는 바로 하위만 허용합니다. 그 외에는 `@/...` 별칭을 사용합니다.
+
+### 아키텍처
+- 무조건 CSR(SPA)이므로 `typeof window === "undefined"` 체크를 하지 않습니다.
+- 외부 API 클라이언트의 파라미터 인터페이스는 실제 API 스펙에 맞춰 정의합니다 (내부 타입과 분리).
+- `knip`으로 미사용 의존성을 검증합니다 (`npm run knip`).
