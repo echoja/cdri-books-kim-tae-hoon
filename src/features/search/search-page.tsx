@@ -9,11 +9,7 @@ import { BookList } from "@/components/book-list";
 import { DetailSearchPanel } from "@/features/search/detail-search-panel";
 import { SearchHistoryLayer } from "@/features/search/search-history-layer";
 import { useToggleFavorite, useFavoriteIds } from "@/features/favorites/use-favorites";
-import {
-  bookRepository,
-  createBookSearchQueryKey,
-  useBookSearch,
-} from "@/features/search/use-book-search";
+import { bookSearchQueryOptions, useBookSearch } from "@/features/search/use-book-search";
 import { Button } from "@/components/ui/button";
 import {
   useRemoveSearchHistory,
@@ -98,10 +94,7 @@ export function SearchPage() {
       page: params.page + 1,
     };
 
-    void queryClient.prefetchQuery({
-      queryKey: createBookSearchQueryKey(nextPageParams),
-      queryFn: ({ signal }) => bookRepository.search(nextPageParams, signal),
-    });
+    void queryClient.prefetchQuery(bookSearchQueryOptions(nextPageParams));
   }, [params, queryClient, searchQuery.data]);
 
   const setSearchParams = (next: { query: string; target: SearchTarget; page: number }) => {
@@ -134,7 +127,7 @@ export function SearchPage() {
 
     if (isSameSearch) {
       void queryClient.invalidateQueries({
-        queryKey: createBookSearchQueryKey(next),
+        queryKey: bookSearchQueryOptions(next).queryKey,
       });
     }
 

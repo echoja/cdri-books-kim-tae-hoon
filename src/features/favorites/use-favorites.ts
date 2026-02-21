@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { applyOptimisticFavorite } from "@/domain/favorites-utils";
 import type { Book, FavoriteRecord } from "@/domain/types";
@@ -7,27 +7,28 @@ import { syncAdapter } from "@/adapters/sync-adapter";
 
 const favoritesRepository = new FavoritesRepository(syncAdapter);
 
-const FAVORITES_QUERY_KEY = ["favorites"] as const;
-const FAVORITE_IDS_QUERY_KEY = ["favorite-ids"] as const;
+const favoritesQueryOptions = queryOptions({
+  queryKey: ["favorites"],
+  queryFn: () => favoritesRepository.list(),
+  initialData: [] as FavoriteRecord[],
+  staleTime: 0,
+  refetchOnMount: "always",
+});
+
+const favoriteIdsQueryOptions = queryOptions({
+  queryKey: ["favorite-ids"],
+  queryFn: () => favoritesRepository.listIsbns(),
+  initialData: [] as string[],
+  staleTime: 0,
+  refetchOnMount: "always",
+});
 
 export function useFavoriteRecords() {
-  return useQuery({
-    queryKey: FAVORITES_QUERY_KEY,
-    queryFn: () => favoritesRepository.list(),
-    initialData: [] as FavoriteRecord[],
-    staleTime: 0,
-    refetchOnMount: "always",
-  });
+  return useQuery(favoritesQueryOptions);
 }
 
 export function useFavoriteIds() {
-  return useQuery({
-    queryKey: FAVORITE_IDS_QUERY_KEY,
-    queryFn: () => favoritesRepository.listIsbns(),
-    initialData: [] as string[],
-    staleTime: 0,
-    refetchOnMount: "always",
-  });
+  return useQuery(favoriteIdsQueryOptions);
 }
 
 interface ToggleFavoriteInput {
@@ -52,18 +53,17 @@ export function useToggleFavorite() {
       }
     },
     onMutate: async ({ book, willFavorite }) => {
-      await queryClient.cancelQueries({ queryKey: FAVORITES_QUERY_KEY });
-      await queryClient.cancelQueries({ queryKey: FAVORITE_IDS_QUERY_KEY });
+      await queryClient.cancelQueries({ queryKey: favoritesQueryOptions.queryKey });
+      await queryClient.cancelQueries({ queryKey: favoriteIdsQueryOptions.queryKey });
 
-      const previousFavorites =
-        queryClient.getQueryData<FavoriteRecord[]>(FAVORITES_QUERY_KEY) ?? [];
-      const previousFavoriteIds = queryClient.getQueryData<string[]>(FAVORITE_IDS_QUERY_KEY) ?? [];
+      const previousFavorites = queryClient.getQueryData(favoritesQueryOptions.queryKey) ?? [];
+      const previousFavoriteIds = queryClient.getQueryData(favoriteIdsQueryOptions.queryKey) ?? [];
 
-      queryClient.setQueryData<FavoriteRecord[]>(FAVORITES_QUERY_KEY, (current = []) =>
+      queryClient.setQueryData(favoritesQueryOptions.queryKey, (current = []) =>
         applyOptimisticFavorite(current, book, willFavorite),
       );
 
-      queryClient.setQueryData<string[]>(FAVORITE_IDS_QUERY_KEY, (current = []) => {
+      queryClient.setQueryData(favoriteIdsQueryOptions.queryKey, (current = []) => {
         if (willFavorite) {
           return Array.from(new Set([book.isbn, ...current]));
         }
@@ -84,8 +84,8 @@ export function useToggleFavorite() {
         return;
       }
 
-      queryClient.setQueryData(FAVORITES_QUERY_KEY, context.previousFavorites);
-      queryClient.setQueryData(FAVORITE_IDS_QUERY_KEY, context.previousFavoriteIds);
+      queryClient.setQueryData(favoritesQueryOptions.queryKey, context.previousFavorites);
+      queryClient.setQueryData(favoriteIdsQueryOptions.queryKey, context.previousFavoriteIds);
 
       toast.error(
         variables.willFavorite
@@ -94,8 +94,8 @@ export function useToggleFavorite() {
       );
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({ queryKey: FAVORITES_QUERY_KEY });
-      await queryClient.invalidateQueries({ queryKey: FAVORITE_IDS_QUERY_KEY });
+      await queryClient.invalidateQueries({ queryKey: favoritesQueryOptions.queryKey });
+      await queryClient.invalidateQueries({ queryKey: favoriteIdsQueryOptions.queryKey });
     },
   });
 }

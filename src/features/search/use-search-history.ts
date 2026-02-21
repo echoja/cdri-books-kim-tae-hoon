@@ -1,17 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { searchHistoryRepository } from "@/repositories/search-history-repository";
-import type { SearchTarget } from "@/domain/types";
+import type { SearchHistoryRecord, SearchTarget } from "@/domain/types";
 
-const SEARCH_HISTORY_QUERY_KEY = ["search-history"] as const;
+const searchHistoryQueryOptions = queryOptions({
+  queryKey: ["search-history"],
+  queryFn: () => searchHistoryRepository.list(),
+  initialData: [] as SearchHistoryRecord[],
+  staleTime: 0,
+  refetchOnMount: "always",
+});
 
 export function useSearchHistory() {
-  return useQuery({
-    queryKey: SEARCH_HISTORY_QUERY_KEY,
-    queryFn: () => searchHistoryRepository.list(),
-    initialData: [],
-    staleTime: 0,
-    refetchOnMount: "always",
-  });
+  return useQuery(searchHistoryQueryOptions);
 }
 
 export function useUpsertSearchHistory() {
@@ -21,7 +21,7 @@ export function useUpsertSearchHistory() {
     mutationFn: ({ keyword, target }: { keyword: string; target?: SearchTarget }) =>
       searchHistoryRepository.upsert(keyword, target),
     onSuccess: (records) => {
-      queryClient.setQueryData(SEARCH_HISTORY_QUERY_KEY, records);
+      queryClient.setQueryData(searchHistoryQueryOptions.queryKey, records);
     },
   });
 }
@@ -32,7 +32,7 @@ export function useRemoveSearchHistory() {
   return useMutation({
     mutationFn: (key: string) => searchHistoryRepository.remove(key),
     onSuccess: (records) => {
-      queryClient.setQueryData(SEARCH_HISTORY_QUERY_KEY, records);
+      queryClient.setQueryData(searchHistoryQueryOptions.queryKey, records);
     },
   });
 }

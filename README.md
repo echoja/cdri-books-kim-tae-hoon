@@ -132,6 +132,11 @@ src/
   - `hidden`/`block` 등 표시 토글
 - 판단 기준: "이 컴포넌트를 다른 것으로 교체해도 해당 속성이 같은 자리에 여전히 필요한가?" → **예**면 부모가 정의, **아니오**면 컴포넌트가 정의.
 
+### TanStack Query
+- 쿼리 정의 시 `queryOptions()`를 사용합니다. `queryKey`에 `DataTag`가 자동 부여되어 `getQueryData`/`setQueryData` 호출 시 데이터 타입이 추론되므로, 수동 제네릭(`getQueryData<T>()`)을 제거할 수 있습니다.
+- 파라미터가 있는 쿼리는 `queryOptions`를 반환하는 팩토리 함수로 정의합니다 (예: `bookSearchQueryOptions(params)`).
+- `prefetchQuery`, `invalidateQueries` 등에도 동일한 `queryOptions` 객체를 재사용하여 키-함수 불일치를 방지합니다.
+
 ### 아키텍처
 - 무조건 CSR(SPA)이므로 `typeof window === "undefined"` 체크를 하지 않습니다.
 - 외부 API 클라이언트의 파라미터 인터페이스는 실제 API 스펙에 맞춰 정의합니다 (내부 타입과 분리).
