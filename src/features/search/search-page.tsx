@@ -9,14 +9,17 @@ import { BookList } from "@/components/book-list";
 import { DetailSearchPanel } from "@/features/search/detail-search-panel";
 import { SearchHistoryLayer } from "@/features/search/search-history-layer";
 import { useToggleFavorite, useFavoriteIds } from "@/features/favorites/use-favorites";
-import { createBookSearchQueryKey, useBookSearch } from "@/features/search/use-book-search";
+import {
+  bookRepository,
+  createBookSearchQueryKey,
+  useBookSearch,
+} from "@/features/search/use-book-search";
 import { Button } from "@/components/ui/button";
 import {
   useRemoveSearchHistory,
   useSearchHistory,
   useUpsertSearchHistory,
 } from "@/features/search/use-search-history";
-import { bookRepository } from "@/repositories/book-repository";
 import { cn } from "@/lib/class-name";
 
 const PAGE_SIZE = 10 as const;

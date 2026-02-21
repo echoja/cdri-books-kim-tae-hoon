@@ -1,12 +1,24 @@
 import { AppError } from "@/domain/errors";
-import type { SearchParams, SearchResult } from "@/domain/types";
+import type { SearchParams, SearchResult, SearchResultPayload } from "@/domain/types";
 import { searchCacheRepository } from "@/repositories/search-cache-repository";
-import { kakaoBookClient } from "@/services/kakao-book-client";
 
-class BookRepository {
+interface BookSearchClient {
+  search(
+    options: { query: string; page?: number; size?: number; target?: string },
+    signal?: AbortSignal,
+  ): Promise<SearchResultPayload>;
+}
+
+export class BookRepository {
+  private readonly client: BookSearchClient;
+
+  constructor(client: BookSearchClient) {
+    this.client = client;
+  }
+
   async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResult> {
     try {
-      const payload = await kakaoBookClient.search(
+      const payload = await this.client.search(
         {
           query: params.query,
           page: params.page,
@@ -48,5 +60,3 @@ class BookRepository {
     }
   }
 }
-
-export const bookRepository = new BookRepository();

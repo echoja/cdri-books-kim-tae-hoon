@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import type { SearchParams } from "@/domain/types";
-import { bookRepository } from "@/repositories/book-repository";
+import { BookRepository } from "@/repositories/book-repository";
+import { kakaoBookClient } from "@/services/kakao-book-client";
+
+export const bookRepository = new BookRepository(kakaoBookClient);
 
 export function createBookSearchQueryKey(params: SearchParams | null) {
   return ["book-search", params] as const;
