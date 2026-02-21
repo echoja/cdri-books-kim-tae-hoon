@@ -104,10 +104,7 @@ export function SearchPage() {
   const setSearchParams = (next: { query: string; target: SearchTarget; page: number }) => {
     void navigate({
       to: "/search",
-      search: (prev: Record<string, unknown>) => ({
-        ...prev,
-        ...next,
-      }),
+      search: next,
     });
   };
 
@@ -136,10 +133,6 @@ export function SearchPage() {
       void queryClient.invalidateQueries({
         queryKey: createBookSearchQueryKey(next),
       });
-      void queryClient.refetchQueries({
-        queryKey: createBookSearchQueryKey(next),
-        exact: true,
-      });
     }
 
     setDetailKeyword(trimmed);
@@ -162,7 +155,6 @@ export function SearchPage() {
 
   const handleHistorySelect = (record: SearchHistoryRecord) => {
     executeSearch(record.keyword, record.target ?? "title");
-    (document.activeElement as HTMLElement | null)?.blur();
   };
 
   const handlePageChange = (nextPage: number) => {
@@ -242,8 +234,13 @@ export function SearchPage() {
           />
         </div>
 
-        <div className="gap-layout-4 text-title-3 text-text-primary mt-6 flex items-center">
-          <span>검색결과</span>
+        <div
+          className={cn(
+            "gap-layout-4 text-title-3 text-text-primary mt-6",
+            "flex items-center font-medium",
+          )}
+        >
+          <span>도서 검색 결과</span>
           <span>
             총 <strong className="text-palette-primary">{totalCount}</strong>건
           </span>
@@ -309,7 +306,7 @@ export function SearchPage() {
         </div>
       ) : null}
 
-      {!searchQuery.isFetching && books.length === 0 ? <EmptyState /> : null}
+      {!searchQuery.isFetching && !searchQuery.error && books.length === 0 ? <EmptyState /> : null}
     </section>
   );
 }
