@@ -1,21 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { cn, cva } from "@/lib/class-name";
+import { cn } from "@/lib/class-name";
 
 const NAV_ITEMS = [
   { to: "/search", label: "도서 검색" },
   { to: "/favorites", label: "내가 찜한 책" },
 ] as const;
-
-const navLinkVariants = cva(
-  "border-b border-transparent pb-2 text-body-1 text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary",
-  {
-    variants: {
-      active: {
-        true: "border-palette-primary",
-      },
-    },
-  },
-);
 
 export function AppHeader() {
   const pathname = useRouterState({ select: (state) => state.location.pathname });
@@ -30,7 +19,7 @@ export function AppHeader() {
       <div
         className={cn(
           "text-title-1 text-text-title absolute",
-          "lg:left-header-pad-desktop left-6 leading-6 font-bold",
+          "lg:left-header-pad-desktop top-6 left-6 leading-6 font-bold",
         )}
         aria-label="CERTICOS BOOKS"
       >
@@ -41,7 +30,14 @@ export function AppHeader() {
           const active = pathname.startsWith(item.to);
 
           return (
-            <Link key={item.to} className={cn(navLinkVariants({ active }))} to={item.to}>
+            <Link
+              key={item.to}
+              className={cn(
+                "text-body-1 text-text-primary focus-visible:outline-palette-primary border-b border-transparent pb-2 focus-visible:outline-2 focus-visible:outline-offset-2",
+                active && "border-palette-primary",
+              )}
+              to={item.to}
+            >
               {item.label}
             </Link>
           );
