@@ -13,7 +13,7 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: "VITE_KAKAO_REST_API_KEY=dummy-key npx vite dev --port 3100",
+    command: "VITE_KAKAO_REST_API_KEY=dummy-key npx vite dev --port 3100 --host 127.0.0.1",
     url: "http://127.0.0.1:3100",
     reuseExistingServer: false,
     timeout: 120_000,
