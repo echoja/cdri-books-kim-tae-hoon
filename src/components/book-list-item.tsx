@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 import lineHeart from "@/assets/icons/line.svg";
 import fillHeart from "@/assets/icons/fill.svg";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
-import { formatPrice, getCollapsedDisplayPrice, hasSalePrice } from "@/domain/book-utils";
+import { formatPrice, hasSalePrice } from "@/domain/book-utils";
 import type { Book } from "@/domain/types";
 import { Button, LinkButton } from "@/components/ui/button";
 import { cn, cva } from "@/lib/class-name";
@@ -56,29 +56,22 @@ export function BookListItem({
 
   return (
     <article className={cn("w-full", className)} {...props}>
-      <div className={cn("px-4 py-4 pl-12 transition-[padding] duration-300", "max-md:p-4")}>
+      <div className={cn("px-4 py-4 pl-12", "max-md:p-4")}>
         <div
           className={cn(
-            "flex transition-[gap,min-height] duration-300 ease-out",
+            "flex",
             expanded ? "min-h-40 items-start gap-8" : "min-h-25 items-center gap-12",
             "max-md:flex-wrap max-md:gap-x-5 max-md:gap-y-3",
           )}
         >
           <div
-            className={cn(
-              "relative shrink-0 transition-[width] duration-300",
-              expanded
-                ? "min-w-book-thumb-large-width w-book-thumb-large-width"
-                : "min-w-book-thumb-small-width w-book-thumb-small-width",
-            )}
+            className="relative shrink-0"
+            style={{ width: expanded ? 210 : 48, minWidth: expanded ? 210 : 48 }}
           >
             <img
-              className={cn(
-                "bg-palette-light-gray-soft object-cover transition-[width,height] duration-300",
-                expanded
-                  ? "h-book-thumb-large-height w-book-thumb-large-width"
-                  : "h-book-thumb-small-height w-book-thumb-small-width",
-              )}
+              width={expanded ? 210 : 48}
+              height={expanded ? 280 : 68}
+              className="bg-palette-light-gray-soft object-cover"
               src={thumbnailSrc}
               alt={`${book.title} 표지`}
             />
@@ -90,11 +83,9 @@ export function BookListItem({
               aria-label={isFavorite ? "찜 해제" : "찜 추가"}
             >
               <img
+                width={expanded ? 24 : 16}
+                height={expanded ? 24 : 16}
                 src={isFavorite ? fillHeart : lineHeart}
-                className={cn(
-                  "transition-[width,height] duration-300",
-                  expanded ? "h-6 w-6" : "h-4 w-4",
-                )}
                 alt=""
               />
             </button>
@@ -105,43 +96,77 @@ export function BookListItem({
           >
             <div
               className={cn(
-                "mr-layout-gap-5 flex min-w-0 flex-1 items-center gap-4",
+                "mr-layout-gap-5 flex min-w-0 flex-1 flex-col gap-3",
                 "max-md:mr-0 max-md:w-full",
-                "max-md:flex-col max-md:items-start max-md:gap-1.5",
               )}
             >
-              <p
+              <div
                 className={cn(
-                  "text-title-3 text-text-primary m-0 transition-all duration-200",
-                  expanded ? "line-clamp-2" : "line-clamp-1",
+                  "flex min-w-0 items-center gap-4",
+                  "max-md:flex-col max-md:items-start max-md:gap-1.5",
                 )}
               >
-                {book.title}
-              </p>
-              <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
+                <p
+                  className={cn(
+                    "text-title-3 text-text-primary m-0",
+                    expanded ? "line-clamp-2" : "line-clamp-1",
+                  )}
+                >
+                  {book.title}
+                </p>
+                <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
+              </div>
+
+              {expanded ? (
+                <section className="flex min-w-0 flex-col gap-3">
+                  <h3 className="text-body-2 text-text-secondary m-0 leading-4.5 font-bold">
+                    책 소개
+                  </h3>
+                  <p
+                    className={cn(
+                      "text-small text-text-primary m-0 line-clamp-8 leading-4",
+                      "max-md:line-clamp-6",
+                    )}
+                  >
+                    {book.contents || "책 소개 정보가 없습니다."}
+                  </p>
+                </section>
+              ) : null}
             </div>
 
             <aside
               className={cn(
-                "ml-auto flex shrink-0 items-center gap-4",
+                "ml-auto shrink-0",
+                expanded ? "flex w-45 flex-col gap-4" : "flex items-center gap-4",
                 "max-md:ml-0 max-md:w-full",
-                "max-md:justify-between max-md:gap-4",
+                expanded ? "max-md:items-stretch" : "max-md:justify-between",
               )}
             >
-              <p className="text-title-3 text-text-primary m-0 text-right">
-                {formatPrice(getCollapsedDisplayPrice(book))}
-              </p>
-              <div className="flex items-center gap-2 max-md:gap-1.5">
-                <LinkButton
-                  variant="primary"
-                  className="w-28 px-0"
-                  href={book.url || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  disabled={!book.url}
-                >
-                  구매하기
-                </LinkButton>
+              <div
+                className={cn(
+                  "flex items-center gap-2 max-md:gap-1.5",
+                  expanded
+                    ? "w-full justify-end"
+                    : "justify-end max-md:w-full max-md:justify-between",
+                )}
+              >
+                {!expanded ? (
+                  <p className="text-title-3 text-text-primary m-0 text-right whitespace-nowrap">
+                    {formatPrice(book.salePrice ?? book.price)}
+                  </p>
+                ) : null}
+                {!expanded ? (
+                  <LinkButton
+                    variant="primary"
+                    className="w-28 px-0"
+                    href={book.url || "#"}
+                    target="_blank"
+                    rel="noreferrer"
+                    disabled={!book.url}
+                  >
+                    구매하기
+                  </LinkButton>
+                ) : null}
                 <Button
                   variant="secondary"
                   className="w-28 px-0"
@@ -149,76 +174,43 @@ export function BookListItem({
                   aria-expanded={expanded}
                 >
                   상세보기
-                  <ChevronDown
-                    size={20}
-                    className={cn("transition-transform duration-240", expanded && "rotate-180")}
-                  />
+                  <span className={cn("inline-flex", expanded ? "rotate-180" : "")}>
+                    <ChevronDown size={20} />
+                  </span>
                 </Button>
               </div>
-            </aside>
-          </div>
-        </div>
-        <div
-          className={cn(
-            "grid transition-[grid-template-rows,opacity,margin-top] duration-300 ease-out",
-            expanded
-              ? "mt-6 grid-rows-[1fr] opacity-100"
-              : "pointer-events-none mt-0 grid-rows-[0fr] opacity-0",
-          )}
-        >
-          <div className="min-h-0 overflow-hidden">
-            <div className={cn("flex items-start gap-8", "max-md:flex-col max-md:gap-4")}>
-              <div
-                className={cn(
-                  "shrink-0 transition-[width] duration-300",
-                  expanded ? "w-book-thumb-large-width" : "w-book-thumb-small-width",
-                  "max-md:hidden",
-                )}
-              />
-              <section
-                className={cn(
-                  "flex min-w-0 flex-1 flex-col gap-3 transition-[opacity,transform] duration-260 ease-out",
-                  expanded ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
-                )}
-              >
-                <h3 className="text-body-2 text-text-secondary m-0 leading-4.5 font-bold">
-                  책 소개
-                </h3>
-                <p
-                  className={cn(
-                    "text-small text-text-primary m-0 line-clamp-8 leading-4",
-                    "max-md:line-clamp-6",
-                  )}
-                >
-                  {book.contents || "책 소개 정보가 없습니다."}
-                </p>
-              </section>
 
-              <aside
-                className={cn(
-                  "w-45 shrink-0 transition-[opacity,transform] delay-75 duration-260 ease-out",
-                  expanded ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
-                  "max-md:w-full",
-                )}
-              >
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-small text-text-subtitle">원가</span>
-                    <strong className="text-title-3 text-text-primary">
-                      {formatPrice(book.price)}
-                    </strong>
-                  </div>
-                  {hasSalePrice(book) ? (
+              {expanded ? (
+                <div>
+                  <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-small text-text-subtitle">할인가</span>
+                      <span className="text-small text-text-subtitle">원가</span>
                       <strong className="text-title-3 text-text-primary">
-                        {formatPrice(book.salePrice ?? 0)}
+                        {formatPrice(book.price)}
                       </strong>
                     </div>
-                  ) : null}
+                    {hasSalePrice(book) ? (
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-small text-text-subtitle">할인가</span>
+                        <strong className="text-title-3 text-text-primary">
+                          {formatPrice(book.salePrice ?? 0)}
+                        </strong>
+                      </div>
+                    ) : null}
+                    <LinkButton
+                      variant="primary"
+                      className="w-full justify-center px-0"
+                      href={book.url || "#"}
+                      target="_blank"
+                      rel="noreferrer"
+                      disabled={!book.url}
+                    >
+                      구매하기
+                    </LinkButton>
+                  </div>
                 </div>
-              </aside>
-            </div>
+              ) : null}
+            </aside>
           </div>
         </div>
       </div>

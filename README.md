@@ -12,7 +12,6 @@
   - `TanStack Router` (파일 기반 라우팅)
   - `TanStack Query`
   - `Dexie(IndexedDB)`
-  - `anime.js`
 - 핵심 목표
   - `docs/requirements.md` 요구사항 충족
   - 네트워크 실패 시 캐시 fallback
@@ -73,7 +72,7 @@ src/
   repositories/    # 데이터 접근 계층(IDB + fallback)
   routes/          # TanStack file routes
   services/        # Kakao API 클라이언트
-  lib/             # query client, persistence, animation 유틸
+  lib/             # query client, persistence 유틸
 ```
 
 ## 라이브러리 선택 이유
@@ -82,7 +81,6 @@ src/
 - `TanStack Query`: 서버 상태 캐시/재시도/prefetch
 - `Dexie`: IndexedDB 추상화와 스키마 관리
 - `@radix-ui/*`: 접근성 있는 popover/select 구현
-- `anime.js`: 핵심 인터랙션 애니메이션 품질 확보
 - `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 ESLint + Prettier를 선택했다.
 - `knip`: 미사용 파일/의존성/export 탐지로 코드베이스 청결 유지
 - `Playwright`: 실제 사용자 플로우 E2E 검증
@@ -92,8 +90,6 @@ src/
 - 검색 실패 시 `검색 캐시` 자동 fallback 및 `캐시 데이터` 배지 노출
 - 검색 기록 `최대 8개` 유지 + 중복 최신화
 - 찜하기 `optimistic update` + 실패 시 롤백
-- `prefers-reduced-motion` 대응 애니메이션
-- 리스트/빈 상태 진입 시 부드러운 페이드인 애니메이션
 - 폰트는 로컬 `@font-face` + `unicode-range` 기반 dynamic subset으로 로딩해 렌더링 성능을 최적화
 
 ## 프로젝트 규칙

@@ -1,9 +1,5 @@
 import type { Book } from "./types";
 
-export function getCollapsedDisplayPrice(book: Book): number {
-  return book.salePrice ?? book.price;
-}
-
 export function hasSalePrice(book: Book): boolean {
   return typeof book.salePrice === "number" && book.salePrice > 0;
 }

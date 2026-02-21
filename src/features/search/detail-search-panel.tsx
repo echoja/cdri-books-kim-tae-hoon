@@ -1,10 +1,9 @@
 import * as Popover from "@radix-ui/react-popover";
 import * as Select from "@radix-ui/react-select";
-import { type ComponentProps, useEffect, useRef } from "react";
+import { type ComponentProps } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 import { SEARCH_TARGET_OPTIONS } from "@/domain/search-utils";
 import type { SearchTarget } from "@/domain/types";
-import { motionDuration, runAnimate } from "@/lib/animation";
 import { cn } from "@/lib/class-name";
 import { Button } from "@/components/ui/button";
 
@@ -32,21 +31,6 @@ export function DetailSearchPanel({
   className,
   ...props
 }: DetailSearchPanelProps) {
-  const contentRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (!open || !contentRef.current) {
-      return;
-    }
-
-    runAnimate(contentRef.current, {
-      opacity: [0, 1],
-      translateY: [-8, 0],
-      duration: motionDuration(220),
-      ease: "outQuad",
-    });
-  }, [open]);
-
   return (
     <Popover.Root open={open} onOpenChange={onOpenChange}>
       <Popover.Trigger asChild>
@@ -66,7 +50,7 @@ export function DetailSearchPanel({
           data-testid="detail-search-popover"
           forceMount
         >
-          <div ref={contentRef} className={className} {...props}>
+          <div className={className} {...props}>
             <button
               type="button"
               className={cn(

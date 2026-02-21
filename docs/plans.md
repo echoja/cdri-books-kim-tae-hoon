@@ -6,7 +6,7 @@
 - 프레임워크는 `TanStack Start`를 채택하되 `SPA 모드`로 제한해 복잡도를 통제합니다.
 - 저장 전략은 `IndexedDB(Dexie) 기본 + localStorage fallback`으로 고정합니다.
 - 테스트는 `유닛 + E2E(Playwright)`로 운영하고 `RTL+MSW 통합 테스트`는 제외합니다.
-- 애니메이션은 `anime.js`를 핵심 인터랙션에만 적용하고, 버튼 상태 전환은 CSS로 유지합니다.
+- 화면 상태 전환은 즉시 반영하고, 버튼 상태 전환은 CSS로 유지합니다.
 
 ## 범위/비범위
 
@@ -24,7 +24,6 @@
 - 접근성 UI 프리미티브: `@radix-ui/react-popover`, `@radix-ui/react-select`.
 - 에러 경계: `react-error-boundary`.
 - 아이콘: `lucide-react` + 제공 에셋.
-- 애니메이션: `animejs`.
 - 테스트: `vitest`, `playwright`.
 
 ## 버전/안정성 정책
@@ -77,18 +76,11 @@
   - hover: `#E7EBEF`.
   - disabled: `#F3F5F7`, text/icon `Icon/Muted`.
 
-## 애니메이션 정책 (anime.js)
+## UI 전환 정책
 
-- 적용 대상:
-  - BookListItem 아코디언 열기/닫기.
-  - 상세검색 패널 열기/닫기.
-  - 검색기록 레이어 항목 등장(stagger).
-- 비적용 대상:
-  - 버튼 hover/focus/disabled는 CSS.
-- 접근성:
-  - `prefers-reduced-motion`에서는 anime duration을 0 처리.
-- 안정성:
-  - 애니메이션 실패 시 즉시 상태 전환으로 기능 우선 fallback.
+- 상태 전환은 애니메이션 없이 즉시 반영합니다.
+- 버튼 hover/focus/disabled는 CSS 상태 스타일만 사용합니다.
+- 전환 실패 케이스 없이 동일한 동작을 보장합니다.
 
 ## 데이터 저장/fallback
 
@@ -127,7 +119,7 @@
 4. 상세검색 패널/검색 기록(IndexedDB+fallback).
 5. BookListItem 접힘/펼침/가격 규칙/버튼 상태.
 6. 찜 기능과 내가 찜한 책 화면 연결.
-7. anime.js 핵심 인터랙션 적용 + reduced-motion 대응.
+7. 전환 동작 안정화 및 접근성 점검.
 8. 유닛/E2E 작성 및 제출 문서 정리.
 
 ## 수용 기준

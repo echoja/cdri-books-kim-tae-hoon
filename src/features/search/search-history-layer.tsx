@@ -1,7 +1,5 @@
-import { type ComponentProps, useEffect, useRef } from "react";
+import { type ComponentProps } from "react";
 import { X } from "lucide-react";
-import { stagger } from "animejs";
-import { motionDuration, runAnimate } from "@/lib/animation";
 import type { SearchHistoryRecord } from "@/domain/types";
 import { cn } from "@/lib/class-name";
 
@@ -18,22 +16,6 @@ export function SearchHistoryLayer({
   className,
   ...props
 }: SearchHistoryLayerProps) {
-  const listRef = useRef<HTMLUListElement | null>(null);
-
-  useEffect(() => {
-    if (!listRef.current || records.length === 0) {
-      return;
-    }
-
-    runAnimate(listRef.current.querySelectorAll("[data-history-row]"), {
-      opacity: [0, 1],
-      translateY: [6, 0],
-      duration: motionDuration(180),
-      delay: stagger(30),
-      ease: "outQuad",
-    });
-  }, [records]);
-
   return (
     <section
       className={cn(
@@ -45,13 +27,9 @@ export function SearchHistoryLayer({
       aria-label="검색 기록"
       {...props}
     >
-      <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">
+      <ul className="m-0 flex list-none flex-col gap-2 p-0">
         {records.map((record) => (
-          <li
-            key={record.key}
-            data-history-row
-            className="flex min-h-7 items-center justify-between opacity-0"
-          >
+          <li key={record.key} className="flex min-h-7 items-center justify-between">
             <button
               type="button"
               className={cn(

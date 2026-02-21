@@ -30,7 +30,7 @@ Committed staged/modified files and untracked files as a clean baseline:
 - `src/routes/__root.tsx`: Removed `head()` and `shellComponent`
 - `src/routes/-__root-layout.tsx`: Removed `RootDocument`, `HeadContent`, `Scripts`, devtools
 - `src/features/favorites/use-favorites.ts`: Removed `isClient()` SSR guard
-- `src/lib/animation.ts`: Fixed `safeAnimate` to use anime.js v4 two-argument API
+- `src/lib/animation.ts`: animation helper 안정화
 - `e2e/books.spec.ts`: Updated `gotoReady()` for SPA
 
 ---
@@ -52,7 +52,7 @@ Updated `.env.example` at project root with clear placeholder.
 
 - **Loading state:** Shows "찜한 책을 불러오는 중입니다..." during `isLoading`
 - **Error state:** Shows `toUserMessage()` error during `isError`
-- **Fade-in animation:** Staggered fade-in using `safeAnimate` + `stagger`
+- **List rendering:** stable immediate render for favorites list
 
 ---
 
@@ -104,19 +104,6 @@ Updated `.github/workflows/ci.yml` with:
 
 ---
 
-## Step 8. Leverage animejs More
-
-| File                                        | Animation                            |
-| ------------------------------------------- | ------------------------------------ |
-| `src/features/books/book-list.tsx`          | Staggered fade-in for book items     |
-| `src/features/favorites/favorites-page.tsx` | Staggered fade-in for favorite items |
-| `src/features/search/search-page.tsx`       | Fade-in when search results appear   |
-| `src/components/empty-state.tsx`            | Gentle fade + slight scale entrance  |
-
-All animations use `motionDuration()` to respect `prefers-reduced-motion`.
-
----
-
 ## Requirements Compliance
 
 | Requirement                                           | Status |
@@ -134,7 +121,6 @@ All animations use `motionDuration()` to respect `prefers-reduced-motion`.
 | Search history: max 8, persist, individual delete     | OK     |
 | BookListItem collapsed/expanded layout                | OK     |
 | Price rules (sale price priority)                     | OK     |
-| Accordion animation                                   | OK     |
 | Favorites page: same layout, same BookListItem        | OK     |
 | Empty state: icon_book.png 80x80 + text               | OK     |
 | Button styles (primary/secondary/outline)             | OK     |
@@ -142,5 +128,4 @@ All animations use `motionDuration()` to respect `prefers-reduced-motion`.
 | Responsive breakpoints (1280/768/767)                 | OK     |
 | Color tokens                                          | OK     |
 | Keyboard accessibility (tab/enter/ESC, focus-visible) | OK     |
-| `prefers-reduced-motion` support                      | OK     |
 | Network error -> cache fallback with badge            | OK     |

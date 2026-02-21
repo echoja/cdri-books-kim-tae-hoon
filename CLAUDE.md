@@ -30,5 +30,5 @@ npm run test:e2e    # Playwright E2E 테스트
 
 - Vite + React 19 + TypeScript (CSR SPA)
 - TanStack Router (파일 기반 라우팅) + TanStack Query
-- Dexie (IndexedDB), anime.js, Radix UI
+- Dexie (IndexedDB), Radix UI
 - ESLint + Prettier, Playwright, knip

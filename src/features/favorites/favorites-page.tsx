@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-import { stagger } from "animejs";
 import { toUserMessage } from "@/domain/errors";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
@@ -8,36 +6,14 @@ import {
   useFavoriteRecords,
   useToggleFavorite,
 } from "@/features/favorites/use-favorites";
-import { motionDuration, runAnimate } from "@/lib/animation";
 
 export function FavoritesPage() {
   const favoritesQuery = useFavoriteRecords();
   const favoriteIdsQuery = useFavoriteIds();
   const toggleFavorite = useToggleFavorite();
-  const listRef = useRef<HTMLDivElement | null>(null);
 
   const records = favoritesQuery.data ?? [];
   const books = records.map((record) => record.book);
-
-  useEffect(() => {
-    if (!listRef.current || books.length === 0) {
-      return;
-    }
-
-    const items = listRef.current.querySelectorAll("article");
-
-    if (items.length === 0) {
-      return;
-    }
-
-    runAnimate(items, {
-      opacity: [0, 1],
-      translateY: [12, 0],
-      duration: motionDuration(300),
-      delay: stagger(50),
-      ease: "outQuad",
-    });
-  }, [books.length]);
 
   return (
     <section className="w-full">
@@ -60,7 +36,7 @@ export function FavoritesPage() {
       ) : null}
 
       {!favoritesQuery.isLoading && books.length > 0 ? (
-        <div ref={listRef}>
+        <div>
           <BookList
             books={books}
             favoriteIds={favoriteIdsQuery.data ?? []}
