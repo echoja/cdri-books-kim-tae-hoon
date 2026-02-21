@@ -34,7 +34,7 @@ export function DetailSearchPanel({
   return (
     <Popover.Root open={open} onOpenChange={onOpenChange}>
       <Popover.Trigger asChild>
-        <Button variant="outline" className="max-md:self-end">
+        <Button variant="outline" className="text-body-2 h-9 px-2.5">
           상세검색
         </Button>
       </Popover.Trigger>
@@ -45,7 +45,6 @@ export function DetailSearchPanel({
           className={cn(
             "bg-palette-white relative z-30 min-h-40 w-90 rounded-lg px-6 py-9",
             "shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)]",
-            "max-md:w-[calc(100vw-32px)] max-md:max-w-90",
           )}
           data-testid="detail-search-popover"
           forceMount
@@ -63,7 +62,7 @@ export function DetailSearchPanel({
               <X size={20} />
             </button>
 
-            <div className="flex items-center gap-1 max-md:flex-wrap">
+            <div className="flex items-center gap-1">
               <Select.Root
                 value={target}
                 onValueChange={(value) => onTargetChange(value as SearchTarget)}
@@ -73,7 +72,6 @@ export function DetailSearchPanel({
                     "border-palette-divider bg-palette-white text-body-2 text-text-primary inline-flex min-h-9 w-25",
                     "items-center justify-between rounded-lg border px-2.5",
                     "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
-                    "max-md:w-full",
                   )}
                   aria-label="검색 기준"
                   data-testid="detail-search-target"
@@ -116,10 +114,9 @@ export function DetailSearchPanel({
 
               <input
                 className={cn(
-                  "border-palette-divider text-text-primary placeholder:text-text-subtitle min-h-9 w-52",
-                  "rounded-lg border px-2.5",
-                  "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
-                  "max-md:w-full",
+                  "border-b-palette-divider placeholder:text-text-subtitle min-h-12 w-52 border-b",
+                  "text-text-primary px-2.5",
+                  "focus-visible:border-b-palette-primary",
                 )}
                 data-testid="detail-search-keyword"
                 value={keyword}

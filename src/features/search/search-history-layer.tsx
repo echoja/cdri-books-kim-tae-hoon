@@ -21,7 +21,6 @@ export function SearchHistoryLayer({
       className={cn(
         "rounded-pill bg-palette-light-gray absolute top-13.25 left-0 z-20",
         "max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4",
-        "max-md:w-full",
         className,
       )}
       aria-label="검색 기록"

@@ -56,22 +56,24 @@ export function BookListItem({
 
   return (
     <article className={cn("w-full", className)} {...props}>
-      <div className={cn("px-4 py-4 pl-12", "max-md:p-4")}>
+      <div className="pl-12">
         <div
           className={cn(
             "flex",
             expanded ? "min-h-40 items-start gap-8" : "min-h-25 items-center gap-12",
-            "max-md:flex-wrap max-md:gap-x-5 max-md:gap-y-3",
           )}
         >
           <div
-            className="relative shrink-0"
+            className="relative shrink-0 transition-[width,min-width] duration-300 ease-in-out"
             style={{ width: expanded ? 210 : 48, minWidth: expanded ? 210 : 48 }}
           >
             <img
               width={expanded ? 210 : 48}
               height={expanded ? 280 : 68}
-              className="bg-palette-light-gray-soft object-cover"
+              className={cn(
+                "bg-palette-light-gray-soft object-cover",
+                "transition-[width,height] duration-300 ease-in-out",
+              )}
               src={thumbnailSrc}
               alt={`${book.title} 표지`}
             />
@@ -91,21 +93,9 @@ export function BookListItem({
             </button>
           </div>
 
-          <div
-            className={cn("flex min-w-0 flex-1 items-start gap-6", "max-md:w-full max-md:flex-col")}
-          >
-            <div
-              className={cn(
-                "mr-layout-gap-5 flex min-w-0 flex-1 flex-col gap-3",
-                "max-md:mr-0 max-md:w-full",
-              )}
-            >
-              <div
-                className={cn(
-                  "flex min-w-0 items-center gap-4",
-                  "max-md:flex-col max-md:items-start max-md:gap-1.5",
-                )}
-              >
+          <div className="flex min-w-0 flex-1 gap-6">
+            <div className="mr-layout-gap-5 flex min-w-0 flex-1 flex-col gap-3">
+              <div className="flex min-w-0 items-center gap-4">
                 <p
                   className={cn(
                     "text-title-3 text-text-primary m-0",
@@ -122,12 +112,7 @@ export function BookListItem({
                   <h3 className="text-body-2 text-text-secondary m-0 leading-4.5 font-bold">
                     책 소개
                   </h3>
-                  <p
-                    className={cn(
-                      "text-small text-text-primary m-0 line-clamp-8 leading-4",
-                      "max-md:line-clamp-6",
-                    )}
-                  >
+                  <p className="text-small text-text-primary m-0 line-clamp-8 leading-4">
                     {book.contents || "책 소개 정보가 없습니다."}
                   </p>
                 </section>
@@ -137,19 +122,10 @@ export function BookListItem({
             <aside
               className={cn(
                 "ml-auto shrink-0",
-                expanded ? "flex w-45 flex-col gap-4" : "flex items-center gap-4",
-                "max-md:ml-0 max-md:w-full",
-                expanded ? "max-md:items-stretch" : "max-md:justify-between",
+                expanded ? "flex w-45 flex-col gap-4" : "flex gap-4",
               )}
             >
-              <div
-                className={cn(
-                  "flex items-center gap-2 max-md:gap-1.5",
-                  expanded
-                    ? "w-full justify-end"
-                    : "justify-end max-md:w-full max-md:justify-between",
-                )}
-              >
+              <div className={cn("flex gap-2", expanded ? "w-full justify-end" : "justify-end")}>
                 {!expanded ? (
                   <p className="text-title-3 text-text-primary m-0 text-right whitespace-nowrap">
                     {formatPrice(book.salePrice ?? book.price)}
@@ -174,7 +150,12 @@ export function BookListItem({
                   aria-expanded={expanded}
                 >
                   상세보기
-                  <span className={cn("inline-flex", expanded ? "rotate-180" : "")}>
+                  <span
+                    className={cn(
+                      "inline-flex transition-transform duration-200 ease-in-out",
+                      expanded ? "rotate-180" : "",
+                    )}
+                  >
                     <ChevronDown size={20} />
                   </span>
                 </Button>
@@ -185,7 +166,12 @@ export function BookListItem({
                   <div className="flex flex-col gap-2">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-small text-text-subtitle">원가</span>
-                      <strong className="text-title-3 text-text-primary">
+                      <strong
+                        className={cn(
+                          "text-title-3 text-text-primary",
+                          hasSalePrice(book) ? "line-through" : "",
+                        )}
+                      >
                         {formatPrice(book.price)}
                       </strong>
                     </div>

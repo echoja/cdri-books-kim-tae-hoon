@@ -7,7 +7,7 @@ const NAV_ITEMS = [
 ] as const;
 
 const navLinkVariants = cva(
-  "border-b border-transparent pb-2 text-body-1 text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-md:text-base",
+  "border-b border-transparent pb-2 text-body-1 text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary",
   {
     variants: {
       active: {
@@ -23,22 +23,20 @@ export function AppHeader() {
   return (
     <header
       className={cn(
-        "h-header-height px-header-pad-desktop relative flex w-full items-center justify-center",
-        "max-xl:px-header-pad-tablet",
-        "max-md:h-header-height-mobile max-md:px-header-pad-mobile",
+        "h-header-height px-header-pad-desktop relative flex w-full",
+        "items-center justify-center",
       )}
     >
       <div
         className={cn(
-          "left-header-pad-desktop text-title-1 text-text-title absolute leading-6 font-bold",
-          "max-xl:left-8",
-          "max-md:static max-md:mr-auto max-md:text-lg max-md:font-semibold",
+          "left-header-pad-desktop text-title-1 text-text-title absolute",
+          "leading-6 font-bold",
         )}
         aria-label="CERTICOS BOOKS"
       >
         CERTICOS BOOKS
       </div>
-      <nav className="gap-nav-gap flex items-center max-md:gap-5" aria-label="주요 메뉴">
+      <nav className="gap-nav-gap flex items-center" aria-label="주요 메뉴">
         {NAV_ITEMS.map((item) => {
           const active = pathname.startsWith(item.to);
 

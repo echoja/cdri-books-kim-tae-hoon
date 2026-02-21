@@ -9,13 +9,7 @@ export function AppShell({ children, className, ...props }: AppShellProps) {
     <>
       <AppHeader />
       <main className={cn("pb-page-bottom flex w-full justify-center", className)} {...props}>
-        <div
-          className={cn(
-            "mt-page-top max-w-page-content w-[calc(100%-var(--spacing-page-pad-trim))]",
-            "max-xl:max-w-page-content max-xl:w-[calc(100%-var(--spacing-page-pad-trim))]",
-            "max-md:mt-page-top-mobile max-md:w-[calc(100%-var(--spacing-page-pad-trim-mobile))]",
-          )}
-        >
+        <div className="mt-page-top max-w-page-content w-[calc(100%-var(--spacing-page-pad-trim))]">
           {children}
         </div>
       </main>
