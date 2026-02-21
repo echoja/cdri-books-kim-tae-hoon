@@ -43,7 +43,7 @@ export function DetailSearchPanel({
           sideOffset={8}
           align="center"
           className={cn(
-            "bg-palette-white relative z-30 min-h-40 w-90 px-6 py-9",
+            "bg-palette-white relative z-30 min-h-40 w-90 rounded-lg px-6 py-9",
             "shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)]",
             "data-[state=closed]:hidden",
           )}
