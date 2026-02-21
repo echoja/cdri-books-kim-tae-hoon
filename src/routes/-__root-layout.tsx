@@ -4,7 +4,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { Toaster } from "sonner";
-import { AppShell } from "@/components/app-shell";
+import { AppHeader } from "@/components/app-header";
+import { cn } from "@/lib/class-name";
 import { queryClient } from "@/lib/query-client";
 import { createQueryPersister } from "@/lib/query-persistence";
 
@@ -43,9 +44,17 @@ export function RootLayout() {
           </section>
         )}
       >
-        <AppShell>
-          <Outlet />
-        </AppShell>
+        <AppHeader />
+        <main className="pb-page-bottom flex w-full justify-center">
+          <div
+            className={cn(
+              "mt-page-top max-w-page-content",
+              "w-[calc(100%-var(--spacing-page-pad-trim))]",
+            )}
+          >
+            <Outlet />
+          </div>
+        </main>
       </ErrorBoundary>
       <Toaster
         theme="light"
