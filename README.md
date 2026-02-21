@@ -79,6 +79,7 @@ src/
 - `Dexie`: IndexedDB 추상화와 스키마 관리
 - `@radix-ui/*`: 접근성 있는 popover/select 구현
 - `anime.js`: 핵심 인터랙션 애니메이션 품질 확보
+- `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 ESLint + Prettier를 선택했다.
 - `Playwright`: 실제 사용자 플로우 E2E 검증
 
 ## 강조 기능
