@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { stagger } from "animejs";
 import { toUserMessage } from "@/domain/errors";
 import { EmptyState } from "@/components/empty-state";
-import { BookList } from "@/features/books/book-list";
+import { BookList } from "@/components/book-list";
 import {
   useFavoriteIds,
   useFavoriteRecords,

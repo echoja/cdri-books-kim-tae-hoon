@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { stagger } from "animejs";
 import type { Book } from "@/domain/types";
-import { BookListItem } from "@/features/books/book-list-item";
+import { BookListItem } from "./book-list-item";
 import { motionDuration, runAnimate } from "@/lib/animation";
 
 interface BookListProps {
