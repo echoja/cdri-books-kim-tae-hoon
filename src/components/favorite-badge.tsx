@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import lineHeart from "@/assets/icons/line.svg";
 import fillHeart from "@/assets/icons/fill.svg";
-import { cn, cva } from "@/lib/class-name";
+import { cn, cva, type VariantProps } from "@/lib/class-name";
 
 const favoriteBadgeVariants = cva(
   "absolute inline-flex items-center justify-center rounded-full border-none bg-transparent p-0",
@@ -18,9 +18,9 @@ const favoriteBadgeVariants = cva(
   },
 );
 
-interface FavoriteBadgeProps extends Omit<ComponentProps<"button">, "children"> {
+interface FavoriteBadgeProps
+  extends Omit<ComponentProps<"button">, "children">, VariantProps<typeof favoriteBadgeVariants> {
   isFavorite: boolean;
-  size?: "collapsed" | "expanded";
 }
 
 export function FavoriteBadge({

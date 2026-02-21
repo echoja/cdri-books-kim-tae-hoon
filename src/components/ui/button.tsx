@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react";
-import { cn, cva } from "@/lib/class-name";
+import { cn, cva, type VariantProps } from "@/lib/class-name";
 
 const buttonVariants = cva(
   "inline-flex h-12 cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-button border border-transparent text-caption text-text-title transition-colors duration-160 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
@@ -20,15 +20,10 @@ const buttonVariants = cva(
   },
 );
 
-type ButtonVariant = NonNullable<Parameters<typeof buttonVariants>[0]>["variant"];
+interface ButtonProps extends ComponentProps<"button">, VariantProps<typeof buttonVariants> {}
 
-interface ButtonProps extends ComponentProps<"button"> {
-  variant?: ButtonVariant;
-}
-
-interface LinkButtonProps extends ComponentProps<"a"> {
+interface LinkButtonProps extends ComponentProps<"a">, VariantProps<typeof buttonVariants> {
   disabled?: boolean;
-  variant?: ButtonVariant;
 }
 
 export function Button({

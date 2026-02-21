@@ -112,6 +112,7 @@ src/
 - Prettier 설정: `semi: true`, `singleQuote: false`.
 - Tailwind 클래스는 canonical 값을 사용합니다 (예: `gap-[6px]` → `gap-1.5`).
 - `className`에 template literal 금지 — `cva()`/`cn()`을 사용합니다.
+- `cva()` variant 타입은 `VariantProps<typeof xxxVariants>`로 추출하고, props 인터페이스에 `extends`합니다.
 - `local/max-classname-line-length` 규칙으로 한 줄 `className="..."`가 100컬럼을 넘으면 경고합니다. 긴 클래스는 `cn("...", "...")`로 분리합니다.
 - 컴포넌트 props는 `ComponentProps<"...">` 기반으로 선언합니다. DOM props/ref 전달은 `...props`로 처리하고, `ref`를 별도 props로 명시하지 않습니다.
 - `AnchorHTMLAttributes` 등 `*HTMLAttributes` 타입 사용을 금지합니다.
