@@ -2,7 +2,7 @@ import * as Popover from "@radix-ui/react-popover";
 import * as Select from "@radix-ui/react-select";
 import { type ComponentProps } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
-import { SEARCH_TARGET_OPTIONS } from "@/domain/search-utils";
+import { SEARCH_TARGET_OPTIONS, toSearchTarget } from "@/domain/search-utils";
 import type { SearchTarget } from "@/domain/types";
 import { cn } from "@/lib/class-name";
 import { Button } from "@/components/ui/button";
@@ -41,10 +41,11 @@ export function DetailSearchPanel({
       <Popover.Portal>
         <Popover.Content
           sideOffset={8}
-          align="start"
+          align="center"
           className={cn(
-            "bg-palette-white relative z-30 min-h-40 w-90 rounded-lg px-6 py-9",
+            "bg-palette-white relative z-30 min-h-40 w-90 px-6 py-9",
             "shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)]",
+            "data-[state=closed]:hidden",
           )}
           data-testid="detail-search-popover"
           forceMount
@@ -65,13 +66,14 @@ export function DetailSearchPanel({
             <div className="flex items-center gap-1">
               <Select.Root
                 value={target}
-                onValueChange={(value) => onTargetChange(value as SearchTarget)}
+                onValueChange={(value) => onTargetChange(toSearchTarget(value))}
               >
                 <Select.Trigger
                   className={cn(
                     "border-palette-divider bg-palette-white text-body-2 text-text-primary inline-flex min-h-9 w-25",
-                    "items-center justify-between rounded-lg border px-2.5",
-                    "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
+                    "items-center justify-between border-b px-2.5",
+                    "data-[state=open]:border-b-palette-primary",
+                    "focus-visible:border-b-palette-primary",
                   )}
                   aria-label="검색 기준"
                   data-testid="detail-search-target"
@@ -84,8 +86,8 @@ export function DetailSearchPanel({
                 <Select.Portal>
                   <Select.Content
                     className={cn(
-                      "border-palette-divider bg-palette-white z-40 h-15 min-w-25",
-                      "overflow-hidden rounded-lg border",
+                      "border-palette-divider bg-palette-white z-40 min-w-25 shadow-[0_0_4px_0_#00000040]",
+                      "overflow-hidden border",
                     )}
                     position="popper"
                     sideOffset={4}
@@ -96,9 +98,9 @@ export function DetailSearchPanel({
                           key={option.value}
                           value={option.value}
                           className={cn(
-                            "text-body-2 text-text-primary flex min-h-7.5 w-full",
+                            "text-body-2 text-text-primary flex min-h-8 w-full",
                             "cursor-pointer items-center justify-between px-2.5",
-                            "data-[highlighted]:bg-palette-light-gray data-[highlighted]:outline-none",
+                            "data-highlighted:bg-palette-light-gray data-highlighted:outline-none",
                           )}
                         >
                           <Select.ItemText>{option.label}</Select.ItemText>
@@ -114,8 +116,8 @@ export function DetailSearchPanel({
 
               <input
                 className={cn(
-                  "border-b-palette-divider placeholder:text-text-subtitle min-h-12 w-52 border-b",
-                  "text-text-primary px-2.5",
+                  "border-b-palette-divider placeholder:text-text-subtitle h-9 w-52 border-b",
+                  "text-text-primary px-2.5 focus-visible:outline-0",
                   "focus-visible:border-b-palette-primary",
                 )}
                 data-testid="detail-search-keyword"
