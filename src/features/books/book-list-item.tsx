@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import lineHeart from "../../../assets/icons/line.svg";
-import fillHeart from "../../../assets/icons/fill.svg";
-import emptyBookIcon from "../../../assets/icons/icon_book.png";
+import lineHeart from "@/assets/icons/line.svg";
+import fillHeart from "@/assets/icons/fill.svg";
+import emptyBookIcon from "@/assets/icons/icon_book.png";
 import { formatPrice, getCollapsedDisplayPrice, hasSalePrice } from "@/domain/book-utils";
 import type { Book } from "@/domain/types";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import { motionDuration, runAnimate } from "@/lib/animation";
 import { Button, LinkButton } from "@/components/ui/button";
 import { cva } from "@/lib/class-name";
 
@@ -71,7 +71,7 @@ export function BookListItem({
 
       const targetHeight = Math.min(panel.scrollHeight, window.innerWidth <= 767 ? 640 : 520);
 
-      safeAnimate(panel, {
+      runAnimate(panel, {
         opacity: [0, 1],
         height: [0, targetHeight],
         duration: motionDuration(220),
@@ -90,7 +90,7 @@ export function BookListItem({
 
     panel.style.overflow = "hidden";
 
-    safeAnimate(panel, {
+    runAnimate(panel, {
       opacity: [1, 0],
       height: [panel.scrollHeight, 0],
       duration: motionDuration(180),
@@ -125,7 +125,7 @@ export function BookListItem({
           </button>
         </div>
 
-        <div className="mr-[22px] flex w-[408px] items-center gap-4 max-[767px]:mr-0 max-[767px]:w-[calc(100%-68px)] max-[767px]:flex-col max-[767px]:items-start max-[767px]:gap-[6px]">
+        <div className="mr-[22px] flex w-[408px] items-center gap-4 max-[767px]:mr-0 max-[767px]:w-[calc(100%-68px)] max-[767px]:flex-col max-[767px]:items-start max-[767px]:gap-1.5">
           <p className="text-title text-text-primary m-0 line-clamp-1">{book.title}</p>
           <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
         </div>
@@ -134,7 +134,7 @@ export function BookListItem({
           <p className="text-title text-text-primary m-0 text-right">
             {formatPrice(getCollapsedDisplayPrice(book))}
           </p>
-          <div className="flex items-center gap-2 max-[767px]:gap-[6px]">
+          <div className="flex items-center gap-2 max-[767px]:gap-1.5">
             <LinkButton
               variant="primary"
               href={book.url || "#"}

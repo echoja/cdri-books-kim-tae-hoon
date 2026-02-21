@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import emptyBookIcon from "../../assets/icons/icon_book.png";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import emptyBookIcon from "@/assets/icons/icon_book.png";
+import { motionDuration, runAnimate } from "@/lib/animation";
 
 interface EmptyStateProps {
   message?: string;
@@ -14,7 +14,7 @@ export function EmptyState({ message = "검색된 결과가 없습니다" }: Emp
       return;
     }
 
-    safeAnimate(ref.current, {
+    runAnimate(ref.current, {
       opacity: [0, 1],
       scale: [0.96, 1],
       duration: motionDuration(350),

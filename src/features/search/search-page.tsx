@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import searchIcon from "../../../assets/icons/search.svg";
+import searchIcon from "@/assets/icons/search.svg";
 import { toUserMessage } from "@/domain/errors";
 import { toSearchTarget } from "@/domain/search-utils";
 import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/domain/types";
@@ -17,7 +17,7 @@ import {
   useUpsertSearchHistory,
 } from "@/features/search/use-search-history";
 import { bookRepository } from "@/repositories/book-repository";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import { motionDuration, runAnimate } from "@/lib/animation";
 
 const PAGE_SIZE = 10 as const;
 
@@ -61,7 +61,7 @@ export function SearchPage() {
       return;
     }
 
-    safeAnimate(resultsRef.current, {
+    runAnimate(resultsRef.current, {
       opacity: [0, 1],
       duration: motionDuration(300),
       ease: "outQuad",
