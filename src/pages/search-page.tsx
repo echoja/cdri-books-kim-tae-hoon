@@ -26,7 +26,6 @@ export function SearchPage() {
   const search = useSearch({ from: "/search" });
   const keywordInputRef = useRef<HTMLInputElement>(null);
 
-  const [detailKeyword, setDetailKeyword] = useState(search.query);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const trimmed = search.query.trim();
@@ -50,10 +49,6 @@ export function SearchPage() {
 
   const page = params?.page ?? 1;
   const totalPages = totalCount === 0 ? 1 : Math.ceil(totalCount / PAGE_SIZE);
-
-  useEffect(() => {
-    setDetailKeyword(search.query);
-  }, [search.query]);
 
   useEffect(() => {
     const input = keywordInputRef.current;
@@ -114,7 +109,6 @@ export function SearchPage() {
       });
     }
 
-    setDetailKeyword(trimmed);
     setIsDetailOpen(false);
     setBookSearchParams({
       query: trimmed,
@@ -175,9 +169,6 @@ export function SearchPage() {
                   "focus-visible:outline-palette-primary h-search-input outline-none",
                   "focus-visible:outline-2 focus-visible:outline-offset-2",
                 )}
-                onChange={(event) => {
-                  setDetailKeyword(event.target.value);
-                }}
               />
             </div>
             {historyRecords.length > 0 ? (
@@ -197,19 +188,7 @@ export function SearchPage() {
           <DetailSearchPanel
             open={isDetailOpen}
             onOpenChange={setIsDetailOpen}
-            target={search.target}
-            keyword={detailKeyword}
-            onTargetChange={(nextTarget) =>
-              setBookSearchParams({
-                query: search.query,
-                page: 1,
-                target: nextTarget,
-              })
-            }
-            onKeywordChange={setDetailKeyword}
-            onSearch={(keywordOverride) =>
-              executeSearch(keywordOverride ?? detailKeyword, search.target)
-            }
+            onSearch={({ keyword, target }) => executeSearch(keyword, target)}
           />
         </div>
 

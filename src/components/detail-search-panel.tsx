@@ -8,29 +8,30 @@ import { cn } from "@/lib/class-name";
 import { Button } from "@/components/ui/button";
 
 interface DetailSearchPanelProps extends Omit<
-  ComponentProps<"div">,
-  "children" | "onChange" | "onSearch"
+  ComponentProps<"form">,
+  "children" | "onChange" | "onSearch" | "onSubmit"
 > {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  target: SearchTarget;
-  keyword: string;
-  onTargetChange: (target: SearchTarget) => void;
-  onKeywordChange: (keyword: string) => void;
-  onSearch: (keywordOverride?: string) => void;
+  onSearch: (args: { target: SearchTarget; keyword: string }) => void;
 }
 
 export function DetailSearchPanel({
   open,
   onOpenChange,
-  target,
-  keyword,
-  onTargetChange,
-  onKeywordChange,
   onSearch,
   className,
   ...props
 }: DetailSearchPanelProps) {
+  const handleSubmit: NonNullable<ComponentProps<"form">["onSubmit"]> = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    onSearch({
+      target: toSearchTarget(formData.get("target")?.toString()),
+      keyword: formData.get("keyword")?.toString() ?? "",
+    });
+  };
+
   return (
     <Popover.Root open={open} onOpenChange={onOpenChange}>
       <Popover.Trigger asChild>
@@ -50,7 +51,7 @@ export function DetailSearchPanel({
           data-testid="detail-search-popover"
           forceMount
         >
-          <div className={className} {...props}>
+          <form className={className} onSubmit={handleSubmit} {...props}>
             <button
               type="button"
               className={cn(
@@ -64,10 +65,7 @@ export function DetailSearchPanel({
             </button>
 
             <div className="flex items-center gap-1">
-              <Select.Root
-                value={target}
-                onValueChange={(value) => onTargetChange(toSearchTarget(value))}
-              >
+              <Select.Root name="target" defaultValue="title">
                 <Select.Trigger
                   className={cn(
                     "border-palette-divider bg-palette-white text-body-2 text-text-primary inline-flex min-h-9 w-25",
@@ -121,25 +119,16 @@ export function DetailSearchPanel({
                   "focus-visible:border-b-palette-primary",
                 )}
                 data-testid="detail-search-keyword"
-                value={keyword}
-                onChange={(event) => onKeywordChange(event.target.value)}
+                name="keyword"
+                defaultValue=""
                 placeholder="검색어 입력"
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    onSearch(event.currentTarget.value);
-                  }
-                }}
               />
             </div>
 
-            <Button
-              variant="primary"
-              className="mt-4 min-h-9 w-full p-0"
-              onClick={() => onSearch()}
-            >
+            <Button variant="primary" type="submit" className="mt-4 min-h-9 w-full p-0">
               검색하기
             </Button>
-          </div>
+          </form>
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
