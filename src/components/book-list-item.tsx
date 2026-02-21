@@ -64,12 +64,19 @@ export function BookListItem({
                 <p
                   className={cn(
                     "text-title-3 text-text-primary m-0",
-                    expanded ? "line-clamp-2" : "line-clamp-1",
+                    expanded ? "line-clamp-4 leading-6" : "line-clamp-1",
                   )}
                 >
                   {book.title}
                 </p>
-                <p className="text-body-2 text-text-subtitle m-0 line-clamp-1">{authors}</p>
+                <p
+                  className={cn(
+                    "text-body-2 text-text-subtitle m-0 line-clamp-1",
+                    expanded ? "line-clamp-4 leading-5" : "line-clamp-1",
+                  )}
+                >
+                  {authors}
+                </p>
               </div>
 
               {expanded ? (
