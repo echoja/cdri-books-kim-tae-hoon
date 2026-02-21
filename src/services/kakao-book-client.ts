@@ -27,6 +27,7 @@ const kakaoResponseSchema = z.object({
   documents: z.array(kakaoDocumentSchema),
 });
 
+/** Kakao 도서 문서를 내부 Book 타입으로 변환한다. */
 function toBook(doc: z.infer<typeof kakaoDocumentSchema>): Book {
   const isbn = doc.isbn.trim().split(" ").find(Boolean);
 
@@ -44,18 +45,30 @@ function toBook(doc: z.infer<typeof kakaoDocumentSchema>): Book {
   };
 }
 
-// Kakao REST API error response: { code: number, msg: string }
-// Ref: https://developers.kakao.com/docs/latest/ko/rest-api/reference#response
+/**
+ * Kakao REST API 에러 응답 스키마.
+ *
+ * ```json
+ * { "code": -1, "msg": "..." }
+ * ```
+ *
+ * @see https://developers.kakao.com/docs/latest/ko/rest-api/reference#response
+ */
 const kakaoErrorSchema = z.object({
   code: z.number(),
   msg: z.string(),
 });
 
-// Kakao REST API rate limits (ref: https://developers.kakao.com/docs/latest/ko/getting-started/quota):
-// - Book search (Daum Search): 30,000 req/day, 50,000/day across all search types
-// - Monthly cap: 3,000,000 req across all APIs
-// - Returns 429 when per-second or daily quota is exceeded
-// - Kakao does NOT provide a Retry-After header on 429 responses.
+/**
+ * Kakao REST API 응답을 파싱하고, 에러 상태일 경우 {@link AppError}를 던진다.
+ *
+ * Rate-limit 정책 (429):
+ * - Book search (Daum Search): 30,000 req/day, 50,000/day across all search types
+ * - Monthly cap: 3,000,000 req across all APIs
+ * - Kakao does NOT provide a `Retry-After` header on 429 responses.
+ *
+ * @see https://developers.kakao.com/docs/latest/ko/getting-started/quota
+ */
 async function parseResponse(response: Response): Promise<SearchResultPayload> {
   if (!response.ok) {
     const body = await response.json().catch(() => null);
@@ -96,6 +109,7 @@ async function parseResponse(response: Response): Promise<SearchResultPayload> {
   };
 }
 
+/** Kakao 도서 검색 API 클라이언트. */
 export class KakaoBookClient {
   private readonly apiKey: string;
 
@@ -103,8 +117,14 @@ export class KakaoBookClient {
     this.apiKey = apiKey?.trim() ?? "";
   }
 
-  // sort 파라미터 미전송 → 기본값 "accuracy" (정확도순) 적용
-  // "latest" (발간일순) 도 가능하나 현재 요구사항에 없음
+  /**
+   * 도서를 검색한다.
+   *
+   * `sort` 파라미터를 전송하지 않으므로 기본값 `"accuracy"` (정확도순) 이 적용된다.
+   * `"latest"` (발간일순) 도 가능하나 현재 요구사항에 없음.
+   *
+   * @see https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
+   */
   async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResultPayload> {
     if (!this.apiKey) {
       throw new AppError("API_KEY_MISSING", "VITE_KAKAO_REST_API_KEY 환경 변수가 필요합니다.");
