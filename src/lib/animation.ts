@@ -1,4 +1,4 @@
-import type { JSAnimation } from 'animejs'
+import type { JSAnimation, TargetsParam, AnimationParams } from 'animejs'
 import { animate } from 'animejs'
 
 export function motionDuration(value: number): number {
@@ -10,9 +10,12 @@ export function motionDuration(value: number): number {
   return reduce ? 0 : value
 }
 
-export function safeAnimate(options: Parameters<typeof animate>[0]): JSAnimation | null {
+export function safeAnimate(
+  targets: TargetsParam,
+  parameters: AnimationParams,
+): JSAnimation | null {
   try {
-    return animate(options)
+    return animate(targets, parameters)
   } catch {
     return null
   }

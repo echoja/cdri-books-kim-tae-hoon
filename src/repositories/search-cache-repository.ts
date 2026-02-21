@@ -26,7 +26,11 @@ export class SearchCacheRepository {
       updatedAt: new Date().toISOString(),
     })
 
-    const overflow = await appDb.searchCache.orderBy('updatedAt').reverse().offset(CACHE_MAX_COUNT).primaryKeys()
+    const overflow = await appDb.searchCache
+      .orderBy('updatedAt')
+      .reverse()
+      .offset(CACHE_MAX_COUNT)
+      .primaryKeys()
 
     if (overflow.length > 0) {
       await appDb.searchCache.bulkDelete(overflow)

@@ -14,11 +14,11 @@ export function FavoritesPage() {
   const records = favoritesQuery.data ?? []
   const books = records.map((record) => record.book)
 
-    return (
+  return (
     <section className="w-full">
       <div className="mb-3 flex flex-col items-start">
-        <h1 className="m-0 text-page-heading text-text-title">내가 찜한 책</h1>
-        <div className="mt-6 flex items-center gap-4 text-title text-text-primary">
+        <h1 className="text-page-heading text-text-title m-0">내가 찜한 책</h1>
+        <div className="text-title text-text-primary mt-6 flex items-center gap-4">
           <span>찜한 책</span>
           <span>
             총 <strong className="text-palette-primary">{records.length}</strong>건

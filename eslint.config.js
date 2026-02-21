@@ -9,13 +9,10 @@ export default tseslint.config(
   {
     ignores: ['dist', 'node_modules', 'src/routeTree.gen.ts', 'test-results'],
   },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
   {
     files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      prettierPlugin.configs.recommended,
-    ],
     languageOptions: {
       ecmaVersion: 2022,
       globals: {
@@ -30,6 +27,7 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      'prettier/prettier': 'error',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

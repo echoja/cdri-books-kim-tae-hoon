@@ -28,7 +28,7 @@ function createResponse(page: number, keyword = '고양이') {
 
 async function gotoReady(page: Page) {
   await page.goto('/')
-  await page.waitForSelector('body[data-app-ready="true"]')
+  await page.waitForSelector('h1')
 }
 
 test.beforeEach(async ({ page }) => {

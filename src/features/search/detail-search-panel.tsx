@@ -33,8 +33,7 @@ export function DetailSearchPanel({
       return
     }
 
-    safeAnimate({
-      targets: contentRef.current,
+    safeAnimate(contentRef.current, {
       opacity: [0, 1],
       translateY: [-8, 0],
       duration: motionDuration(220),
@@ -53,14 +52,14 @@ export function DetailSearchPanel({
         <Popover.Content
           sideOffset={8}
           align="start"
-          className="relative z-30 min-h-[160px] w-[360px] rounded-lg bg-palette-white px-6 py-9 shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)] max-[767px]:w-[calc(100vw-32px)] max-[767px]:max-w-[360px]"
+          className="bg-palette-white relative z-30 min-h-[160px] w-[360px] rounded-lg px-6 py-9 shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)] max-[767px]:w-[calc(100vw-32px)] max-[767px]:max-w-[360px]"
           data-testid="detail-search-popover"
           forceMount
         >
           <div ref={contentRef}>
             <button
               type="button"
-              className="absolute right-2 top-2 cursor-pointer border-none bg-transparent text-text-secondary"
+              className="text-text-secondary absolute top-2 right-2 cursor-pointer border-none bg-transparent"
               aria-label="상세검색 닫기"
               onClick={() => onOpenChange(false)}
             >
@@ -68,9 +67,12 @@ export function DetailSearchPanel({
             </button>
 
             <div className="flex items-center gap-1 max-[767px]:flex-wrap">
-              <Select.Root value={target} onValueChange={(value) => onTargetChange(value as SearchTarget)}>
+              <Select.Root
+                value={target}
+                onValueChange={(value) => onTargetChange(value as SearchTarget)}
+              >
                 <Select.Trigger
-                  className="inline-flex min-h-9 w-[100px] items-center justify-between rounded-lg border border-divider bg-palette-white px-[10px] text-body-small text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-[767px]:w-full"
+                  className="border-divider bg-palette-white text-body-small text-text-primary focus-visible:outline-palette-primary inline-flex min-h-9 w-[100px] items-center justify-between rounded-lg border px-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 max-[767px]:w-full"
                   aria-label="검색 기준"
                   data-testid="detail-search-target"
                 >
@@ -81,16 +83,16 @@ export function DetailSearchPanel({
                 </Select.Trigger>
                 <Select.Portal>
                   <Select.Content
-                    className="z-40 h-[60px] min-w-[100px] overflow-hidden rounded-lg border border-divider bg-palette-white"
+                    className="border-divider bg-palette-white z-40 h-[60px] min-w-[100px] overflow-hidden rounded-lg border"
                     position="popper"
                     sideOffset={4}
                   >
-                  <Select.Viewport>
+                    <Select.Viewport>
                       {SEARCH_TARGET_OPTIONS.map((option) => (
                         <Select.Item
                           key={option.value}
                           value={option.value}
-                          className="flex min-h-[30px] w-full cursor-pointer items-center justify-between px-[10px] text-body-small text-text-primary data-[highlighted]:bg-surface-secondary data-[highlighted]:outline-none"
+                          className="text-body-small text-text-primary data-[highlighted]:bg-surface-secondary flex min-h-[30px] w-full cursor-pointer items-center justify-between px-[10px] data-[highlighted]:outline-none"
                         >
                           <Select.ItemText>{option.label}</Select.ItemText>
                           <Select.ItemIndicator>
@@ -104,7 +106,7 @@ export function DetailSearchPanel({
               </Select.Root>
 
               <input
-                className="min-h-9 w-[208px] rounded-lg border border-divider px-[10px] text-text-primary placeholder:text-text-subtitle focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-[767px]:w-full"
+                className="border-divider text-text-primary placeholder:text-text-subtitle focus-visible:outline-palette-primary min-h-9 w-[208px] rounded-lg border px-[10px] focus-visible:outline-2 focus-visible:outline-offset-2 max-[767px]:w-full"
                 data-testid="detail-search-keyword"
                 value={keyword}
                 onChange={(event) => onKeywordChange(event.target.value)}
@@ -117,7 +119,11 @@ export function DetailSearchPanel({
               />
             </div>
 
-            <Button variant="primary" className="mt-4 min-h-9 w-full p-0" onClick={() => onSearch()}>
+            <Button
+              variant="primary"
+              className="mt-4 min-h-9 w-full p-0"
+              onClick={() => onSearch()}
+            >
               검색하기
             </Button>
           </div>

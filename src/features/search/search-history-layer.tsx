@@ -10,11 +10,7 @@ interface SearchHistoryLayerProps {
   onRemove: (key: string) => void
 }
 
-export function SearchHistoryLayer({
-  records,
-  onSelect,
-  onRemove,
-}: SearchHistoryLayerProps) {
+export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistoryLayerProps) {
   const listRef = useRef<HTMLUListElement | null>(null)
 
   useEffect(() => {
@@ -22,8 +18,7 @@ export function SearchHistoryLayer({
       return
     }
 
-    safeAnimate({
-      targets: listRef.current.querySelectorAll('[data-history-row]'),
+    safeAnimate(listRef.current.querySelectorAll('[data-history-row]'), {
       opacity: [0, 1],
       translateY: [6, 0],
       duration: motionDuration(180),
@@ -34,7 +29,7 @@ export function SearchHistoryLayer({
 
   return (
     <section
-      className="absolute left-0 top-[53px] z-20 max-h-[153px] min-h-[153px] w-[480px] overflow-y-auto rounded-pill bg-surface-secondary px-5 py-4 max-[767px]:w-full"
+      className="rounded-pill bg-surface-secondary absolute top-[53px] left-0 z-20 max-h-[153px] min-h-[153px] w-[480px] overflow-y-auto px-5 py-4 max-[767px]:w-full"
       aria-label="검색 기록"
     >
       <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">
@@ -46,7 +41,7 @@ export function SearchHistoryLayer({
           >
             <button
               type="button"
-              className="cursor-pointer border-none bg-transparent text-body-small text-text-primary"
+              className="text-body-small text-text-primary cursor-pointer border-none bg-transparent"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => onSelect(record)}
             >
@@ -54,7 +49,7 @@ export function SearchHistoryLayer({
             </button>
             <button
               type="button"
-              className="inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-text-primary hover:bg-surface-hover-soft"
+              className="text-text-primary hover:bg-surface-hover-soft inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-none bg-transparent"
               onMouseDown={(event) => event.preventDefault()}
               aria-label={`${record.keyword} 기록 삭제`}
               onClick={() => onRemove(record.key)}

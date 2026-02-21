@@ -71,8 +71,7 @@ export function BookListItem({
 
       const targetHeight = Math.min(panel.scrollHeight, window.innerWidth <= 767 ? 640 : 520)
 
-      safeAnimate({
-        targets: panel,
+      safeAnimate(panel, {
         opacity: [0, 1],
         height: [0, targetHeight],
         duration: motionDuration(220),
@@ -91,8 +90,7 @@ export function BookListItem({
 
     panel.style.overflow = 'hidden'
 
-    safeAnimate({
-      targets: panel,
+    safeAnimate(panel, {
       opacity: [1, 0],
       height: [panel.scrollHeight, 0],
       duration: motionDuration(180),
@@ -112,7 +110,7 @@ export function BookListItem({
       <div className="flex min-h-[100px] items-center px-4 py-4 pl-12 max-[767px]:flex-wrap max-[767px]:gap-y-3 max-[767px]:p-4">
         <div className="relative mr-12 w-12 min-w-12 max-[767px]:mr-5">
           <img
-            className="h-book-thumb-small-height w-book-thumb-small-width object-cover bg-surface-secondary-soft"
+            className="h-book-thumb-small-height w-book-thumb-small-width bg-surface-secondary-soft object-cover"
             src={thumbnailSrc}
             alt={`${book.title} 표지`}
           />
@@ -128,12 +126,12 @@ export function BookListItem({
         </div>
 
         <div className="mr-[22px] flex w-[408px] items-center gap-4 max-[767px]:mr-0 max-[767px]:w-[calc(100%-68px)] max-[767px]:flex-col max-[767px]:items-start max-[767px]:gap-[6px]">
-          <p className="m-0 line-clamp-1 text-title text-text-primary">{book.title}</p>
-          <p className="m-0 line-clamp-1 text-body-small text-text-secondary">{authors}</p>
+          <p className="text-title text-text-primary m-0 line-clamp-1">{book.title}</p>
+          <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
         </div>
 
         <div className="ml-auto flex items-center gap-14 max-[767px]:ml-0 max-[767px]:w-full max-[767px]:justify-between max-[767px]:gap-4">
-          <p className="m-0 text-right text-title text-text-primary">
+          <p className="text-title text-text-primary m-0 text-right">
             {formatPrice(getCollapsedDisplayPrice(book))}
           </p>
           <div className="flex items-center gap-2 max-[767px]:gap-[6px]">
@@ -155,11 +153,15 @@ export function BookListItem({
       </div>
 
       {renderExpanded ? (
-        <div ref={panelRef} className="min-h-[344px]" style={{ display: expanded ? 'block' : 'none' }}>
-          <div className="flex min-h-[344px] max-h-[520px] items-start overflow-hidden px-4 py-6 pl-[54px] max-[767px]:max-h-[640px] max-[767px]:flex-col max-[767px]:gap-4 max-[767px]:overflow-y-auto max-[767px]:px-4 max-[767px]:py-5">
+        <div
+          ref={panelRef}
+          className="min-h-[344px]"
+          style={{ display: expanded ? 'block' : 'none' }}
+        >
+          <div className="flex max-h-[520px] min-h-[344px] items-start overflow-hidden px-4 py-6 pl-[54px] max-[767px]:max-h-[640px] max-[767px]:flex-col max-[767px]:gap-4 max-[767px]:overflow-y-auto max-[767px]:px-4 max-[767px]:py-5">
             <div className="relative mr-8 w-[210px] min-w-[210px] max-[767px]:mr-0">
               <img
-                className="h-book-thumb-large-height w-book-thumb-large-width object-cover bg-surface-secondary-soft"
+                className="h-book-thumb-large-height w-book-thumb-large-width bg-surface-secondary-soft object-cover"
                 src={thumbnailSrc}
                 alt={`${book.title} 표지 확대`}
               />
@@ -176,13 +178,15 @@ export function BookListItem({
 
             <section className="mr-[163px] flex w-[324px] flex-col gap-4 max-[1279px]:mr-12 max-[767px]:mr-0 max-[767px]:w-full">
               <div className="flex items-center gap-4">
-                <p className="m-0 line-clamp-2 text-title text-text-primary">{book.title}</p>
-                <p className="m-0 line-clamp-1 text-body-small text-text-secondary">{authors}</p>
+                <p className="text-title text-text-primary m-0 line-clamp-2">{book.title}</p>
+                <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
               </div>
 
               <section className="flex flex-col gap-3">
-                <h3 className="m-0 text-body-small font-bold leading-[18px] text-text-secondary">책 소개</h3>
-                <p className="m-0 line-clamp-8 text-small text-text-primary max-[767px]:line-clamp-6">
+                <h3 className="text-body-small text-text-secondary m-0 leading-[18px] font-bold">
+                  책 소개
+                </h3>
+                <p className="text-small text-text-primary m-0 line-clamp-8 max-[767px]:line-clamp-6">
                   {book.contents || '책 소개 정보가 없습니다.'}
                 </p>
               </section>
@@ -224,7 +228,7 @@ export function BookListItem({
           </div>
         </div>
       ) : null}
-      <div className="h-px w-full bg-divider" />
+      <div className="bg-divider h-px w-full" />
     </article>
   )
 }

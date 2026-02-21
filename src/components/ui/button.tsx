@@ -23,16 +23,14 @@ const buttonVariants = cva(
 type ButtonVariant = NonNullable<Parameters<typeof buttonVariants>[0]>['variant']
 
 interface ButtonProps
-  extends PropsWithChildren,
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
+  extends PropsWithChildren, Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
   className?: string
   ref?: Ref<HTMLButtonElement>
   variant?: ButtonVariant
 }
 
 interface LinkButtonProps
-  extends PropsWithChildren,
-    Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className'> {
+  extends PropsWithChildren, Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'className'> {
   className?: string
   disabled?: boolean
   ref?: Ref<HTMLAnchorElement>
@@ -46,7 +44,14 @@ export function Button({
   type = 'button',
   ...props
 }: ButtonProps) {
-  return <button ref={ref} type={type} className={cn(buttonVariants({ variant }), className)} {...props} />
+  return (
+    <button
+      ref={ref}
+      type={type}
+      className={cn(buttonVariants({ variant }), className)}
+      {...props}
+    />
+  )
 }
 
 export function LinkButton({
@@ -63,7 +68,11 @@ export function LinkButton({
       ref={ref}
       {...props}
       tabIndex={disabled ? -1 : tabIndex}
-      className={cn(buttonVariants({ variant }), disabled && 'pointer-events-none cursor-not-allowed', className)}
+      className={cn(
+        buttonVariants({ variant }),
+        disabled && 'pointer-events-none cursor-not-allowed',
+        className,
+      )}
       aria-disabled={disabled}
       onClick={(event) => {
         if (disabled) {

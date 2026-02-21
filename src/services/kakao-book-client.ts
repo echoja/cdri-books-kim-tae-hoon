@@ -106,10 +106,7 @@ export class KakaoBookClient {
 
   async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResultPayload> {
     if (!this.apiKey) {
-      throw new AppError(
-        'API_KEY_MISSING',
-        'VITE_KAKAO_REST_API_KEY 환경 변수가 필요합니다.',
-      )
+      throw new AppError('API_KEY_MISSING', 'VITE_KAKAO_REST_API_KEY 환경 변수가 필요합니다.')
     }
 
     const query = new URLSearchParams({

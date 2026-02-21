@@ -7,15 +7,10 @@ import { syncAdapter } from '@/adapters/sync-adapter'
 export const FAVORITES_QUERY_KEY = ['favorites'] as const
 export const FAVORITE_IDS_QUERY_KEY = ['favorite-ids'] as const
 
-function isClient(): boolean {
-  return typeof window !== 'undefined'
-}
-
 export function useFavoriteRecords() {
   return useQuery({
     queryKey: FAVORITES_QUERY_KEY,
     queryFn: () => favoritesRepository.list(),
-    enabled: isClient(),
     initialData: [] as FavoriteRecord[],
     staleTime: 0,
     refetchOnMount: 'always',
@@ -26,7 +21,6 @@ export function useFavoriteIds() {
   return useQuery({
     queryKey: FAVORITE_IDS_QUERY_KEY,
     queryFn: () => favoritesRepository.listIsbns(),
-    enabled: isClient(),
     initialData: [] as string[],
     staleTime: 0,
     refetchOnMount: 'always',
@@ -61,8 +55,7 @@ export function useToggleFavorite() {
 
       const previousFavorites =
         queryClient.getQueryData<FavoriteRecord[]>(FAVORITES_QUERY_KEY) ?? []
-      const previousFavoriteIds =
-        queryClient.getQueryData<string[]>(FAVORITE_IDS_QUERY_KEY) ?? []
+      const previousFavoriteIds = queryClient.getQueryData<string[]>(FAVORITE_IDS_QUERY_KEY) ?? []
 
       queryClient.setQueryData<FavoriteRecord[]>(FAVORITES_QUERY_KEY, (current = []) =>
         applyOptimisticFavorite(current, book, willFavorite),

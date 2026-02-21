@@ -52,8 +52,6 @@ describe('KakaoBookClient', () => {
   it('API 키가 없으면 명시적 오류를 던진다', async () => {
     const client = new KakaoBookClient(undefined)
 
-    await expect(client.search({ query: '테스트', page: 1, size: 10 })).rejects.toThrow(
-      AppError,
-    )
+    await expect(client.search({ query: '테스트', page: 1, size: 10 })).rejects.toThrow(AppError)
   })
 })

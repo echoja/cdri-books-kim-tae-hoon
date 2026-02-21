@@ -11,7 +11,7 @@ export function EmptyState({ message = '검색된 결과가 없습니다' }: Emp
       aria-live="polite"
     >
       <img src={emptyBookIcon} width={80} height={80} alt="도서 아이콘" />
-      <p className="m-0 text-heading text-text-primary">{message}</p>
+      <p className="text-heading text-text-primary m-0">{message}</p>
     </section>
   )
 }
