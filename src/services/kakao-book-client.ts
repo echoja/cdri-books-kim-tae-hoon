@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { AppError } from "@/domain/errors";
-import { buildBookId } from "@/domain/book-utils";
-import type { Book, SearchResultPayload } from "@/domain/types";
+import { AppError } from "@/lib/errors";
+import { buildBookId } from "@/lib/book-utils";
+import type { Book, SearchResultPayload } from "@/lib/types";
 
 /**
  * Kakao 도서 검색 API 요청 파라미터.

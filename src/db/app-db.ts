@@ -4,7 +4,7 @@ import type {
   SearchHistoryRecord,
   SearchParams,
   SearchResultPayload,
-} from "@/domain/types";
+} from "@/lib/types";
 
 interface FavoriteEntity extends FavoriteRecord {}
 

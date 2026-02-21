@@ -2,8 +2,8 @@ import * as Popover from "@radix-ui/react-popover";
 import * as Select from "@radix-ui/react-select";
 import { type ComponentProps } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
-import { SEARCH_TARGET_OPTIONS, toSearchTarget } from "@/domain/search-utils";
-import type { SearchTarget } from "@/domain/types";
+import { SEARCH_TARGET_OPTIONS, toSearchTarget } from "@/lib/search-utils";
+import type { SearchTarget } from "@/lib/types";
 import { cn } from "@/lib/class-name";
 import { Button } from "@/components/ui/button";
 

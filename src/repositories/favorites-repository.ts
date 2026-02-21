@@ -1,5 +1,5 @@
 import { appDb } from "@/db/app-db";
-import type { Book, FavoriteRecord, SyncAdapter } from "@/domain/types";
+import type { Book, FavoriteRecord, SyncAdapter } from "@/lib/types";
 
 export class FavoritesRepository {
   private readonly sync: SyncAdapter;

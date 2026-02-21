@@ -1,6 +1,6 @@
 import { appDb } from "@/db/app-db";
-import { getSearchHistoryLimit, upsertSearchHistory } from "@/domain/search-utils";
-import type { SearchHistoryRecord, SearchTarget } from "@/domain/types";
+import { getSearchHistoryLimit, upsertSearchHistory } from "@/lib/search-utils";
+import type { SearchHistoryRecord, SearchTarget } from "@/lib/types";
 
 const STORAGE_KEY = "cdri:search-history";
 

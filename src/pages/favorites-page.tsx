@@ -1,11 +1,7 @@
-import { toUserMessage } from "@/domain/errors";
+import { toUserMessage } from "@/lib/errors";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
-import {
-  useFavoriteIds,
-  useFavoriteRecords,
-  useToggleFavorite,
-} from "@/features/favorites/use-favorites";
+import { useFavoriteIds, useFavoriteRecords, useToggleFavorite } from "@/hooks/use-favorites";
 
 export function FavoritesPage() {
   const favoritesQuery = useFavoriteRecords();

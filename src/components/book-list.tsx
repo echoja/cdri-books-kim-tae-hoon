@@ -1,5 +1,5 @@
 import { type ComponentProps, useState } from "react";
-import type { Book } from "@/domain/types";
+import type { Book } from "@/lib/types";
 import { BookListItem } from "./book-list-item";
 import { cn } from "@/lib/class-name";
 

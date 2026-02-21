@@ -1,5 +1,5 @@
 import { QueryClient } from "@tanstack/react-query";
-import { AppError } from "@/domain/errors";
+import { AppError } from "@/lib/errors";
 
 const RETRYABLE_CODES = new Set(["RATE_LIMIT", "SERVER", "NETWORK"]);
 

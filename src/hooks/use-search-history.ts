@@ -1,6 +1,6 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { searchHistoryRepository } from "@/repositories/search-history-repository";
-import type { SearchHistoryRecord, SearchTarget } from "@/domain/types";
+import type { SearchHistoryRecord, SearchTarget } from "@/lib/types";
 
 const searchHistoryQueryOptions = queryOptions({
   queryKey: ["search-history"],

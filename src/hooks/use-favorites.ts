@@ -1,7 +1,7 @@
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { applyOptimisticFavorite } from "@/domain/favorites-utils";
-import type { Book, FavoriteRecord } from "@/domain/types";
+import { applyOptimisticFavorite } from "@/lib/favorites-utils";
+import type { Book, FavoriteRecord } from "@/lib/types";
 import { FavoritesRepository } from "@/repositories/favorites-repository";
 import { syncAdapter } from "@/adapters/sync-adapter";
 

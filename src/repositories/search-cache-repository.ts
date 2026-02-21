@@ -1,5 +1,5 @@
 import { appDb } from "@/db/app-db";
-import type { SearchParams, SearchResultPayload } from "@/domain/types";
+import type { SearchParams, SearchResultPayload } from "@/lib/types";
 
 const CACHE_MAX_COUNT = 60;
 

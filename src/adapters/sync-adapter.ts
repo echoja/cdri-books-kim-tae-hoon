@@ -1,4 +1,4 @@
-import type { FavoriteRecord, SyncAdapter } from "@/domain/types";
+import type { FavoriteRecord, SyncAdapter } from "@/lib/types";
 
 class NoopSyncAdapter implements SyncAdapter {
   async pushFavorites(_changes: FavoriteRecord[]): Promise<void> {

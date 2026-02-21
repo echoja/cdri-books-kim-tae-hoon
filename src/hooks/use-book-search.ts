@@ -1,5 +1,5 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import type { SearchParams } from "@/domain/types";
+import type { SearchParams } from "@/lib/types";
 import { BookRepository } from "@/repositories/book-repository";
 import { kakaoBookClient } from "@/services/kakao-book-client";
 

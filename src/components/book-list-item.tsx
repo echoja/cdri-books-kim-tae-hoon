@@ -1,8 +1,8 @@
 import { type ComponentProps } from "react";
 import { ChevronDown } from "lucide-react";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
-import { formatPrice, hasSalePrice } from "@/domain/book-utils";
-import type { Book } from "@/domain/types";
+import { formatPrice, hasSalePrice } from "@/lib/book-utils";
+import type { Book } from "@/lib/types";
 import { Button, LinkButton } from "@/components/ui/button";
 import { FavoriteBadge } from "@/components/favorite-badge";
 import { cn } from "@/lib/class-name";

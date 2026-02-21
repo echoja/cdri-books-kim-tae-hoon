@@ -1,5 +1,5 @@
-import { AppError } from "@/domain/errors";
-import type { SearchParams, SearchResult, SearchResultPayload } from "@/domain/types";
+import { AppError } from "@/lib/errors";
+import type { SearchParams, SearchResult, SearchResultPayload } from "@/lib/types";
 import { searchCacheRepository } from "@/repositories/search-cache-repository";
 
 interface BookSearchClient {

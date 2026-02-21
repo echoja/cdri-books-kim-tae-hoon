@@ -1,6 +1,6 @@
 import { type ComponentProps } from "react";
 import { X } from "lucide-react";
-import type { SearchHistoryRecord } from "@/domain/types";
+import type { SearchHistoryRecord } from "@/lib/types";
 import { cn } from "@/lib/class-name";
 
 interface SearchHistoryLayerProps extends Omit<ComponentProps<"section">, "children" | "onSelect"> {

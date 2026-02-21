@@ -2,20 +2,20 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import searchIcon from "@/assets/icons/search.svg";
-import { toUserMessage } from "@/domain/errors";
-import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/domain/types";
+import { toUserMessage } from "@/lib/errors";
+import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/lib/types";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
-import { DetailSearchPanel } from "@/features/search/detail-search-panel";
-import { SearchHistoryLayer } from "@/features/search/search-history-layer";
-import { useToggleFavorite, useFavoriteIds } from "@/features/favorites/use-favorites";
-import { bookSearchQueryOptions, useBookSearch } from "@/features/search/use-book-search";
+import { DetailSearchPanel } from "@/components/detail-search-panel";
+import { SearchHistoryLayer } from "@/components/search-history-layer";
+import { useToggleFavorite, useFavoriteIds } from "@/hooks/use-favorites";
+import { bookSearchQueryOptions, useBookSearch } from "@/hooks/use-book-search";
 import { Button } from "@/components/ui/button";
 import {
   useRemoveSearchHistory,
   useSearchHistory,
   useUpsertSearchHistory,
-} from "@/features/search/use-search-history";
+} from "@/hooks/use-search-history";
 import { cn } from "@/lib/class-name";
 
 const PAGE_SIZE = 10 as const;

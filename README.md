@@ -65,14 +65,14 @@ npm run test:e2e
 src/
   assets/          # 이미지, 아이콘 등 정적 에셋
   adapters/        # SyncAdapter(no-op)
-  components/      # React 컴포넌트(헤더, 레이아웃, BookList, empty)
+  components/      # React 컴포넌트(헤더, 레이아웃, BookList, 검색 패널 등)
   db/              # Dexie 스키마
-  domain/          # 타입/규칙/순수 함수
-  features/        # 검색/찜 기능 단위
+  hooks/           # 커스텀 훅(검색, 찜, 검색 기록)
+  lib/             # 타입, 순수 함수, query client, persistence 유틸
+  pages/           # 페이지 컴포넌트(검색, 찜)
   repositories/    # 데이터 접근 계층(IDB + fallback)
   routes/          # TanStack file routes
   services/        # Kakao API 클라이언트
-  lib/             # query client, persistence 유틸
 ```
 
 ## 라이브러리
@@ -141,4 +141,4 @@ src/
 ### 아키텍처
 - 무조건 CSR(SPA)이므로 `typeof window === "undefined"` 체크를 하지 않습니다.
 - 외부 API 클라이언트의 파라미터 인터페이스는 실제 API 스펙에 맞춰 정의합니다 (내부 타입과 분리).
-- Repository는 외부 의존성(API 클라이언트, SyncAdapter 등)을 생성자 주입으로 받습니다. 모듈 간 직접 import 결합을 제거하고, 사용처(feature 계층)에서 조립합니다.
+- Repository는 외부 의존성(API 클라이언트, SyncAdapter 등)을 생성자 주입으로 받습니다. 모듈 간 직접 import 결합을 제거하고, 사용처(hooks 계층)에서 조립합니다.
