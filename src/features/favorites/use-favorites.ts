@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { applyOptimisticFavorite } from "@/domain/favorites-utils";
 import type { Book, FavoriteRecord } from "@/domain/types";
 import { favoritesRepository } from "@/repositories/favorites-repository";
@@ -74,13 +75,28 @@ export function useToggleFavorite() {
         previousFavoriteIds,
       };
     },
-    onError: (_error, _variables, context) => {
+    onSuccess: (_data, { book, willFavorite }) => {
+      console.log("[favorite] updated", {
+        action: willFavorite ? "add" : "remove",
+        isbn: book.isbn,
+        title: book.title,
+      });
+
+      toast.success(willFavorite ? "찜에 추가했어요." : "찜을 해제했어요.");
+    },
+    onError: (_error, variables, context) => {
       if (!context) {
         return;
       }
 
       queryClient.setQueryData(FAVORITES_QUERY_KEY, context.previousFavorites);
       queryClient.setQueryData(FAVORITE_IDS_QUERY_KEY, context.previousFavoriteIds);
+
+      toast.error(
+        variables.willFavorite
+          ? "찜 추가에 실패했어요. 다시 시도해 주세요."
+          : "찜 해제에 실패했어요.",
+      );
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({ queryKey: FAVORITES_QUERY_KEY });
