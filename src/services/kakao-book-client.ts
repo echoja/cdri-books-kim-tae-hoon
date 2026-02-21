@@ -1,7 +1,27 @@
 import { z } from "zod";
 import { AppError } from "@/domain/errors";
 import { buildBookId } from "@/domain/book-utils";
-import type { Book, SearchParams, SearchResultPayload } from "@/domain/types";
+import type { Book, SearchResultPayload } from "@/domain/types";
+
+/**
+ * Kakao 도서 검색 API 요청 파라미터.
+ *
+ * 필드명과 타입을 실제 API 스펙에 맞춘다.
+ *
+ * @see https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book-request
+ */
+export interface KakaoBookSearchOptions {
+  /** 검색을 원하는 질의어 (필수). */
+  query: string;
+  /** 결과 문서 정렬 방식. 기본값 `"accuracy"` (정확도순). */
+  sort?: "accuracy" | "latest";
+  /** 결과 페이지 번호. 1–50, 기본값 1. */
+  page?: number;
+  /** 한 페이지에 보여질 문서 수. 1–50, 기본값 10. */
+  size?: number;
+  /** 검색 필드 제한. 미지정 시 전체 필드 대상. */
+  target?: "title" | "isbn" | "publisher" | "person";
+}
 
 const KAKAO_BASE_URL = "https://dapi.kakao.com/v3/search/book";
 
@@ -120,30 +140,40 @@ export class KakaoBookClient {
   /**
    * 도서를 검색한다.
    *
-   * `sort` 파라미터를 전송하지 않으므로 기본값 `"accuracy"` (정확도순) 이 적용된다.
-   * `"latest"` (발간일순) 도 가능하나 현재 요구사항에 없음.
-   *
+   * @param options - Kakao 도서 검색 API 요청 파라미터.
+   * @param signal - 요청 취소를 위한 {@link AbortSignal}.
    * @see https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
    */
-  async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResultPayload> {
+  async search(
+    options: KakaoBookSearchOptions,
+    signal?: AbortSignal,
+  ): Promise<SearchResultPayload> {
     if (!this.apiKey) {
       throw new AppError("API_KEY_MISSING", "VITE_KAKAO_REST_API_KEY 환경 변수가 필요합니다.");
     }
 
-    const query = new URLSearchParams({
-      query: params.query,
-      page: String(params.page),
-      size: String(params.size),
-    });
+    const params = new URLSearchParams({ query: options.query });
 
-    if (params.target) {
-      query.set("target", params.target);
+    if (options.sort) {
+      params.set("sort", options.sort);
+    }
+
+    if (options.page !== undefined) {
+      params.set("page", String(options.page));
+    }
+
+    if (options.size !== undefined) {
+      params.set("size", String(options.size));
+    }
+
+    if (options.target) {
+      params.set("target", options.target);
     }
 
     let response: Response;
 
     try {
-      response = await fetch(`${KAKAO_BASE_URL}?${query.toString()}`, {
+      response = await fetch(`${KAKAO_BASE_URL}?${params.toString()}`, {
         method: "GET",
         headers: {
           Authorization: `KakaoAK ${this.apiKey}`,
