@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { stagger } from "animejs";
 import type { Book } from "@/domain/types";
 import { BookListItem } from "@/features/books/book-list-item";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import { motionDuration, runAnimate } from "@/lib/animation";
 
 interface BookListProps {
   books: Book[];
@@ -30,7 +30,7 @@ export function BookList({
       return;
     }
 
-    safeAnimate(items, {
+    runAnimate(items, {
       opacity: [0, 1],
       translateY: [12, 0],
       duration: motionDuration(300),

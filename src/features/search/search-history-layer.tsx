@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { stagger } from "animejs";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import { motionDuration, runAnimate } from "@/lib/animation";
 import type { SearchHistoryRecord } from "@/domain/types";
 
 interface SearchHistoryLayerProps {
@@ -18,7 +18,7 @@ export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistor
       return;
     }
 
-    safeAnimate(listRef.current.querySelectorAll("[data-history-row]"), {
+    runAnimate(listRef.current.querySelectorAll("[data-history-row]"), {
       opacity: [0, 1],
       translateY: [6, 0],
       duration: motionDuration(180),

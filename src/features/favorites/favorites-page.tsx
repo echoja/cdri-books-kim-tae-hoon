@@ -8,7 +8,7 @@ import {
   useFavoriteRecords,
   useToggleFavorite,
 } from "@/features/favorites/use-favorites";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import { motionDuration, runAnimate } from "@/lib/animation";
 
 export function FavoritesPage() {
   const favoritesQuery = useFavoriteRecords();
@@ -30,7 +30,7 @@ export function FavoritesPage() {
       return;
     }
 
-    safeAnimate(items, {
+    runAnimate(items, {
       opacity: [0, 1],
       translateY: [12, 0],
       duration: motionDuration(300),

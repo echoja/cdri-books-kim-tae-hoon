@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { Check, ChevronDown, X } from "lucide-react";
 import { SEARCH_TARGET_OPTIONS } from "@/domain/search-utils";
 import type { SearchTarget } from "@/domain/types";
-import { motionDuration, safeAnimate } from "@/lib/animation";
+import { motionDuration, runAnimate } from "@/lib/animation";
 import { Button } from "@/components/ui/button";
 
 interface DetailSearchPanelProps {
@@ -33,7 +33,7 @@ export function DetailSearchPanel({
       return;
     }
 
-    safeAnimate(contentRef.current, {
+    runAnimate(contentRef.current, {
       opacity: [0, 1],
       translateY: [-8, 0],
       duration: motionDuration(220),
