@@ -157,6 +157,7 @@
 #### BookListItem 요소 트리 (Parent-Children / Layout Direction / Gap)
 
 - 접힘 상태 (`2143:449`) 트리
+
 ```text
 BookListItemCollapsed [dir=column]
 ├─ ContentRow [dir=row, align=center]
@@ -174,7 +175,9 @@ BookListItemCollapsed [dir=column]
 ├─ InterGroupGap: ThumbnailWrap ↔ MetaRow = 48
 └─ InterGroupGap: MetaRow ↔ PriceAndActions = 22
 ```
+
 - 펼침 상태 (`2143:567`) 트리
+
 ```text
 BookListItemExpanded [dir=column]
 ├─ ContentRow [dir=row, align=start]

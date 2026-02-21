@@ -1,4 +1,4 @@
-import type { FavoriteRecord, Book } from './types'
+import type { FavoriteRecord, Book } from "./types";
 
 export function applyOptimisticFavorite(
   current: FavoriteRecord[],
@@ -6,18 +6,18 @@ export function applyOptimisticFavorite(
   willFavorite: boolean,
 ): FavoriteRecord[] {
   if (willFavorite) {
-    const now = new Date().toISOString()
+    const now = new Date().toISOString();
 
     const next: FavoriteRecord = {
       isbn: book.isbn,
       book,
       likedAt: now,
       updatedAt: now,
-      syncStatus: 'pending',
-    }
+      syncStatus: "pending",
+    };
 
-    return [next, ...current.filter((entry) => entry.isbn !== book.isbn)]
+    return [next, ...current.filter((entry) => entry.isbn !== book.isbn)];
   }
 
-  return current.filter((entry) => entry.isbn !== book.isbn)
+  return current.filter((entry) => entry.isbn !== book.isbn);
 }

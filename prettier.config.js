@@ -1,8 +1,8 @@
 export default {
-  semi: false,
-  singleQuote: true,
+  semi: true,
+  singleQuote: false,
   tabWidth: 2,
   printWidth: 100,
-  trailingComma: 'all',
-  plugins: ['prettier-plugin-tailwindcss'],
-}
+  trailingComma: "all",
+  plugins: ["prettier-plugin-tailwindcss"],
+};

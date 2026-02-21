@@ -1,28 +1,28 @@
-import { type ReactNode, useEffect, useMemo } from 'react'
-import { Outlet } from '@tanstack/react-router'
-import { ErrorBoundary } from 'react-error-boundary'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { persistQueryClient } from '@tanstack/react-query-persist-client'
-import { AppShell } from '@/components/app-shell'
-import { queryClient } from '@/lib/query-client'
-import { createQueryPersister } from '@/lib/query-persistence'
+import { type ReactNode, useEffect, useMemo } from "react";
+import { Outlet } from "@tanstack/react-router";
+import { ErrorBoundary } from "react-error-boundary";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { persistQueryClient } from "@tanstack/react-query-persist-client";
+import { AppShell } from "@/components/app-shell";
+import { queryClient } from "@/lib/query-client";
+import { createQueryPersister } from "@/lib/query-persistence";
 
 export function AppProviders({ children }: { children: ReactNode }) {
-  const persister = useMemo(() => createQueryPersister(), [])
+  const persister = useMemo(() => createQueryPersister(), []);
 
   useEffect(() => {
     const [unsubscribe, restorePromise] = persistQueryClient({
       queryClient,
       persister,
       maxAge: 1000 * 60 * 60 * 24,
-    })
+    });
 
-    void restorePromise.catch(() => undefined)
+    void restorePromise.catch(() => undefined);
 
-    return unsubscribe
-  }, [persister])
+    return unsubscribe;
+  }, [persister]);
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
 
 export function RootLayout() {
@@ -43,5 +43,5 @@ export function RootLayout() {
         </AppShell>
       </ErrorBoundary>
     </AppProviders>
-  )
+  );
 }

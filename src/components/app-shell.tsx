@@ -1,8 +1,8 @@
-import type { ReactNode } from 'react'
-import { AppHeader } from '@/components/app-header'
+import type { ReactNode } from "react";
+import { AppHeader } from "@/components/app-header";
 
 interface AppShellProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export function AppShell({ children }: AppShellProps) {
@@ -15,5 +15,5 @@ export function AppShell({ children }: AppShellProps) {
         </div>
       </main>
     </>
-  )
+  );
 }

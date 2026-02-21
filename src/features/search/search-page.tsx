@@ -1,94 +1,94 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
-import searchIcon from '../../../assets/icons/search.svg'
-import { toUserMessage } from '@/domain/errors'
-import { toSearchTarget } from '@/domain/search-utils'
-import type { SearchHistoryRecord, SearchParams, SearchTarget } from '@/domain/types'
-import { EmptyState } from '@/components/empty-state'
-import { BookList } from '@/features/books/book-list'
-import { DetailSearchPanel } from '@/features/search/detail-search-panel'
-import { SearchHistoryLayer } from '@/features/search/search-history-layer'
-import { useToggleFavorite, useFavoriteIds } from '@/features/favorites/use-favorites'
-import { createBookSearchQueryKey, useBookSearch } from '@/features/search/use-book-search'
-import { Button } from '@/components/ui/button'
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import searchIcon from "../../../assets/icons/search.svg";
+import { toUserMessage } from "@/domain/errors";
+import { toSearchTarget } from "@/domain/search-utils";
+import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/domain/types";
+import { EmptyState } from "@/components/empty-state";
+import { BookList } from "@/features/books/book-list";
+import { DetailSearchPanel } from "@/features/search/detail-search-panel";
+import { SearchHistoryLayer } from "@/features/search/search-history-layer";
+import { useToggleFavorite, useFavoriteIds } from "@/features/favorites/use-favorites";
+import { createBookSearchQueryKey, useBookSearch } from "@/features/search/use-book-search";
+import { Button } from "@/components/ui/button";
 import {
   useRemoveSearchHistory,
   useSearchHistory,
   useUpsertSearchHistory,
-} from '@/features/search/use-search-history'
-import { bookRepository } from '@/repositories/book-repository'
-import { motionDuration, safeAnimate } from '@/lib/animation'
+} from "@/features/search/use-search-history";
+import { bookRepository } from "@/repositories/book-repository";
+import { motionDuration, safeAnimate } from "@/lib/animation";
 
-const PAGE_SIZE = 10 as const
+const PAGE_SIZE = 10 as const;
 
 export function SearchPage() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
-  const [inputKeyword, setInputKeyword] = useState('')
-  const [detailKeyword, setDetailKeyword] = useState('')
-  const [target, setTarget] = useState<SearchTarget>('title')
-  const [params, setParams] = useState<SearchParams | null>(null)
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
-  const [isDetailOpen, setIsDetailOpen] = useState(false)
+  const [inputKeyword, setInputKeyword] = useState("");
+  const [detailKeyword, setDetailKeyword] = useState("");
+  const [target, setTarget] = useState<SearchTarget>("title");
+  const [params, setParams] = useState<SearchParams | null>(null);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-  const searchQuery = useBookSearch(params)
-  const historyQuery = useSearchHistory()
-  const upsertHistory = useUpsertSearchHistory()
-  const removeHistory = useRemoveSearchHistory()
+  const searchQuery = useBookSearch(params);
+  const historyQuery = useSearchHistory();
+  const upsertHistory = useUpsertSearchHistory();
+  const removeHistory = useRemoveSearchHistory();
 
-  const favoriteIdsQuery = useFavoriteIds()
-  const toggleFavorite = useToggleFavorite()
-  const resultsRef = useRef<HTMLDivElement | null>(null)
+  const favoriteIdsQuery = useFavoriteIds();
+  const toggleFavorite = useToggleFavorite();
+  const resultsRef = useRef<HTMLDivElement | null>(null);
 
-  const historyRecords = historyQuery.data ?? []
-  const books = searchQuery.data?.books ?? []
-  const totalCount = searchQuery.data?.totalCount ?? 0
-  const hasSearched = !!params
+  const historyRecords = historyQuery.data ?? [];
+  const books = searchQuery.data?.books ?? [];
+  const totalCount = searchQuery.data?.totalCount ?? 0;
+  const hasSearched = !!params;
 
-  const page = params?.page ?? 1
+  const page = params?.page ?? 1;
   const totalPages = useMemo(() => {
     if (totalCount === 0) {
-      return 1
+      return 1;
     }
 
-    return Math.ceil(totalCount / PAGE_SIZE)
-  }, [totalCount])
+    return Math.ceil(totalCount / PAGE_SIZE);
+  }, [totalCount]);
 
-  const sourceLabel = searchQuery.data?.source === 'cache' ? '캐시 데이터' : null
+  const sourceLabel = searchQuery.data?.source === "cache" ? "캐시 데이터" : null;
 
   useEffect(() => {
     if (!resultsRef.current || books.length === 0) {
-      return
+      return;
     }
 
     safeAnimate(resultsRef.current, {
       opacity: [0, 1],
       duration: motionDuration(300),
-      ease: 'outQuad',
-    })
-  }, [searchQuery.data, books.length])
+      ease: "outQuad",
+    });
+  }, [searchQuery.data, books.length]);
 
   useEffect(() => {
     if (!params || !searchQuery.data || searchQuery.data.isEnd) {
-      return
+      return;
     }
 
     const nextPageParams: SearchParams = {
       ...params,
       page: params.page + 1,
-    }
+    };
 
     void queryClient.prefetchQuery({
       queryKey: createBookSearchQueryKey(nextPageParams),
       queryFn: ({ signal }) => bookRepository.search(nextPageParams, signal),
-    })
-  }, [params, queryClient, searchQuery.data])
+    });
+  }, [params, queryClient, searchQuery.data]);
 
   const executeSearch = (keyword: string, nextTarget: SearchTarget, nextPage = 1) => {
-    const trimmed = keyword.trim()
+    const trimmed = keyword.trim();
 
     if (!trimmed) {
-      return
+      return;
     }
 
     const next: SearchParams = {
@@ -96,48 +96,48 @@ export function SearchPage() {
       target: nextTarget,
       page: nextPage,
       size: PAGE_SIZE,
-    }
+    };
 
     const isSameSearch =
-      params?.query === next.query && params?.target === next.target && params?.page === next.page
+      params?.query === next.query && params?.target === next.target && params?.page === next.page;
 
     if (isSameSearch) {
       void queryClient.invalidateQueries({
         queryKey: createBookSearchQueryKey(next),
-      })
+      });
       void queryClient.refetchQueries({
         queryKey: createBookSearchQueryKey(next),
         exact: true,
-      })
+      });
     }
 
-    setInputKeyword(trimmed)
-    setDetailKeyword(trimmed)
-    setTarget(nextTarget)
-    setParams(next)
-    setIsHistoryOpen(false)
-    setIsDetailOpen(false)
+    setInputKeyword(trimmed);
+    setDetailKeyword(trimmed);
+    setTarget(nextTarget);
+    setParams(next);
+    setIsHistoryOpen(false);
+    setIsDetailOpen(false);
 
     upsertHistory.mutate({
       keyword: trimmed,
       target: nextTarget,
-    })
-  }
+    });
+  };
 
   const handleHistorySelect = (record: SearchHistoryRecord) => {
-    executeSearch(record.keyword, record.target ?? 'title')
-  }
+    executeSearch(record.keyword, record.target ?? "title");
+  };
 
   const handlePageChange = (nextPage: number) => {
     if (!params || nextPage < 1 || nextPage > totalPages) {
-      return
+      return;
     }
 
     setParams({
       ...params,
       page: nextPage,
-    })
-  }
+    });
+  };
 
   return (
     <section className="w-full">
@@ -148,8 +148,8 @@ export function SearchPage() {
           <form
             className="h-search-input rounded-pill bg-surface-secondary relative m-0 flex w-[480px] items-center gap-[11px] px-[18px] max-[767px]:w-full"
             onSubmit={(event) => {
-              event.preventDefault()
-              executeSearch(inputKeyword, target)
+              event.preventDefault();
+              executeSearch(inputKeyword, target);
             }}
           >
             <img src={searchIcon} width={30} height={30} alt="" aria-hidden />
@@ -159,11 +159,11 @@ export function SearchPage() {
               className="text-caption text-text-primary placeholder:text-text-subtitle focus-visible:outline-palette-primary flex-1 border-none bg-transparent outline-none focus-visible:outline-2 focus-visible:outline-offset-2"
               onFocus={() => setIsHistoryOpen(true)}
               onBlur={() => {
-                window.setTimeout(() => setIsHistoryOpen(false), 100)
+                window.setTimeout(() => setIsHistoryOpen(false), 100);
               }}
               onChange={(event) => {
-                setInputKeyword(event.target.value)
-                setDetailKeyword(event.target.value)
+                setInputKeyword(event.target.value);
+                setDetailKeyword(event.target.value);
               }}
             />
             {isHistoryOpen && historyRecords.length > 0 ? (
@@ -250,5 +250,5 @@ export function SearchPage() {
 
       {!searchQuery.isFetching && books.length === 0 ? <EmptyState /> : null}
     </section>
-  )
+  );
 }

@@ -1,20 +1,20 @@
-import * as Popover from '@radix-ui/react-popover'
-import * as Select from '@radix-ui/react-select'
-import { useEffect, useRef } from 'react'
-import { Check, ChevronDown, X } from 'lucide-react'
-import { SEARCH_TARGET_OPTIONS } from '@/domain/search-utils'
-import type { SearchTarget } from '@/domain/types'
-import { motionDuration, safeAnimate } from '@/lib/animation'
-import { Button } from '@/components/ui/button'
+import * as Popover from "@radix-ui/react-popover";
+import * as Select from "@radix-ui/react-select";
+import { useEffect, useRef } from "react";
+import { Check, ChevronDown, X } from "lucide-react";
+import { SEARCH_TARGET_OPTIONS } from "@/domain/search-utils";
+import type { SearchTarget } from "@/domain/types";
+import { motionDuration, safeAnimate } from "@/lib/animation";
+import { Button } from "@/components/ui/button";
 
 interface DetailSearchPanelProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-  target: SearchTarget
-  keyword: string
-  onTargetChange: (target: SearchTarget) => void
-  onKeywordChange: (keyword: string) => void
-  onSearch: (keywordOverride?: string) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  target: SearchTarget;
+  keyword: string;
+  onTargetChange: (target: SearchTarget) => void;
+  onKeywordChange: (keyword: string) => void;
+  onSearch: (keywordOverride?: string) => void;
 }
 
 export function DetailSearchPanel({
@@ -26,20 +26,20 @@ export function DetailSearchPanel({
   onKeywordChange,
   onSearch,
 }: DetailSearchPanelProps) {
-  const contentRef = useRef<HTMLDivElement | null>(null)
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!open || !contentRef.current) {
-      return
+      return;
     }
 
     safeAnimate(contentRef.current, {
       opacity: [0, 1],
       translateY: [-8, 0],
       duration: motionDuration(220),
-      ease: 'outQuad',
-    })
-  }, [open])
+      ease: "outQuad",
+    });
+  }, [open]);
 
   return (
     <Popover.Root open={open} onOpenChange={onOpenChange}>
@@ -112,8 +112,8 @@ export function DetailSearchPanel({
                 onChange={(event) => onKeywordChange(event.target.value)}
                 placeholder="검색어 입력"
                 onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    onSearch(event.currentTarget.value)
+                  if (event.key === "Enter") {
+                    onSearch(event.currentTarget.value);
                   }
                 }}
               />
@@ -130,5 +130,5 @@ export function DetailSearchPanel({
         </Popover.Content>
       </Popover.Portal>
     </Popover.Root>
-  )
+  );
 }

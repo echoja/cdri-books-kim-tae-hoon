@@ -1,34 +1,34 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { ChevronDown, ChevronUp } from 'lucide-react'
-import lineHeart from '../../../assets/icons/line.svg'
-import fillHeart from '../../../assets/icons/fill.svg'
-import emptyBookIcon from '../../../assets/icons/icon_book.png'
-import { formatPrice, getCollapsedDisplayPrice, hasSalePrice } from '@/domain/book-utils'
-import type { Book } from '@/domain/types'
-import { motionDuration, safeAnimate } from '@/lib/animation'
-import { Button, LinkButton } from '@/components/ui/button'
-import { cva } from '@/lib/class-name'
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import lineHeart from "../../../assets/icons/line.svg";
+import fillHeart from "../../../assets/icons/fill.svg";
+import emptyBookIcon from "../../../assets/icons/icon_book.png";
+import { formatPrice, getCollapsedDisplayPrice, hasSalePrice } from "@/domain/book-utils";
+import type { Book } from "@/domain/types";
+import { motionDuration, safeAnimate } from "@/lib/animation";
+import { Button, LinkButton } from "@/components/ui/button";
+import { cva } from "@/lib/class-name";
 
 const favoriteBadgeVariants = cva(
-  'absolute inline-flex items-center justify-center rounded-full border-none bg-transparent p-0',
+  "absolute inline-flex items-center justify-center rounded-full border-none bg-transparent p-0",
   {
     variants: {
       size: {
-        collapsed: 'right-0 top-0 h-4 w-4',
-        expanded: 'right-2 top-2 h-6 w-6',
+        collapsed: "right-0 top-0 h-4 w-4",
+        expanded: "right-2 top-2 h-6 w-6",
       },
     },
     defaultVariants: {
-      size: 'collapsed',
+      size: "collapsed",
     },
   },
-)
+);
 
 interface BookListItemProps {
-  book: Book
-  isFavorite: boolean
-  favoriteDisabled?: boolean
-  onToggleFavorite: (book: Book, willFavorite: boolean) => void
+  book: Book;
+  isFavorite: boolean;
+  favoriteDisabled?: boolean;
+  onToggleFavorite: (book: Book, willFavorite: boolean) => void;
 }
 
 export function BookListItem({
@@ -37,73 +37,73 @@ export function BookListItem({
   favoriteDisabled = false,
   onToggleFavorite,
 }: BookListItemProps) {
-  const [expanded, setExpanded] = useState(false)
-  const [renderExpanded, setRenderExpanded] = useState(false)
-  const panelRef = useRef<HTMLDivElement | null>(null)
+  const [expanded, setExpanded] = useState(false);
+  const [renderExpanded, setRenderExpanded] = useState(false);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
   const authors = useMemo(() => {
     if (!book.authors || book.authors.length === 0) {
-      return '-'
+      return "-";
     }
 
-    return book.authors.join(', ')
-  }, [book.authors])
+    return book.authors.join(", ");
+  }, [book.authors]);
 
-  const thumbnailSrc = book.thumbnail || emptyBookIcon
+  const thumbnailSrc = book.thumbnail || emptyBookIcon;
 
   useEffect(() => {
     if (expanded) {
-      setRenderExpanded(true)
+      setRenderExpanded(true);
     }
-  }, [expanded])
+  }, [expanded]);
 
   useEffect(() => {
-    const panel = panelRef.current
+    const panel = panelRef.current;
 
     if (!panel) {
-      return
+      return;
     }
 
     if (expanded) {
-      panel.style.display = 'block'
-      panel.style.overflow = 'hidden'
-      panel.style.height = '0px'
+      panel.style.display = "block";
+      panel.style.overflow = "hidden";
+      panel.style.height = "0px";
 
-      const targetHeight = Math.min(panel.scrollHeight, window.innerWidth <= 767 ? 640 : 520)
+      const targetHeight = Math.min(panel.scrollHeight, window.innerWidth <= 767 ? 640 : 520);
 
       safeAnimate(panel, {
         opacity: [0, 1],
         height: [0, targetHeight],
         duration: motionDuration(220),
-        ease: 'outQuad',
+        ease: "outQuad",
         onComplete: () => {
-          panel.style.height = 'auto'
-          panel.style.overflow = 'visible'
+          panel.style.height = "auto";
+          panel.style.overflow = "visible";
         },
-      })
-      return
+      });
+      return;
     }
 
     if (!renderExpanded) {
-      return
+      return;
     }
 
-    panel.style.overflow = 'hidden'
+    panel.style.overflow = "hidden";
 
     safeAnimate(panel, {
       opacity: [1, 0],
       height: [panel.scrollHeight, 0],
       duration: motionDuration(180),
-      ease: 'outQuad',
+      ease: "outQuad",
       onComplete: () => {
-        setRenderExpanded(false)
+        setRenderExpanded(false);
       },
-    })
-  }, [expanded, renderExpanded])
+    });
+  }, [expanded, renderExpanded]);
 
   const toggleExpanded = () => {
-    setExpanded((prev) => !prev)
-  }
+    setExpanded((prev) => !prev);
+  };
 
   return (
     <article className="w-full">
@@ -116,10 +116,10 @@ export function BookListItem({
           />
           <button
             type="button"
-            className={favoriteBadgeVariants({ size: 'collapsed' })}
+            className={favoriteBadgeVariants({ size: "collapsed" })}
             onClick={() => onToggleFavorite(book, !isFavorite)}
             disabled={favoriteDisabled}
-            aria-label={isFavorite ? '찜 해제' : '찜 추가'}
+            aria-label={isFavorite ? "찜 해제" : "찜 추가"}
           >
             <img src={isFavorite ? fillHeart : lineHeart} width={16} height={16} alt="" />
           </button>
@@ -137,7 +137,7 @@ export function BookListItem({
           <div className="flex items-center gap-2 max-[767px]:gap-[6px]">
             <LinkButton
               variant="primary"
-              href={book.url || '#'}
+              href={book.url || "#"}
               target="_blank"
               rel="noreferrer"
               disabled={!book.url}
@@ -156,7 +156,7 @@ export function BookListItem({
         <div
           ref={panelRef}
           className="min-h-[344px]"
-          style={{ display: expanded ? 'block' : 'none' }}
+          style={{ display: expanded ? "block" : "none" }}
         >
           <div className="flex max-h-[520px] min-h-[344px] items-start overflow-hidden px-4 py-6 pl-[54px] max-[767px]:max-h-[640px] max-[767px]:flex-col max-[767px]:gap-4 max-[767px]:overflow-y-auto max-[767px]:px-4 max-[767px]:py-5">
             <div className="relative mr-8 w-[210px] min-w-[210px] max-[767px]:mr-0">
@@ -167,10 +167,10 @@ export function BookListItem({
               />
               <button
                 type="button"
-                className={favoriteBadgeVariants({ size: 'expanded' })}
+                className={favoriteBadgeVariants({ size: "expanded" })}
                 onClick={() => onToggleFavorite(book, !isFavorite)}
                 disabled={favoriteDisabled}
-                aria-label={isFavorite ? '찜 해제' : '찜 추가'}
+                aria-label={isFavorite ? "찜 해제" : "찜 추가"}
               >
                 <img src={isFavorite ? fillHeart : lineHeart} width={24} height={24} alt="" />
               </button>
@@ -187,7 +187,7 @@ export function BookListItem({
                   책 소개
                 </h3>
                 <p className="text-small text-text-primary m-0 line-clamp-8 max-[767px]:line-clamp-6">
-                  {book.contents || '책 소개 정보가 없습니다.'}
+                  {book.contents || "책 소개 정보가 없습니다."}
                 </p>
               </section>
             </section>
@@ -216,7 +216,7 @@ export function BookListItem({
                 <LinkButton
                   variant="primary"
                   className="w-full justify-center"
-                  href={book.url || '#'}
+                  href={book.url || "#"}
                   target="_blank"
                   rel="noreferrer"
                   disabled={!book.url}
@@ -230,5 +230,5 @@ export function BookListItem({
       ) : null}
       <div className="bg-divider h-px w-full" />
     </article>
-  )
+  );
 }

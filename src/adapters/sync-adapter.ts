@@ -1,13 +1,13 @@
-import type { FavoriteRecord, SyncAdapter } from '@/domain/types'
+import type { FavoriteRecord, SyncAdapter } from "@/domain/types";
 
 export class NoopSyncAdapter implements SyncAdapter {
   async pushFavorites(_changes: FavoriteRecord[]): Promise<void> {
-    return Promise.resolve()
+    return Promise.resolve();
   }
 
   async pullFavorites(_since?: string): Promise<FavoriteRecord[]> {
-    return Promise.resolve([])
+    return Promise.resolve([]);
   }
 }
 
-export const syncAdapter: SyncAdapter = new NoopSyncAdapter()
+export const syncAdapter: SyncAdapter = new NoopSyncAdapter();

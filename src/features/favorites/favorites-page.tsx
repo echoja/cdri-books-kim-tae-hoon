@@ -1,33 +1,33 @@
-import { useEffect, useRef } from 'react'
-import { stagger } from 'animejs'
-import { toUserMessage } from '@/domain/errors'
-import { EmptyState } from '@/components/empty-state'
-import { BookList } from '@/features/books/book-list'
+import { useEffect, useRef } from "react";
+import { stagger } from "animejs";
+import { toUserMessage } from "@/domain/errors";
+import { EmptyState } from "@/components/empty-state";
+import { BookList } from "@/features/books/book-list";
 import {
   useFavoriteIds,
   useFavoriteRecords,
   useToggleFavorite,
-} from '@/features/favorites/use-favorites'
-import { motionDuration, safeAnimate } from '@/lib/animation'
+} from "@/features/favorites/use-favorites";
+import { motionDuration, safeAnimate } from "@/lib/animation";
 
 export function FavoritesPage() {
-  const favoritesQuery = useFavoriteRecords()
-  const favoriteIdsQuery = useFavoriteIds()
-  const toggleFavorite = useToggleFavorite()
-  const listRef = useRef<HTMLDivElement | null>(null)
+  const favoritesQuery = useFavoriteRecords();
+  const favoriteIdsQuery = useFavoriteIds();
+  const toggleFavorite = useToggleFavorite();
+  const listRef = useRef<HTMLDivElement | null>(null);
 
-  const records = favoritesQuery.data ?? []
-  const books = records.map((record) => record.book)
+  const records = favoritesQuery.data ?? [];
+  const books = records.map((record) => record.book);
 
   useEffect(() => {
     if (!listRef.current || books.length === 0) {
-      return
+      return;
     }
 
-    const items = listRef.current.querySelectorAll('article')
+    const items = listRef.current.querySelectorAll("article");
 
     if (items.length === 0) {
-      return
+      return;
     }
 
     safeAnimate(items, {
@@ -35,9 +35,9 @@ export function FavoritesPage() {
       translateY: [12, 0],
       duration: motionDuration(300),
       delay: stagger(50),
-      ease: 'outQuad',
-    })
-  }, [books.length])
+      ease: "outQuad",
+    });
+  }, [books.length]);
 
   return (
     <section className="w-full">
@@ -81,5 +81,5 @@ export function FavoritesPage() {
         <EmptyState message="찜한 책이 없습니다" />
       ) : null}
     </section>
-  )
+  );
 }
