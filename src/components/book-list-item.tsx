@@ -1,4 +1,4 @@
-import { type ComponentProps, useState } from "react";
+import { type ComponentProps } from "react";
 import { ChevronDown } from "lucide-react";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
 import { formatPrice, hasSalePrice } from "@/domain/book-utils";
@@ -9,6 +9,8 @@ import { cn } from "@/lib/class-name";
 
 interface BookListItemProps extends Omit<ComponentProps<"article">, "children"> {
   book: Book;
+  expanded: boolean;
+  onToggleExpanded: () => void;
   isFavorite: boolean;
   favoriteDisabled?: boolean;
   onToggleFavorite: (book: Book, willFavorite: boolean) => void;
@@ -16,21 +18,17 @@ interface BookListItemProps extends Omit<ComponentProps<"article">, "children"> 
 
 export function BookListItem({
   book,
+  expanded,
+  onToggleExpanded,
   isFavorite,
   favoriteDisabled = false,
   onToggleFavorite,
   className,
   ...props
 }: BookListItemProps) {
-  const [expanded, setExpanded] = useState(false);
-
   const authors = !book.authors || book.authors.length === 0 ? "-" : book.authors.join(", ");
 
   const thumbnailSrc = book.thumbnail || emptyBookIcon;
-
-  const toggleExpanded = () => {
-    setExpanded((prev) => !prev);
-  };
 
   return (
     <article className={cn("w-full", className)} {...props}>
@@ -115,7 +113,7 @@ export function BookListItem({
                 <Button
                   variant="secondary"
                   className="w-28 px-0"
-                  onClick={toggleExpanded}
+                  onClick={onToggleExpanded}
                   aria-expanded={expanded}
                 >
                   상세보기

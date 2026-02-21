@@ -1,4 +1,4 @@
-import { type ComponentProps } from "react";
+import { type ComponentProps, useState } from "react";
 import type { Book } from "@/domain/types";
 import { BookListItem } from "./book-list-item";
 import { cn } from "@/lib/class-name";
@@ -18,12 +18,18 @@ export function BookList({
   className,
   ...props
 }: BookListProps) {
+  const [expandedIsbn, setExpandedIsbn] = useState<string | null>(null);
+
   return (
     <section className={cn("mt-9", className)} aria-live="polite" {...props}>
       {books.map((book) => (
         <BookListItem
           key={`${book.isbn}-${book.title}`}
           book={book}
+          expanded={expandedIsbn === book.isbn}
+          onToggleExpanded={() =>
+            setExpandedIsbn((prev) => (prev === book.isbn ? null : book.isbn))
+          }
           isFavorite={favoriteIds.includes(book.isbn)}
           favoriteDisabled={favoriteDisabled}
           onToggleFavorite={onToggleFavorite}
