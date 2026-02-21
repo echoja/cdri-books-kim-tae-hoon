@@ -82,56 +82,6 @@ const kakaoErrorSchema = z.object({
   msg: z.string(),
 });
 
-/**
- * Kakao REST API 응답을 파싱하고, 에러 상태일 경우 {@link AppError}를 던진다.
- *
- * Rate-limit 정책 (429):
- * - Book search (Daum Search): 30,000 req/day, 50,000/day across all search types
- * - Monthly cap: 3,000,000 req across all APIs
- * - Kakao does NOT provide a `Retry-After` header on 429 responses.
- *
- * @see https://developers.kakao.com/docs/latest/ko/getting-started/quota
- */
-async function parseResponse(response: Response): Promise<SearchResult> {
-  if (!response.ok) {
-    const body = await response.json().catch(() => null);
-    const kakaoError = kakaoErrorSchema.safeParse(body);
-    const serverMsg = kakaoError.success ? kakaoError.data.msg : undefined;
-
-    if (response.status === 401 || response.status === 403) {
-      throw new AppError("UNAUTHORIZED", serverMsg ?? "인증되지 않은 요청입니다.", response.status);
-    }
-
-    if (response.status === 429) {
-      throw new AppError("RATE_LIMIT", serverMsg ?? "요청 제한에 도달했습니다.", response.status);
-    }
-
-    if (response.status >= 500) {
-      throw new AppError(
-        "SERVER",
-        serverMsg ?? "카카오 책 검색 서버 오류가 발생했습니다.",
-        response.status,
-      );
-    }
-
-    throw new AppError("UNKNOWN", serverMsg ?? "검색 요청을 처리할 수 없습니다.", response.status);
-  }
-
-  const json = await response.json();
-  const parsed = kakaoResponseSchema.safeParse(json);
-
-  if (!parsed.success) {
-    throw new AppError("UNKNOWN", "검색 응답 형식이 올바르지 않습니다.");
-  }
-
-  return {
-    books: parsed.data.documents.map(toBook),
-    totalCount: parsed.data.meta.total_count,
-    pageableCount: parsed.data.meta.pageable_count,
-    isEnd: parsed.data.meta.is_end,
-  };
-}
-
 /** Kakao 도서 검색 API 클라이언트. */
 class KakaoBookClient {
   private readonly apiKey: string;
@@ -146,6 +96,12 @@ class KakaoBookClient {
    * @param options - Kakao 도서 검색 API 요청 파라미터.
    * @param signal - 요청 취소를 위한 {@link AbortSignal}.
    * @see https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
+   *
+   * Rate-limit 정책 (429):
+   * - Book search (Daum Search): 30,000 req/day, 50,000/day across all search types
+   * - Monthly cap: 3,000,000 req across all APIs
+   *
+   * @see https://developers.kakao.com/docs/latest/ko/getting-started/quota
    */
   async search(options: KakaoBookSearchOptions, signal?: AbortSignal): Promise<SearchResult> {
     if (!this.apiKey) {
@@ -188,7 +144,51 @@ class KakaoBookClient {
       throw new AppError("NETWORK", "네트워크 오류로 검색에 실패했습니다.");
     }
 
-    return parseResponse(response);
+    if (!response.ok) {
+      const body = await response.json().catch(() => null);
+      const kakaoError = kakaoErrorSchema.safeParse(body);
+      const serverMsg = kakaoError.success ? kakaoError.data.msg : undefined;
+
+      if (response.status === 401 || response.status === 403) {
+        throw new AppError(
+          "UNAUTHORIZED",
+          serverMsg ?? "인증되지 않은 요청입니다.",
+          response.status,
+        );
+      }
+
+      if (response.status === 429) {
+        throw new AppError("RATE_LIMIT", serverMsg ?? "요청 제한에 도달했습니다.", response.status);
+      }
+
+      if (response.status >= 500) {
+        throw new AppError(
+          "SERVER",
+          serverMsg ?? "카카오 책 검색 서버 오류가 발생했습니다.",
+          response.status,
+        );
+      }
+
+      throw new AppError(
+        "UNKNOWN",
+        serverMsg ?? "검색 요청을 처리할 수 없습니다.",
+        response.status,
+      );
+    }
+
+    const json = await response.json();
+    const parsed = kakaoResponseSchema.safeParse(json);
+
+    if (!parsed.success) {
+      throw new AppError("UNKNOWN", "검색 응답 형식이 올바르지 않습니다.");
+    }
+
+    return {
+      books: parsed.data.documents.map(toBook),
+      totalCount: parsed.data.meta.total_count,
+      pageableCount: parsed.data.meta.pageable_count,
+      isEnd: parsed.data.meta.is_end,
+    };
   }
 }
 
