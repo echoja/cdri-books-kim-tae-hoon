@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { AppError } from "@/lib/errors";
 import { buildBookId } from "@/lib/book-utils";
-import type { Book, SearchResultPayload } from "@/lib/types";
+import type { Book, SearchResult } from "@/lib/types";
 
 /**
  * Kakao 도서 검색 API 요청 파라미터.
@@ -92,7 +92,7 @@ const kakaoErrorSchema = z.object({
  *
  * @see https://developers.kakao.com/docs/latest/ko/getting-started/quota
  */
-async function parseResponse(response: Response): Promise<SearchResultPayload> {
+async function parseResponse(response: Response): Promise<SearchResult> {
   if (!response.ok) {
     const body = await response.json().catch(() => null);
     const kakaoError = kakaoErrorSchema.safeParse(body);
@@ -147,10 +147,7 @@ class KakaoBookClient {
    * @param signal - 요청 취소를 위한 {@link AbortSignal}.
    * @see https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book
    */
-  async search(
-    options: KakaoBookSearchOptions,
-    signal?: AbortSignal,
-  ): Promise<SearchResultPayload> {
+  async search(options: KakaoBookSearchOptions, signal?: AbortSignal): Promise<SearchResult> {
     if (!this.apiKey) {
       throw new AppError("API_KEY_MISSING", "VITE_KAKAO_REST_API_KEY 환경 변수가 필요합니다.");
     }

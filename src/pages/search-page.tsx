@@ -51,8 +51,6 @@ export function SearchPage() {
   const page = params?.page ?? 1;
   const totalPages = totalCount === 0 ? 1 : Math.ceil(totalCount / PAGE_SIZE);
 
-  const sourceLabel = searchQuery.data?.source === "cache" ? "캐시 데이터" : null;
-
   useEffect(() => {
     setDetailKeyword(search.query);
   }, [search.query]);
@@ -225,16 +223,6 @@ export function SearchPage() {
           <span>
             총 <strong className="text-palette-primary">{totalCount}</strong>건
           </span>
-          {sourceLabel ? (
-            <span
-              className={cn(
-                "border-palette-divider text-small text-text-subtitle rounded-full",
-                "border px-2 py-0.75",
-              )}
-            >
-              {sourceLabel}
-            </span>
-          ) : null}
         </div>
       </div>
 

@@ -1,23 +1,9 @@
 import Dexie, { type Table } from "dexie";
-import type {
-  FavoriteRecord,
-  SearchHistoryRecord,
-  SearchParams,
-  SearchResultPayload,
-} from "@/lib/types";
+import type { FavoriteRecord, SearchHistoryRecord } from "@/lib/types";
 
 interface FavoriteEntity extends FavoriteRecord {}
 
 interface SearchHistoryEntity extends SearchHistoryRecord {}
-
-interface SearchCacheEntity {
-  key: string;
-  query: string;
-  page: number;
-  target?: SearchParams["target"];
-  payload: SearchResultPayload;
-  updatedAt: string;
-}
 
 interface KeyValueEntity {
   key: string;
@@ -28,7 +14,6 @@ interface KeyValueEntity {
 class AppDb extends Dexie {
   favorites!: Table<FavoriteEntity, string>;
   searchHistory!: Table<SearchHistoryEntity, string>;
-  searchCache!: Table<SearchCacheEntity, string>;
   kv!: Table<KeyValueEntity, string>;
 
   constructor() {
@@ -37,7 +22,6 @@ class AppDb extends Dexie {
     this.version(1).stores({
       favorites: "&isbn, likedAt, updatedAt",
       searchHistory: "&key, searchedAt",
-      searchCache: "&key, updatedAt",
       kv: "&key, updatedAt",
     });
   }

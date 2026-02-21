@@ -1,12 +1,11 @@
 import { AppError } from "@/lib/errors";
-import type { SearchParams, SearchResult, SearchResultPayload } from "@/lib/types";
-import { searchCacheRepository } from "@/repositories/search-cache-repository";
+import type { SearchParams, SearchResult } from "@/lib/types";
 
 interface BookSearchClient {
   search(
     options: { query: string; page?: number; size?: number; target?: string },
     signal?: AbortSignal,
-  ): Promise<SearchResultPayload>;
+  ): Promise<SearchResult>;
 }
 
 export class BookRepository {
@@ -18,7 +17,7 @@ export class BookRepository {
 
   async search(params: SearchParams, signal?: AbortSignal): Promise<SearchResult> {
     try {
-      const payload = await this.client.search(
+      return await this.client.search(
         {
           query: params.query,
           page: params.page,
@@ -27,29 +26,9 @@ export class BookRepository {
         },
         signal,
       );
-
-      try {
-        await searchCacheRepository.set(params, payload);
-      } catch {
-        /* cache write failure is non-critical */
-      }
-
-      return {
-        ...payload,
-        source: "network",
-      };
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         throw error;
-      }
-
-      const cached = await searchCacheRepository.get(params);
-
-      if (cached) {
-        return {
-          ...cached,
-          source: "cache",
-        };
       }
 
       if (error instanceof AppError) {

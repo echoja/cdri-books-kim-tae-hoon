@@ -25,14 +25,6 @@ export interface SearchResult {
   totalCount: number;
   pageableCount: number;
   isEnd: boolean;
-  source: "network" | "cache";
-}
-
-export interface SearchResultPayload {
-  books: Book[];
-  totalCount: number;
-  pageableCount: number;
-  isEnd: boolean;
 }
 
 export type SyncStatus = "synced" | "pending";

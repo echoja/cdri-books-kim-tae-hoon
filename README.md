@@ -14,7 +14,6 @@
   - `Dexie(IndexedDB)`
 - 핵심 목표
   - `docs/requirements.md` 요구사항 충족
-  - 네트워크 실패 시 캐시 fallback
   - 로컬 우선 저장 + 향후 원격 동기화 확장 포인트 확보
 
 ## 사전 요구사항
@@ -91,7 +90,6 @@ src/
 
 ## 강조 기능
 
-- 검색 실패 시 `검색 캐시` 자동 fallback 및 `캐시 데이터` 배지 노출
 - 검색 기록 `최대 8개` 유지 + 중복 최신화
 - 찜하기 `optimistic update` + 실패 시 롤백
 - 폰트는 로컬 `@font-face` + `unicode-range` 기반 dynamic subset으로 로딩해 렌더링 성능을 최적화
