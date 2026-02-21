@@ -61,8 +61,8 @@ export function BookListItem({
           </div>
 
           <div className="flex min-w-0 flex-1 gap-12">
-            <div className={cn("mt-4 flex min-w-0 flex-col gap-4")}>
-              <div className={cn("flex min-w-0 items-center gap-4", expanded ? "" : "")}>
+            <div className="mt-4 flex min-w-0 flex-col gap-4">
+              <div className="flex min-w-0 items-center gap-4">
                 <p
                   className={cn(
                     "text-title-3 text-text-primary m-0",
