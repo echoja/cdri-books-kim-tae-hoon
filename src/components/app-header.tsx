@@ -11,21 +11,18 @@ export function AppHeader() {
 
   return (
     <header
-      className={cn(
-        "h-header-height px-header-pad-desktop relative flex w-full",
-        "items-center justify-center",
-      )}
+      className={cn("h-header px-header-inset relative flex w-full", "items-center justify-center")}
     >
       <div
         className={cn(
           "text-title-1 text-text-title absolute",
-          "lg:left-header-pad-desktop top-6 left-6 leading-6 font-bold",
+          "lg:left-header-inset top-6 left-6 leading-6 font-bold",
         )}
         aria-label="CERTICOS BOOKS"
       >
         CERTICOS BOOKS
       </div>
-      <nav className="gap-nav-gap flex items-center" aria-label="주요 메뉴">
+      <nav className="gap-nav-spacing flex items-center" aria-label="주요 메뉴">
         {NAV_ITEMS.map((item) => {
           const active = pathname.startsWith(item.to);
 

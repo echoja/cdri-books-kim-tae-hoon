@@ -9,14 +9,14 @@
   --spacing-page-bottom: 60px;
   --spacing-page-pad-trim: 64px;
 
-  --spacing-header-pad-desktop: 160px;
+  --spacing-header-inset: 160px;
 
-  --spacing-layout-gap-4: 16px;
-  --spacing-layout-gap-5: 22px;
-  --spacing-nav-gap: 56px;
+  --spacing-layout-4: 16px;
+  --spacing-layout-5: 22px;
+  --spacing-nav-spacing: 56px;
 
-  --spacing-header-height: 84px;
-  --spacing-search-input-height: 48px;
+  --spacing-header: 84px;
+  --spacing-search-input: 48px;
 
   --radius-pill: 24px;
   --radius-button: 8px;
