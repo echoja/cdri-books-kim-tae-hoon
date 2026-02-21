@@ -41,7 +41,7 @@ export function AppHeader() {
           const active = pathname.startsWith(item.to);
 
           return (
-            <Link key={item.to} className={navLinkVariants({ active })} to={item.to}>
+            <Link key={item.to} className={cn(navLinkVariants({ active }))} to={item.to}>
               {item.label}
             </Link>
           );
