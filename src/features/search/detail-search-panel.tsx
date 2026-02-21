@@ -5,6 +5,7 @@ import { Check, ChevronDown, X } from "lucide-react";
 import { SEARCH_TARGET_OPTIONS } from "@/domain/search-utils";
 import type { SearchTarget } from "@/domain/types";
 import { motionDuration, runAnimate } from "@/lib/animation";
+import { cn } from "@/lib/class-name";
 import { Button } from "@/components/ui/button";
 
 interface DetailSearchPanelProps {
@@ -44,7 +45,7 @@ export function DetailSearchPanel({
   return (
     <Popover.Root open={open} onOpenChange={onOpenChange}>
       <Popover.Trigger asChild>
-        <Button variant="outline" className="max-[767px]:self-end">
+        <Button variant="outline" className="max-md:self-end">
           상세검색
         </Button>
       </Popover.Trigger>
@@ -52,27 +53,39 @@ export function DetailSearchPanel({
         <Popover.Content
           sideOffset={8}
           align="start"
-          className="bg-palette-white relative z-30 min-h-40 w-90 rounded-lg px-6 py-9 shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)] max-[767px]:w-[calc(100vw-32px)] max-[767px]:max-w-90"
+          className={cn(
+            "bg-palette-white relative z-30 min-h-40 w-90 rounded-lg px-6 py-9",
+            "shadow-[0_4px_14px_6px_rgba(151,151,151,0.15)]",
+            "max-md:w-[calc(100vw-32px)] max-md:max-w-90",
+          )}
           data-testid="detail-search-popover"
           forceMount
         >
           <div ref={contentRef}>
             <button
               type="button"
-              className="text-text-secondary absolute top-2 right-2 cursor-pointer border-none bg-transparent"
+              className={cn(
+                "text-text-secondary absolute top-2 right-2",
+                "cursor-pointer border-none bg-transparent",
+              )}
               aria-label="상세검색 닫기"
               onClick={() => onOpenChange(false)}
             >
               <X size={20} />
             </button>
 
-            <div className="flex items-center gap-1 max-[767px]:flex-wrap">
+            <div className="flex items-center gap-1 max-md:flex-wrap">
               <Select.Root
                 value={target}
                 onValueChange={(value) => onTargetChange(value as SearchTarget)}
               >
                 <Select.Trigger
-                  className="border-divider bg-palette-white text-body-small text-text-primary focus-visible:outline-palette-primary inline-flex min-h-9 w-25 items-center justify-between rounded-lg border px-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 max-[767px]:w-full"
+                  className={cn(
+                    "border-divider bg-palette-white text-body-small text-text-primary inline-flex min-h-9 w-25",
+                    "items-center justify-between rounded-lg border px-2.5",
+                    "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
+                    "max-md:w-full",
+                  )}
                   aria-label="검색 기준"
                   data-testid="detail-search-target"
                 >
@@ -83,7 +96,10 @@ export function DetailSearchPanel({
                 </Select.Trigger>
                 <Select.Portal>
                   <Select.Content
-                    className="border-divider bg-palette-white z-40 h-15 min-w-25 overflow-hidden rounded-lg border"
+                    className={cn(
+                      "border-divider bg-palette-white z-40 h-15 min-w-25",
+                      "overflow-hidden rounded-lg border",
+                    )}
                     position="popper"
                     sideOffset={4}
                   >
@@ -92,7 +108,11 @@ export function DetailSearchPanel({
                         <Select.Item
                           key={option.value}
                           value={option.value}
-                          className="text-body-small text-text-primary data-[highlighted]:bg-surface-secondary flex min-h-7.5 w-full cursor-pointer items-center justify-between px-2.5 data-[highlighted]:outline-none"
+                          className={cn(
+                            "text-body-small text-text-primary flex min-h-7.5 w-full",
+                            "cursor-pointer items-center justify-between px-2.5",
+                            "data-highlighted:bg-surface-secondary data-highlighted:outline-none",
+                          )}
                         >
                           <Select.ItemText>{option.label}</Select.ItemText>
                           <Select.ItemIndicator>
@@ -106,7 +126,12 @@ export function DetailSearchPanel({
               </Select.Root>
 
               <input
-                className="border-divider text-text-primary placeholder:text-text-subtitle focus-visible:outline-palette-primary min-h-9 w-52 rounded-lg border px-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 max-[767px]:w-full"
+                className={cn(
+                  "border-divider text-text-primary placeholder:text-text-subtitle min-h-9 w-52",
+                  "rounded-lg border px-2.5",
+                  "focus-visible:outline-palette-primary focus-visible:outline-2 focus-visible:outline-offset-2",
+                  "max-md:w-full",
+                )}
                 data-testid="detail-search-keyword"
                 value={keyword}
                 onChange={(event) => onKeywordChange(event.target.value)}

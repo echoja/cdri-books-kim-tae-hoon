@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { stagger } from "animejs";
 import { motionDuration, runAnimate } from "@/lib/animation";
 import type { SearchHistoryRecord } from "@/domain/types";
+import { cn } from "@/lib/class-name";
 
 interface SearchHistoryLayerProps {
   records: SearchHistoryRecord[];
@@ -29,7 +30,11 @@ export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistor
 
   return (
     <section
-      className="rounded-pill bg-surface-secondary absolute top-13.25 left-0 z-20 max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4 max-[767px]:w-full"
+      className={cn(
+        "rounded-pill bg-surface-secondary absolute top-13.25 left-0 z-20",
+        "max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4",
+        "max-md:w-full",
+      )}
       aria-label="검색 기록"
     >
       <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">
@@ -41,7 +46,10 @@ export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistor
           >
             <button
               type="button"
-              className="text-body-small text-text-primary cursor-pointer border-none bg-transparent"
+              className={cn(
+                "text-body-small text-text-primary",
+                "cursor-pointer border-none bg-transparent",
+              )}
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => onSelect(record)}
             >
@@ -49,7 +57,10 @@ export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistor
             </button>
             <button
               type="button"
-              className="text-text-primary hover:bg-surface-hover-soft inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-none bg-transparent"
+              className={cn(
+                "text-text-primary inline-flex h-6 w-6 items-center justify-center rounded-md",
+                "hover:bg-surface-hover-soft cursor-pointer border-none bg-transparent",
+              )}
               onMouseDown={(event) => event.preventDefault()}
               aria-label={`${record.keyword} 기록 삭제`}
               onClick={() => onRemove(record.key)}

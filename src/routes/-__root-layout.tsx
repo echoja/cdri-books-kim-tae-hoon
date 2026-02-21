@@ -42,7 +42,28 @@ export function RootLayout() {
         <AppShell>
           <Outlet />
         </AppShell>
-        <Toaster richColors closeButton />
+        <Toaster
+          theme="light"
+          richColors={false}
+          closeButton={false}
+          toastOptions={{
+            unstyled: true,
+            classNames: {
+              toast:
+                "rounded-button border border-divider bg-surface-secondary text-text-primary px-4 py-3 shadow-none flex items-start gap-2",
+              title: "text-body-small text-text-primary font-medium leading-none",
+              description: "text-small text-text-secondary mt-1",
+              content: "flex min-w-0 flex-1 flex-col gap-0",
+              icon: "text-text-subtitle mt-0.25",
+              success: "[&_[data-icon]]:text-palette-primary",
+              error: "[&_[data-icon]]:text-text-error",
+              actionButton:
+                "rounded-button bg-palette-primary px-3 text-palette-white hover:bg-palette-primary-hover",
+              cancelButton:
+                "rounded-button border border-divider bg-palette-white px-3 text-text-secondary hover:bg-surface-hover",
+            },
+          }}
+        />
       </ErrorBoundary>
     </AppProviders>
   );

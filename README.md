@@ -115,6 +115,7 @@ src/
 - Prettier 설정: `semi: true`, `singleQuote: false`.
 - Tailwind 클래스는 canonical 값을 사용합니다 (예: `gap-[6px]` → `gap-1.5`).
 - `className`에 template literal 금지 — `cva()`/`cn()`을 사용합니다.
+- `local/max-classname-line-length` 규칙으로 한 줄 `className="..."`가 100컬럼을 넘으면 경고합니다. 긴 클래스는 `cn("...", "...")`로 분리합니다.
 - `clsx`, `tailwind-merge`, `class-variance-authority` 직접 import 금지 — `@/lib/class-name`을 사용합니다.
 
 ### 임포트

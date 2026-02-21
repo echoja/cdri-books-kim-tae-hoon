@@ -5,6 +5,7 @@ import prettierPlugin from "eslint-plugin-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
+import maxClassnameLineLengthRule from "./eslint-rules/max-classname-line-length.js";
 
 export default defineConfig([
   {
@@ -25,6 +26,11 @@ export default defineConfig([
       prettier: prettierPlugin,
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
+      local: {
+        rules: {
+          "max-classname-line-length": maxClassnameLineLengthRule,
+        },
+      },
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -68,6 +74,7 @@ export default defineConfig([
       curly: "error",
       eqeqeq: ["error", "always"],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "local/max-classname-line-length": ["warn", { max: 100 }],
     },
   },
 ]);

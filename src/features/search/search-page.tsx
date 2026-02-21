@@ -18,6 +18,7 @@ import {
 } from "@/features/search/use-search-history";
 import { bookRepository } from "@/repositories/book-repository";
 import { motionDuration, runAnimate } from "@/lib/animation";
+import { cn } from "@/lib/class-name";
 
 const PAGE_SIZE = 10 as const;
 
@@ -144,9 +145,18 @@ export function SearchPage() {
       <div className="flex flex-col items-start">
         <h1 className="text-page-heading text-text-title m-0">도서 검색</h1>
 
-        <div className="mt-4 flex items-center gap-4 max-[767px]:w-full max-[767px]:flex-col max-[767px]:items-stretch">
+        <div
+          className={cn(
+            "mt-4 flex items-center gap-4",
+            "max-md:w-full max-md:flex-col max-md:items-stretch",
+          )}
+        >
           <form
-            className="h-search-input rounded-pill bg-surface-secondary relative m-0 flex w-120 items-center gap-2.75 px-4.5 max-[767px]:w-full"
+            className={cn(
+              "h-search-input rounded-pill bg-surface-secondary relative m-0",
+              "flex w-120 items-center gap-2.75 px-4.5",
+              "max-md:w-full",
+            )}
             onSubmit={(event) => {
               event.preventDefault();
               executeSearch(inputKeyword, target);
@@ -156,7 +166,11 @@ export function SearchPage() {
             <input
               value={inputKeyword}
               placeholder="검색어 입력"
-              className="text-caption text-text-primary placeholder:text-text-subtitle focus-visible:outline-palette-primary flex-1 border-none bg-transparent outline-none focus-visible:outline-2 focus-visible:outline-offset-2"
+              className={cn(
+                "text-caption text-text-primary placeholder:text-text-subtitle flex-1 border-none bg-transparent",
+                "focus-visible:outline-palette-primary outline-none",
+                "focus-visible:outline-2 focus-visible:outline-offset-2",
+              )}
               onFocus={() => setIsHistoryOpen(true)}
               onBlur={() => {
                 window.setTimeout(() => setIsHistoryOpen(false), 100);
@@ -192,7 +206,12 @@ export function SearchPage() {
             총 <strong className="text-palette-primary">{totalCount}</strong>건
           </span>
           {sourceLabel ? (
-            <span className="border-divider text-small text-text-subtitle rounded-full border px-2 py-0.75">
+            <span
+              className={cn(
+                "border-divider text-small text-text-subtitle rounded-full",
+                "border px-2 py-0.75",
+              )}
+            >
               {sourceLabel}
             </span>
           ) : null}

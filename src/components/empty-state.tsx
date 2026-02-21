@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
 import { motionDuration, runAnimate } from "@/lib/animation";
+import { cn } from "@/lib/class-name";
 
 interface EmptyStateProps {
   message?: string;
@@ -25,7 +26,10 @@ export function EmptyState({ message = "검색된 결과가 없습니다" }: Emp
   return (
     <section
       ref={ref}
-      className="flex min-h-[calc(100vh-320px)] flex-col items-center justify-center gap-6 text-center"
+      className={cn(
+        "flex min-h-[calc(100vh-320px)] flex-col items-center justify-center",
+        "gap-6 text-center",
+      )}
       aria-live="polite"
       style={{ opacity: 0 }}
     >
