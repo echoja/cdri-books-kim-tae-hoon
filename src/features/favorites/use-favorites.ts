@@ -2,8 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { applyOptimisticFavorite } from "@/domain/favorites-utils";
 import type { Book, FavoriteRecord } from "@/domain/types";
-import { favoritesRepository } from "@/repositories/favorites-repository";
+import { FavoritesRepository } from "@/repositories/favorites-repository";
 import { syncAdapter } from "@/adapters/sync-adapter";
+
+const favoritesRepository = new FavoritesRepository(syncAdapter);
 
 const FAVORITES_QUERY_KEY = ["favorites"] as const;
 const FAVORITE_IDS_QUERY_KEY = ["favorite-ids"] as const;
@@ -48,8 +50,6 @@ export function useToggleFavorite() {
       } else {
         await favoritesRepository.remove(book.isbn);
       }
-
-      await syncAdapter.pushFavorites(await favoritesRepository.list());
     },
     onMutate: async ({ book, willFavorite }) => {
       await queryClient.cancelQueries({ queryKey: FAVORITES_QUERY_KEY });

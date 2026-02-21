@@ -1,7 +1,13 @@
 import { appDb } from "@/db/app-db";
-import type { Book, FavoriteRecord } from "@/domain/types";
+import type { Book, FavoriteRecord, SyncAdapter } from "@/domain/types";
 
-class FavoritesRepository {
+export class FavoritesRepository {
+  private readonly sync: SyncAdapter;
+
+  constructor(sync: SyncAdapter) {
+    this.sync = sync;
+  }
+
   async list(): Promise<FavoriteRecord[]> {
     return appDb.favorites.orderBy("updatedAt").reverse().toArray();
   }
@@ -27,11 +33,12 @@ class FavoritesRepository {
       updatedAt: now,
       syncStatus: "pending",
     });
+
+    await this.sync.pushFavorites(await this.list());
   }
 
   async remove(isbn: string): Promise<void> {
     await appDb.favorites.delete(isbn);
+    await this.sync.pushFavorites(await this.list());
   }
 }
-
-export const favoritesRepository = new FavoritesRepository();
