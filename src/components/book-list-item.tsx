@@ -1,4 +1,4 @@
-import { type ComponentProps, useMemo, useState } from "react";
+import { type ComponentProps, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
 import { formatPrice, hasSalePrice } from "@/domain/book-utils";
@@ -24,13 +24,7 @@ export function BookListItem({
 }: BookListItemProps) {
   const [expanded, setExpanded] = useState(false);
 
-  const authors = useMemo(() => {
-    if (!book.authors || book.authors.length === 0) {
-      return "-";
-    }
-
-    return book.authors.join(", ");
-  }, [book.authors]);
+  const authors = !book.authors || book.authors.length === 0 ? "-" : book.authors.join(", ");
 
   const thumbnailSrc = book.thumbnail || emptyBookIcon;
 
@@ -44,7 +38,7 @@ export function BookListItem({
         <div
           className={cn(
             "flex",
-            expanded ? "min-h-40 items-start gap-8 py-6.5" : "min-h-25 items-center gap-12",
+            expanded ? "min-h-40 gap-8 pt-6.5 pb-12" : "min-h-25 items-center gap-12",
           )}
         >
           <div
@@ -66,9 +60,9 @@ export function BookListItem({
             />
           </div>
 
-          <div className="flex min-w-0 flex-1 gap-6">
-            <div className="mr-layout-gap-5 flex min-w-0 flex-1 flex-col gap-3">
-              <div className="flex min-w-0 items-center gap-4">
+          <div className="flex min-w-0 flex-1 gap-12">
+            <div className={cn("mt-4 flex min-w-0 flex-col gap-4")}>
+              <div className={cn("flex min-w-0 items-center gap-4", expanded ? "" : "")}>
                 <p
                   className={cn(
                     "text-title-3 text-text-primary m-0",
@@ -77,11 +71,11 @@ export function BookListItem({
                 >
                   {book.title}
                 </p>
-                <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
+                <p className="text-body-2 text-text-subtitle m-0 line-clamp-1">{authors}</p>
               </div>
 
               {expanded ? (
-                <section className="flex min-w-0 flex-col gap-3">
+                <section className="flex min-w-0 flex-col gap-4">
                   <h3 className="text-body-2 text-text-secondary m-0 leading-4.5 font-bold">
                     책 소개
                   </h3>
@@ -94,8 +88,10 @@ export function BookListItem({
 
             <aside
               className={cn(
-                "ml-auto shrink-0",
-                expanded ? "flex w-45 flex-col gap-4" : "flex items-center gap-4",
+                "ml-auto gap-4",
+                expanded
+                  ? "flex w-60 shrink-0 flex-col justify-between"
+                  : "flex shrink-0 items-center",
               )}
             >
               {!expanded ? (
@@ -132,38 +128,38 @@ export function BookListItem({
               </div>
 
               {expanded ? (
-                <div>
-                  <div className="flex flex-col gap-2">
-                    <div className="flex items-center justify-between gap-2">
+                <div className="flex flex-col gap-7.5">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-end gap-2">
                       <span className="text-small text-text-subtitle">원가</span>
                       <strong
                         className={cn(
                           "text-title-3 text-text-primary",
-                          hasSalePrice(book) ? "line-through" : "",
+                          hasSalePrice(book) ? "font-light line-through" : "",
                         )}
                       >
                         {formatPrice(book.price)}
                       </strong>
                     </div>
                     {hasSalePrice(book) ? (
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center justify-end gap-2">
                         <span className="text-small text-text-subtitle">할인가</span>
                         <strong className="text-title-3 text-text-primary">
                           {formatPrice(book.salePrice ?? 0)}
                         </strong>
                       </div>
                     ) : null}
-                    <LinkButton
-                      variant="primary"
-                      className="w-full justify-center px-0"
-                      href={book.url || "#"}
-                      target="_blank"
-                      rel="noreferrer"
-                      disabled={!book.url}
-                    >
-                      구매하기
-                    </LinkButton>
                   </div>
+                  <LinkButton
+                    variant="primary"
+                    className="justify-center px-0"
+                    href={book.url || "#"}
+                    target="_blank"
+                    rel="noreferrer"
+                    disabled={!book.url}
+                  >
+                    구매하기
+                  </LinkButton>
                 </div>
               ) : null}
             </aside>

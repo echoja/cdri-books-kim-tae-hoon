@@ -15,7 +15,7 @@ export function EmptyState({
   return (
     <section
       className={cn(
-        "flex min-h-[calc(100vh-320px)] flex-col items-center justify-center",
+        "flex min-h-[calc(100vh-500px)] flex-col items-center justify-center",
         "gap-6 text-center",
         className,
       )}
