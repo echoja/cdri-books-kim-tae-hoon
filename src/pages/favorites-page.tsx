@@ -15,7 +15,7 @@ export function FavoritesPage() {
     <section className="w-full">
       <div className="mb-3 flex flex-col items-start">
         <h1 className="text-title-2 text-text-title m-0">내가 찜한 책</h1>
-        <div className="text-title-3 text-text-primary mt-6 flex items-center gap-4">
+        <div className="text-title-3 text-text-primary mt-6 flex items-center gap-4 font-medium">
           <span>찜한 책</span>
           <span>
             총 <strong className="text-palette-primary">{records.length}</strong>건
