@@ -204,7 +204,7 @@ export function SearchPage() {
             />
             {historyRecords.length > 0 ? (
               <SearchHistoryLayer
-                className="hidden group-focus-within:block"
+                className="absolute top-13.25 left-0 z-20 hidden group-focus-within:block"
                 records={historyRecords}
                 onSelect={handleHistorySelect}
                 onRemove={(key) => removeHistory.mutate(key)}
