@@ -2,7 +2,7 @@ import type { ComponentProps } from "react";
 import { cn, cva } from "@/lib/class-name";
 
 const buttonVariants = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-4.75 whitespace-nowrap rounded-button border border-transparent text-caption text-text-title transition-colors duration-160 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
+  "inline-flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-button border border-transparent text-caption text-text-title transition-colors duration-160 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
