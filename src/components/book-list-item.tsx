@@ -1,27 +1,11 @@
 import { type ComponentProps, useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
-import lineHeart from "@/assets/icons/line.svg";
-import fillHeart from "@/assets/icons/fill.svg";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
 import { formatPrice, hasSalePrice } from "@/domain/book-utils";
 import type { Book } from "@/domain/types";
 import { Button, LinkButton } from "@/components/ui/button";
-import { cn, cva } from "@/lib/class-name";
-
-const favoriteBadgeVariants = cva(
-  "absolute inline-flex items-center justify-center rounded-full border-none bg-transparent p-0",
-  {
-    variants: {
-      size: {
-        collapsed: "right-0 top-0 h-4 w-4",
-        expanded: "right-2 top-2 h-6 w-6",
-      },
-    },
-    defaultVariants: {
-      size: "collapsed",
-    },
-  },
-);
+import { FavoriteBadge } from "@/components/favorite-badge";
+import { cn } from "@/lib/class-name";
 
 interface BookListItemProps extends Omit<ComponentProps<"article">, "children"> {
   book: Book;
@@ -74,20 +58,12 @@ export function BookListItem({
               src={thumbnailSrc}
               alt={`${book.title} 표지`}
             />
-            <button
-              type="button"
-              className={favoriteBadgeVariants({ size: expanded ? "expanded" : "collapsed" })}
+            <FavoriteBadge
+              isFavorite={isFavorite}
+              size={expanded ? "expanded" : "collapsed"}
               onClick={() => onToggleFavorite(book, !isFavorite)}
               disabled={favoriteDisabled}
-              aria-label={isFavorite ? "찜 해제" : "찜 추가"}
-            >
-              <img
-                width={expanded ? 24 : 16}
-                height={expanded ? 24 : 16}
-                src={isFavorite ? fillHeart : lineHeart}
-                alt=""
-              />
-            </button>
+            />
           </div>
 
           <div className="flex min-w-0 flex-1 gap-6">
