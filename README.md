@@ -121,6 +121,16 @@ src/
 - 에셋(이미지, 아이콘)은 `src/assets/` 에 배치하고, `@/assets/...` 절대경로로 임포트합니다.
 - 상대경로 임포트는 같은 디렉토리 또는 바로 하위만 허용합니다. 그 외에는 `@/...` 별칭을 사용합니다.
 
+### 컴포넌트 스타일 경계
+- 컴포넌트는 **자신의 내부 스타일**(padding, background, border, border-radius, overflow, 내부 layout 등)만 스스로 정의합니다.
+- **위치·외부 여백·표시 조건**은 부모(호출부)에서 지정합니다.
+  - `position`, `top/right/bottom/left`, `z-index`
+  - `margin`
+  - `flex`/`align-self`/`justify-self`/`grid-area`/`order`
+  - `width`/`max-width` (유동 크기일 때)
+  - `hidden`/`block` 등 표시 토글
+- 판단 기준: "이 컴포넌트를 다른 것으로 교체해도 해당 속성이 같은 자리에 여전히 필요한가?" → **예**면 부모가 정의, **아니오**면 컴포넌트가 정의.
+
 ### 아키텍처
 - 무조건 CSR(SPA)이므로 `typeof window === "undefined"` 체크를 하지 않습니다.
 - 외부 API 클라이언트의 파라미터 인터페이스는 실제 API 스펙에 맞춰 정의합니다 (내부 타입과 분리).

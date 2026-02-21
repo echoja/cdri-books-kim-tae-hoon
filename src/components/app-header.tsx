@@ -29,8 +29,8 @@ export function AppHeader() {
     >
       <div
         className={cn(
-          "left-header-pad-desktop text-title-1 text-text-title absolute",
-          "leading-6 font-bold",
+          "text-title-1 text-text-title absolute",
+          "lg:left-header-pad-desktop left-6 leading-6 font-bold",
         )}
         aria-label="CERTICOS BOOKS"
       >
