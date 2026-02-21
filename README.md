@@ -8,8 +8,8 @@
   - `도서 검색`
   - `내가 찜한 책`
 - 기술 스택
-  - `TanStack Start` (SPA 모드)
-  - `React + TypeScript`
+  - `Vite` + `React` + `TypeScript`
+  - `TanStack Router` (파일 기반 라우팅)
   - `TanStack Query`
   - `Dexie(IndexedDB)`
   - `anime.js`
@@ -17,6 +17,11 @@
   - `docs/requirements.md` 요구사항 충족
   - 네트워크 실패 시 캐시 fallback
   - 로컬 우선 저장 + 향후 원격 동기화 확장 포인트 확보
+
+## 사전 요구사항
+
+- Node.js 22+
+- 카카오 REST API 키 ([developers.kakao.com](https://developers.kakao.com))
 
 ## 실행 방법
 
@@ -35,10 +40,20 @@ npm install
 npm run dev
 ```
 
-3. 테스트
+## 검증 방법
 
 ```bash
-npm run test:unit
+# 타입 검사
+npx tsc --noEmit
+
+# 린트
+npm run lint
+
+# 빌드
+npm run build
+
+# E2E 테스트 (Playwright)
+npx playwright install --with-deps chromium
 npm run test:e2e
 ```
 
@@ -59,7 +74,7 @@ src/
 
 ## 라이브러리 선택 이유
 
-- `TanStack Start`: Router/Query 기반 SPA 구조를 일관되게 유지
+- `TanStack Router`: 타입 안전한 파일 기반 라우팅
 - `TanStack Query`: 서버 상태 캐시/재시도/prefetch
 - `Dexie`: IndexedDB 추상화와 스키마 관리
 - `@radix-ui/*`: 접근성 있는 popover/select 구현
@@ -72,6 +87,35 @@ src/
 - 검색 기록 `최대 8개` 유지 + 중복 최신화
 - 찜하기 `optimistic update` + 실패 시 롤백
 - `prefers-reduced-motion` 대응 애니메이션
+- 리스트/빈 상태 진입 시 부드러운 페이드인 애니메이션
+
+## 요구사항 준수 체크리스트
+
+| 요구사항 | 상태 |
+|---------|------|
+| React.js + TypeScript + React Query | OK |
+| 카카오 도서 검색 API 연동 | OK |
+| `.env` API 키 관리 + `.gitignore` | OK |
+| 타이포그래피 토큰 (Title/Body/Caption/Small) | OK |
+| 데스크톱 우선 960px 콘텐츠 영역 | OK |
+| 헤더: 전폭, 로고 왼쪽, GNB 중앙 | OK |
+| GNB: 2항목, 56px 간격, active 밑줄 | OK |
+| 검색박스: 3줄 구조, Enter 검색 | OK |
+| 검색 입력: 480x48, pill 라운드, 돋보기 | OK |
+| 상세검색 패널: 360x160, 그림자, 드롭다운 | OK |
+| 검색 기록: 최대 8개, 영속, 개별 삭제 | OK |
+| BookListItem 접힘/펼침 레이아웃 | OK |
+| 가격 규칙 (할인가 우선) | OK |
+| 아코디언 애니메이션 | OK |
+| 찜 페이지: 동일 레이아웃, 동일 BookListItem | OK |
+| 빈 상태: icon_book.png 80x80 + 텍스트 | OK |
+| 버튼 스타일 (primary/secondary/outline) | OK |
+| 찜 하트 아이콘 (line.svg/fill.svg) | OK |
+| 반응형 브레이크포인트 (1280/768/767) | OK |
+| 색상 토큰 | OK |
+| 키보드 접근성 (tab/enter/ESC, focus-visible) | OK |
+| `prefers-reduced-motion` 지원 | OK |
+| 네트워크 오류 시 캐시 fallback + 배지 | OK |
 
 ## 프로젝트 규칙
 
