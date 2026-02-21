@@ -34,7 +34,7 @@ export function SearchHistoryLayer({
 
   return (
     <section
-      className="absolute left-0 top-[53px] z-20 max-h-[153px] min-h-[153px] w-[480px] overflow-y-auto rounded-[24px] bg-[#f2f4f6] px-5 py-4 max-[767px]:w-full"
+      className="absolute left-0 top-[53px] z-20 max-h-[153px] min-h-[153px] w-[480px] overflow-y-auto rounded-pill bg-surface-secondary px-5 py-4 max-[767px]:w-full"
       aria-label="검색 기록"
     >
       <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">
@@ -46,7 +46,7 @@ export function SearchHistoryLayer({
           >
             <button
               type="button"
-              className="cursor-pointer border-none bg-transparent text-sm text-[#353c49]"
+              className="cursor-pointer border-none bg-transparent text-sm text-text-primary"
               onMouseDown={(event) => event.preventDefault()}
               onClick={() => onSelect(record)}
             >
@@ -54,7 +54,7 @@ export function SearchHistoryLayer({
             </button>
             <button
               type="button"
-              className="inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-[#353c49] hover:bg-[#e3e8ec]"
+              className="inline-flex h-6 w-6 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-text-primary hover:bg-surface-hover-soft"
               onMouseDown={(event) => event.preventDefault()}
               aria-label={`${record.keyword} 기록 삭제`}
               onClick={() => onRemove(record.key)}

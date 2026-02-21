@@ -1,21 +1,120 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 @import 'tailwindcss';
 
+@theme {
+  --font-family-sans: 'Noto Sans KR', sans-serif;
+
+  --spacing-page-content: 960px;
+  --spacing-page-top: 80px;
+  --spacing-page-top-mobile: 48px;
+  --spacing-page-bottom: 60px;
+  --spacing-page-pad-trim: 64px;
+  --spacing-page-pad-trim-mobile: 32px;
+
+  --spacing-header-pad-desktop: 160px;
+  --spacing-header-pad-tablet: 32px;
+  --spacing-header-pad-mobile: 16px;
+
+  --spacing-layout-gap-4: 16px;
+  --spacing-layout-gap-5: 22px;
+  --spacing-layout-gap-6: 24px;
+  --spacing-layout-gap-7: 32px;
+  --spacing-layout-gap-8: 36px;
+  --spacing-nav-gap: 56px;
+
+  --spacing-header-height: 84px;
+  --spacing-header-height-mobile: 76px;
+  --spacing-search-input-height: 48px;
+  --spacing-search-target-height: 36px;
+  --spacing-book-thumb-small-width: 48px;
+  --spacing-book-thumb-small-height: 68px;
+  --spacing-book-thumb-large-width: 210px;
+  --spacing-book-thumb-large-height: 280px;
+
+  --radius-pill: 24px;
+  --radius-button: 8px;
+
+  --font-size-title-2: 22px;
+  --line-height-title-2: 24px;
+  --font-size-title-3: 18px;
+  --line-height-title-3: 18px;
+  --font-size-body-1: 20px;
+  --line-height-body-1: 20px;
+  --font-size-body-2: 14px;
+  --line-height-body-2: 14px;
+  --font-size-caption: 16px;
+  --line-height-caption: 18px;
+  --font-size-small: 10px;
+  --line-height-small: 16px;
+
+  --color-palette-primary: #4880ee;
+  --color-palette-primary-hover: #3b6acd;
+  --color-palette-white: #ffffff;
+  --color-surface-secondary: #f2f4f6;
+  --color-surface-secondary-soft: #eceff2;
+  --color-surface-disabled: #f3f5f7;
+  --color-surface-hover: #e7ebef;
+  --color-surface-hover-soft: #e3e8ec;
+  --color-divider: #d2d6da;
+  --color-text-title: #1a1e27;
+  --color-text-primary: #353c49;
+  --color-text-secondary: #6d7582;
+  --color-text-subtitle: #8d94a0;
+  --color-text-muted: #b1b8c0;
+  --color-text-error: #b42318;
+}
+
+@utility typography-page-heading {
+  font-size: var(--font-size-title-2);
+  line-height: var(--line-height-title-2);
+  font-weight: 700;
+}
+
+@utility typography-title {
+  font-size: var(--font-size-title-3);
+  line-height: var(--line-height-title-3);
+  font-weight: 700;
+}
+
+@utility typography-body {
+  font-size: var(--font-size-body-1);
+  line-height: var(--line-height-body-1);
+  font-weight: 500;
+}
+
+@utility typography-body-small {
+  font-size: var(--font-size-body-2);
+  line-height: var(--line-height-body-2);
+  font-weight: 500;
+}
+
+@utility typography-caption {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  font-weight: 500;
+}
+
+@utility typography-small {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+  font-weight: 500;
+}
+
 @layer base {
-  * {
-    @apply box-border;
-  }
+  * { box-sizing: border-box; }
 
   html,
   body {
-    @apply m-0 p-0;
-    font-family: 'Noto Sans KR', sans-serif;
-    color: #353c49;
-    background: #ffffff;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-sans);
+    color: var(--color-text-primary);
+    background: var(--color-palette-white);
   }
 
   a {
-    @apply text-inherit no-underline;
+    color: inherit;
+    text-decoration: none;
   }
 
   button,

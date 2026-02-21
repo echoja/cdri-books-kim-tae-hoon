@@ -2,16 +2,16 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, PropsWithChildren, Ref
 import { cn, cva } from '@/lib/class-name'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-[19px] rounded-lg border border-transparent text-base leading-4 font-medium transition-colors duration-[160ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4880ee] disabled:pointer-events-none disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center gap-[19px] rounded-button border border-transparent typography-caption text-text-title transition-colors duration-[160ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
         primary:
-          'bg-[#4880ee] px-7 py-4 text-white hover:bg-[#3b6acd] disabled:bg-[#afc4f4] aria-disabled:bg-[#afc4f4]',
+          'bg-palette-primary px-[28px] py-[16px] text-palette-white hover:bg-palette-primary-hover disabled:bg-surface-disabled aria-disabled:bg-surface-disabled',
         secondary:
-          'bg-[#f2f4f6] px-5 py-4 text-[#6d7582] hover:bg-[#e7ebef] [&_svg]:text-[#b1b8c0] disabled:bg-[#f3f5f7] disabled:text-[#b1b8c0] aria-disabled:bg-[#f3f5f7] aria-disabled:text-[#b1b8c0]',
+          'bg-surface-secondary px-[20px] py-[16px] text-text-secondary hover:bg-surface-hover disabled:bg-surface-disabled disabled:text-text-muted aria-disabled:bg-surface-disabled aria-disabled:text-text-muted [&_svg]:text-text-muted',
         outline:
-          'bg-white px-[10px] py-[5px] text-[#8d94a0] border-[#8d94a0] hover:bg-[#f2f4f6] disabled:border-[#d2d6da] disabled:text-[#b1b8c0] aria-disabled:border-[#d2d6da] aria-disabled:text-[#b1b8c0]',
+          'bg-palette-white px-[10px] py-[5px] text-text-subtitle border-text-subtitle hover:bg-surface-secondary disabled:border-divider disabled:text-text-muted aria-disabled:border-divider aria-disabled:text-text-muted',
       },
     },
     defaultVariants: {
