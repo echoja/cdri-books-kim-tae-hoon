@@ -71,7 +71,7 @@ export function BookListItem({
                 </p>
                 <p
                   className={cn(
-                    "text-body-2 text-text-subtitle m-0 line-clamp-1",
+                    "text-body-2 text-text-subtitle m-0",
                     expanded ? "line-clamp-4 leading-5" : "line-clamp-1",
                   )}
                 >
