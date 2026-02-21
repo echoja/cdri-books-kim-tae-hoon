@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import searchIcon from '../../../assets/icons/search.svg'
 import { toUserMessage } from '@/domain/errors'
@@ -17,6 +17,7 @@ import {
   useUpsertSearchHistory,
 } from '@/features/search/use-search-history'
 import { bookRepository } from '@/repositories/book-repository'
+import { motionDuration, safeAnimate } from '@/lib/animation'
 
 const PAGE_SIZE = 10 as const
 
@@ -37,6 +38,7 @@ export function SearchPage() {
 
   const favoriteIdsQuery = useFavoriteIds()
   const toggleFavorite = useToggleFavorite()
+  const resultsRef = useRef<HTMLDivElement | null>(null)
 
   const historyRecords = historyQuery.data ?? []
   const books = searchQuery.data?.books ?? []
@@ -53,6 +55,18 @@ export function SearchPage() {
   }, [totalCount])
 
   const sourceLabel = searchQuery.data?.source === 'cache' ? '캐시 데이터' : null
+
+  useEffect(() => {
+    if (!resultsRef.current || books.length === 0) {
+      return
+    }
+
+    safeAnimate(resultsRef.current, {
+      opacity: [0, 1],
+      duration: motionDuration(300),
+      ease: 'outQuad',
+    })
+  }, [searchQuery.data, books.length])
 
   useEffect(() => {
     if (!params || !searchQuery.data || searchQuery.data.isEnd) {
@@ -194,7 +208,7 @@ export function SearchPage() {
       ) : null}
 
       {!searchQuery.isFetching && books.length > 0 ? (
-        <>
+        <div ref={resultsRef}>
           <BookList
             books={books}
             favoriteIds={favoriteIdsQuery.data ?? []}
@@ -231,7 +245,7 @@ export function SearchPage() {
               다음
             </Button>
           </nav>
-        </>
+        </div>
       ) : null}
 
       {!searchQuery.isFetching && books.length === 0 ? <EmptyState /> : null}
