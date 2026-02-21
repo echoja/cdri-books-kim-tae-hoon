@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import searchIcon from "@/assets/icons/search.svg";
 import { toUserMessage } from "@/domain/errors";
-import { toSearchTarget } from "@/domain/search-utils";
 import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/domain/types";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
@@ -23,12 +23,27 @@ const PAGE_SIZE = 10 as const;
 
 export function SearchPage() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate({ from: "/search" });
+  const search = useSearch({ from: "/search" });
+  const keywordInputRef = useRef<HTMLInputElement>(null);
 
-  const [inputKeyword, setInputKeyword] = useState("");
-  const [detailKeyword, setDetailKeyword] = useState("");
-  const [target, setTarget] = useState<SearchTarget>("title");
-  const [params, setParams] = useState<SearchParams | null>(null);
+  const [detailKeyword, setDetailKeyword] = useState(search.query);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+  const params = useMemo<SearchParams | null>(() => {
+    const trimmed = search.query.trim();
+
+    if (!trimmed) {
+      return null;
+    }
+
+    return {
+      query: trimmed,
+      page: search.page,
+      size: PAGE_SIZE,
+      target: search.target,
+    };
+  }, [search.page, search.query, search.target]);
 
   const searchQuery = useBookSearch(params);
   const historyQuery = useSearchHistory();
@@ -41,7 +56,7 @@ export function SearchPage() {
   const historyRecords = historyQuery.data ?? [];
   const books = searchQuery.data?.books ?? [];
   const totalCount = searchQuery.data?.totalCount ?? 0;
-  const hasSearched = !!params;
+  const hasSearched = search.query.trim().length > 0;
 
   const page = params?.page ?? 1;
   const totalPages = useMemo(() => {
@@ -53,6 +68,22 @@ export function SearchPage() {
   }, [totalCount]);
 
   const sourceLabel = searchQuery.data?.source === "cache" ? "캐시 데이터" : null;
+
+  useEffect(() => {
+    setDetailKeyword(search.query);
+  }, [search.query]);
+
+  useEffect(() => {
+    const input = keywordInputRef.current;
+
+    if (!input) {
+      return;
+    }
+
+    if (input.value !== search.query) {
+      input.value = search.query;
+    }
+  }, [search.query]);
 
   useEffect(() => {
     if (!params || !searchQuery.data || searchQuery.data.isEnd) {
@@ -69,6 +100,16 @@ export function SearchPage() {
       queryFn: ({ signal }) => bookRepository.search(nextPageParams, signal),
     });
   }, [params, queryClient, searchQuery.data]);
+
+  const setSearchParams = (next: { query: string; target: SearchTarget; page: number }) => {
+    void navigate({
+      to: "/search",
+      search: (prev) => ({
+        ...prev,
+        ...next,
+      }),
+    });
+  };
 
   const executeSearch = (keyword: string, nextTarget: SearchTarget, nextPage = 1) => {
     const trimmed = keyword.trim();
@@ -97,11 +138,17 @@ export function SearchPage() {
       });
     }
 
-    setInputKeyword(trimmed);
     setDetailKeyword(trimmed);
-    setTarget(nextTarget);
-    setParams(next);
     setIsDetailOpen(false);
+    setSearchParams({
+      query: trimmed,
+      target: nextTarget,
+      page: nextPage,
+    });
+
+    if (keywordInputRef.current && keywordInputRef.current.value !== trimmed) {
+      keywordInputRef.current.value = trimmed;
+    }
 
     upsertHistory.mutate({
       keyword: trimmed,
@@ -118,8 +165,9 @@ export function SearchPage() {
       return;
     }
 
-    setParams({
-      ...params,
+    setSearchParams({
+      query: params.query,
+      target: params.target ?? "title",
       page: nextPage,
     });
   };
@@ -137,12 +185,13 @@ export function SearchPage() {
             )}
             onSubmit={(event) => {
               event.preventDefault();
-              executeSearch(inputKeyword, target);
+              executeSearch(keywordInputRef.current?.value ?? "", search.target);
             }}
           >
             <img src={searchIcon} width={30} height={30} alt="" aria-hidden />
             <input
-              value={inputKeyword}
+              ref={keywordInputRef}
+              defaultValue={search.query}
               placeholder="검색어 입력"
               className={cn(
                 "text-caption text-text-primary placeholder:text-text-subtitle flex-1 border-none bg-transparent",
@@ -150,7 +199,6 @@ export function SearchPage() {
                 "focus-visible:outline-2 focus-visible:outline-offset-2",
               )}
               onChange={(event) => {
-                setInputKeyword(event.target.value);
                 setDetailKeyword(event.target.value);
               }}
             />
@@ -167,11 +215,19 @@ export function SearchPage() {
           <DetailSearchPanel
             open={isDetailOpen}
             onOpenChange={setIsDetailOpen}
-            target={target}
+            target={search.target}
             keyword={detailKeyword}
-            onTargetChange={(value) => setTarget(toSearchTarget(value))}
+            onTargetChange={(nextTarget) =>
+              setSearchParams({
+                query: search.query,
+                page: 1,
+                target: nextTarget,
+              })
+            }
             onKeywordChange={setDetailKeyword}
-            onSearch={(keywordOverride) => executeSearch(keywordOverride ?? detailKeyword, target)}
+            onSearch={(keywordOverride) =>
+              executeSearch(keywordOverride ?? detailKeyword, search.target)
+            }
           />
         </div>
 
