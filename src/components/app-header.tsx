@@ -1,24 +1,24 @@
-import { Link, useRouterState } from '@tanstack/react-router'
-import { cva } from '@/lib/class-name'
+import { Link, useRouterState } from "@tanstack/react-router";
+import { cva } from "@/lib/class-name";
 
 const NAV_ITEMS = [
-  { to: '/', label: '도서 검색' },
-  { to: '/favorites', label: '내가 찜한 책' },
-] as const
+  { to: "/search", label: "도서 검색" },
+  { to: "/favorites", label: "내가 찜한 책" },
+] as const;
 
 const navLinkVariants = cva(
-  'border-b border-transparent pb-2 text-body text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-[767px]:text-base',
+  "border-b border-transparent pb-2 text-body text-text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary max-[767px]:text-base",
   {
     variants: {
       active: {
-        true: 'border-palette-primary',
+        true: "border-palette-primary",
       },
     },
   },
-)
+);
 
 export function AppHeader() {
-  const pathname = useRouterState({ select: (state) => state.location.pathname })
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
 
   return (
     <header className="h-header-height px-header-pad-desktop max-[1279px]:px-header-pad-tablet max-[767px]:h-header-height-mobile max-[767px]:px-header-pad-mobile relative flex w-full items-center justify-center">
@@ -30,15 +30,15 @@ export function AppHeader() {
       </div>
       <nav className="gap-nav-gap flex items-center max-[767px]:gap-5" aria-label="주요 메뉴">
         {NAV_ITEMS.map((item) => {
-          const active = item.to === '/' ? pathname === '/' : pathname.startsWith(item.to)
+          const active = pathname.startsWith(item.to);
 
           return (
             <Link key={item.to} className={navLinkVariants({ active })} to={item.to}>
               {item.label}
             </Link>
-          )
+          );
         })}
       </nav>
     </header>
-  )
+  );
 }

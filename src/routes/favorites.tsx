@@ -1,6 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { FavoritesPage } from '@/features/favorites/favorites-page'
+import { createFileRoute } from "@tanstack/react-router";
+import { FavoritesPage } from "@/features/favorites/favorites-page";
 
-export const Route = createFileRoute('/favorites')({
+export const Route = createFileRoute("/favorites")({
   component: FavoritesPage,
-})
+});

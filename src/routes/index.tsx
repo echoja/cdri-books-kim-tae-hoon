@@ -1,6 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { SearchPage } from '@/features/search/search-page'
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute('/')({
-  component: SearchPage,
-})
+export const Route = createFileRoute("/")({
+  beforeLoad: () => {
+    throw redirect({ to: "/search" });
+  },
+});
