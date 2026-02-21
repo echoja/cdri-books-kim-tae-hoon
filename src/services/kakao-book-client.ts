@@ -15,7 +15,7 @@ const kakaoDocumentSchema = z.object({
   publisher: z.string().default(''),
   thumbnail: z.string().default(''),
   price: z.number().nonnegative().default(0),
-  sale_price: z.number().nonnegative().default(0),
+  sale_price: z.number().default(0),
 })
 
 const kakaoResponseSchema = z.object({
