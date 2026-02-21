@@ -65,7 +65,7 @@ npm run test:e2e
 src/
   assets/          # 이미지, 아이콘 등 정적 에셋
   adapters/        # SyncAdapter(no-op)
-  components/      # 공통 UI(헤더, 레이아웃, BookList, empty)
+  components/      # React 컴포넌트(헤더, 레이아웃, BookList, empty)
   db/              # Dexie 스키마
   domain/          # 타입/규칙/순수 함수
   features/        # 검색/찜 기능 단위
