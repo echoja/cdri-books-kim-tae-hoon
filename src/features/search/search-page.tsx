@@ -5,7 +5,7 @@ import { toUserMessage } from "@/domain/errors";
 import { toSearchTarget } from "@/domain/search-utils";
 import type { SearchHistoryRecord, SearchParams, SearchTarget } from "@/domain/types";
 import { EmptyState } from "@/components/empty-state";
-import { BookList } from "@/features/books/book-list";
+import { BookList } from "@/components/book-list";
 import { DetailSearchPanel } from "@/features/search/detail-search-panel";
 import { SearchHistoryLayer } from "@/features/search/search-history-layer";
 import { useToggleFavorite, useFavoriteIds } from "@/features/favorites/use-favorites";
@@ -146,7 +146,7 @@ export function SearchPage() {
 
         <div className="mt-4 flex items-center gap-4 max-[767px]:w-full max-[767px]:flex-col max-[767px]:items-stretch">
           <form
-            className="h-search-input rounded-pill bg-surface-secondary relative m-0 flex w-[480px] items-center gap-[11px] px-[18px] max-[767px]:w-full"
+            className="h-search-input rounded-pill bg-surface-secondary relative m-0 flex w-120 items-center gap-2.75 px-4.5 max-[767px]:w-full"
             onSubmit={(event) => {
               event.preventDefault();
               executeSearch(inputKeyword, target);
@@ -192,7 +192,7 @@ export function SearchPage() {
             총 <strong className="text-palette-primary">{totalCount}</strong>건
           </span>
           {sourceLabel ? (
-            <span className="border-divider text-small text-text-subtitle rounded-full border px-2 py-[3px]">
+            <span className="border-divider text-small text-text-subtitle rounded-full border px-2 py-0.75">
               {sourceLabel}
             </span>
           ) : null}
@@ -227,7 +227,7 @@ export function SearchPage() {
           >
             <Button
               variant="secondary"
-              className="gap-0 px-[18px] py-[10px]"
+              className="gap-0 px-4.5 py-2.5"
               disabled={page <= 1}
               onClick={() => handlePageChange(page - 1)}
             >
@@ -238,7 +238,7 @@ export function SearchPage() {
             </span>
             <Button
               variant="secondary"
-              className="gap-0 px-[18px] py-[10px]"
+              className="gap-0 px-4.5 py-2.5"
               disabled={page >= totalPages}
               onClick={() => handlePageChange(page + 1)}
             >

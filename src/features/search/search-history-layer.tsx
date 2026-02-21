@@ -29,7 +29,7 @@ export function SearchHistoryLayer({ records, onSelect, onRemove }: SearchHistor
 
   return (
     <section
-      className="rounded-pill bg-surface-secondary absolute top-[53px] left-0 z-20 max-h-[153px] min-h-[153px] w-[480px] overflow-y-auto px-5 py-4 max-[767px]:w-full"
+      className="rounded-pill bg-surface-secondary absolute top-13.25 left-0 z-20 max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4 max-[767px]:w-full"
       aria-label="검색 기록"
     >
       <ul ref={listRef} className="m-0 flex list-none flex-col gap-2 p-0">

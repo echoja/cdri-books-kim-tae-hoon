@@ -107,7 +107,7 @@ export function BookListItem({
 
   return (
     <article className="w-full">
-      <div className="flex min-h-[100px] items-center px-4 py-4 pl-12 max-[767px]:flex-wrap max-[767px]:gap-y-3 max-[767px]:p-4">
+      <div className="flex min-h-25 items-center px-4 py-4 pl-12 max-[767px]:flex-wrap max-[767px]:gap-y-3 max-[767px]:p-4">
         <div className="relative mr-12 w-12 min-w-12 max-[767px]:mr-5">
           <img
             className="h-book-thumb-small-height w-book-thumb-small-width bg-surface-secondary-soft object-cover"
@@ -125,12 +125,12 @@ export function BookListItem({
           </button>
         </div>
 
-        <div className="mr-[22px] flex w-[408px] items-center gap-4 max-[767px]:mr-0 max-[767px]:w-[calc(100%-68px)] max-[767px]:flex-col max-[767px]:items-start max-[767px]:gap-1.5">
+        <div className="mr-5.5 flex w-102 items-center gap-4 max-[767px]:mr-0 max-[767px]:w-[calc(100%-68px)] max-[767px]:flex-col max-[767px]:items-start max-[767px]:gap-1.5">
           <p className="text-title text-text-primary m-0 line-clamp-1">{book.title}</p>
           <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
         </div>
 
-        <div className="ml-auto flex items-center gap-14 max-[767px]:ml-0 max-[767px]:w-full max-[767px]:justify-between max-[767px]:gap-4">
+        <div className="ml-auto flex shrink-0 items-center gap-14 max-[767px]:ml-0 max-[767px]:w-full max-[767px]:justify-between max-[767px]:gap-4">
           <p className="text-title text-text-primary m-0 text-right">
             {formatPrice(getCollapsedDisplayPrice(book))}
           </p>
@@ -144,7 +144,7 @@ export function BookListItem({
             >
               구매하기
             </LinkButton>
-            <Button variant="secondary" className="min-w-[115px]" onClick={toggleExpanded}>
+            <Button variant="secondary" className="min-w-28.75" onClick={toggleExpanded}>
               상세보기
               <ChevronDown size={16} />
             </Button>
@@ -153,13 +153,9 @@ export function BookListItem({
       </div>
 
       {renderExpanded ? (
-        <div
-          ref={panelRef}
-          className="min-h-[344px]"
-          style={{ display: expanded ? "block" : "none" }}
-        >
-          <div className="flex max-h-[520px] min-h-[344px] items-start overflow-hidden px-4 py-6 pl-[54px] max-[767px]:max-h-[640px] max-[767px]:flex-col max-[767px]:gap-4 max-[767px]:overflow-y-auto max-[767px]:px-4 max-[767px]:py-5">
-            <div className="relative mr-8 w-[210px] min-w-[210px] max-[767px]:mr-0">
+        <div ref={panelRef} className="min-h-86" style={{ display: expanded ? "block" : "none" }}>
+          <div className="flex max-h-130 min-h-86 items-start overflow-hidden px-4 py-6 pl-13.5 max-[767px]:max-h-160 max-[767px]:flex-col max-[767px]:gap-4 max-[767px]:overflow-y-auto max-[767px]:px-4 max-[767px]:py-5">
+            <div className="relative mr-8 w-52.5 min-w-52.5 max-[767px]:mr-0">
               <img
                 className="h-book-thumb-large-height w-book-thumb-large-width bg-surface-secondary-soft object-cover"
                 src={thumbnailSrc}
@@ -176,14 +172,14 @@ export function BookListItem({
               </button>
             </div>
 
-            <section className="mr-[163px] flex w-[324px] flex-col gap-4 max-[1279px]:mr-12 max-[767px]:mr-0 max-[767px]:w-full">
+            <section className="mr-40.75 flex w-81 flex-col gap-4 max-[1279px]:mr-12 max-[767px]:mr-0 max-[767px]:w-full">
               <div className="flex items-center gap-4">
                 <p className="text-title text-text-primary m-0 line-clamp-2">{book.title}</p>
                 <p className="text-body-small text-text-secondary m-0 line-clamp-1">{authors}</p>
               </div>
 
               <section className="flex flex-col gap-3">
-                <h3 className="text-body-small text-text-secondary m-0 leading-[18px] font-bold">
+                <h3 className="text-body-small text-text-secondary m-0 leading-4.5 font-bold">
                   책 소개
                 </h3>
                 <p className="text-small text-text-primary m-0 line-clamp-8 max-[767px]:line-clamp-6">
@@ -192,13 +188,13 @@ export function BookListItem({
               </section>
             </section>
 
-            <aside className="ml-auto flex h-full min-w-[180px] flex-col items-end justify-between gap-4 max-[767px]:w-full max-[767px]:min-w-0 max-[767px]:items-stretch">
-              <Button variant="secondary" className="min-w-[115px]" onClick={toggleExpanded}>
+            <aside className="ml-auto flex h-full min-w-45 flex-col items-end justify-between gap-4 max-[767px]:w-full max-[767px]:min-w-0 max-[767px]:items-stretch">
+              <Button variant="secondary" className="min-w-28.75" onClick={toggleExpanded}>
                 상세보기
                 <ChevronUp size={16} />
               </Button>
 
-              <div className="flex w-[180px] flex-col gap-2 max-[767px]:w-full">
+              <div className="flex w-45 flex-col gap-2 max-[767px]:w-full">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-small text-text-subtitle">원가</span>
                   <strong className="text-title text-text-primary">

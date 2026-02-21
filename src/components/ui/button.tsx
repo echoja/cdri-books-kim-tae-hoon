@@ -2,16 +2,16 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, PropsWithChildren, Ref
 import { cn, cva } from "@/lib/class-name";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-[19px] rounded-button border border-transparent text-caption text-text-title transition-colors duration-[160ms] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
+  "inline-flex cursor-pointer items-center justify-center gap-4.75 whitespace-nowrap rounded-button border border-transparent text-caption text-text-title transition-colors duration-160 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         primary:
-          "bg-palette-primary px-[28px] py-[16px] text-palette-white hover:bg-palette-primary-hover disabled:bg-surface-disabled aria-disabled:bg-surface-disabled",
+          "bg-palette-primary px-7 py-4 text-palette-white hover:bg-palette-primary-hover disabled:bg-surface-disabled aria-disabled:bg-surface-disabled",
         secondary:
-          "bg-surface-secondary px-[20px] py-[16px] text-text-secondary hover:bg-surface-hover disabled:bg-surface-disabled disabled:text-text-muted aria-disabled:bg-surface-disabled aria-disabled:text-text-muted [&_svg]:text-text-muted",
+          "bg-surface-secondary px-5 py-4 text-text-secondary hover:bg-surface-hover disabled:bg-surface-disabled disabled:text-text-muted aria-disabled:bg-surface-disabled aria-disabled:text-text-muted [&_svg]:text-text-muted",
         outline:
-          "bg-palette-white px-[10px] py-[5px] text-text-subtitle border-text-subtitle hover:bg-surface-secondary disabled:border-divider disabled:text-text-muted aria-disabled:border-divider aria-disabled:text-text-muted",
+          "bg-palette-white px-2.5 py-1.25 text-text-subtitle border-text-subtitle hover:bg-surface-secondary disabled:border-divider disabled:text-text-muted aria-disabled:border-divider aria-disabled:text-text-muted",
       },
     },
     defaultVariants: {
