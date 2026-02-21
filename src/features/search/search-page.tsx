@@ -28,7 +28,6 @@ export function SearchPage() {
   const [detailKeyword, setDetailKeyword] = useState("");
   const [target, setTarget] = useState<SearchTarget>("title");
   const [params, setParams] = useState<SearchParams | null>(null);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const searchQuery = useBookSearch(params);
@@ -102,7 +101,6 @@ export function SearchPage() {
     setDetailKeyword(trimmed);
     setTarget(nextTarget);
     setParams(next);
-    setIsHistoryOpen(false);
     setIsDetailOpen(false);
 
     upsertHistory.mutate({
@@ -131,17 +129,11 @@ export function SearchPage() {
       <div className="flex flex-col items-start">
         <h1 className="text-title-2 text-text-title m-0">도서 검색</h1>
 
-        <div
-          className={cn(
-            "mt-4 flex items-center gap-4",
-            "max-md:w-full max-md:flex-col max-md:items-stretch",
-          )}
-        >
+        <div className="mt-4 flex items-center gap-4">
           <form
             className={cn(
-              "h-search-input rounded-pill bg-palette-light-gray relative m-0",
-              "flex w-120 items-center gap-2.75 px-4.5",
-              "max-md:w-full",
+              "h-search-input-height rounded-pill bg-palette-light-gray relative m-0",
+              "group flex w-120 items-center gap-2.75 px-4.5",
             )}
             onSubmit={(event) => {
               event.preventDefault();
@@ -157,17 +149,14 @@ export function SearchPage() {
                 "focus-visible:outline-palette-primary outline-none",
                 "focus-visible:outline-2 focus-visible:outline-offset-2",
               )}
-              onFocus={() => setIsHistoryOpen(true)}
-              onBlur={() => {
-                window.setTimeout(() => setIsHistoryOpen(false), 100);
-              }}
               onChange={(event) => {
                 setInputKeyword(event.target.value);
                 setDetailKeyword(event.target.value);
               }}
             />
-            {isHistoryOpen && historyRecords.length > 0 ? (
+            {historyRecords.length > 0 ? (
               <SearchHistoryLayer
+                className="hidden group-focus-within:block"
                 records={historyRecords}
                 onSelect={handleHistorySelect}
                 onRemove={(key) => removeHistory.mutate(key)}
