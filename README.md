@@ -48,7 +48,7 @@ npx tsc --noEmit
 # 린트
 npm run lint
 
-# 미사용 의존성 검증
+# 미사용 의존성 및 변수 검증
 npm run knip
 
 # 빌드
