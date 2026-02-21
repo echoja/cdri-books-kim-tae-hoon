@@ -176,12 +176,12 @@ export function BookListItem({
 
             <section className="mr-[163px] flex w-[324px] flex-col gap-4 max-[1279px]:mr-12 max-[767px]:mr-0 max-[767px]:w-full">
               <div className="flex items-center gap-4">
-                <p className="m-0 line-clamp-2 text-page-heading text-text-primary">{book.title}</p>
+                <p className="m-0 line-clamp-2 text-title text-text-primary">{book.title}</p>
                 <p className="m-0 line-clamp-1 text-body-small text-text-secondary">{authors}</p>
               </div>
 
               <section className="flex flex-col gap-3">
-                <h3 className="m-0 text-caption leading-[18px] text-text-secondary">책 소개</h3>
+                <h3 className="m-0 text-body-small font-bold leading-[18px] text-text-secondary">책 소개</h3>
                 <p className="m-0 line-clamp-8 text-small text-text-primary max-[767px]:line-clamp-6">
                   {book.contents || '책 소개 정보가 없습니다.'}
                 </p>

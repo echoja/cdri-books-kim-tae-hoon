@@ -1,0 +1,15 @@
+node_modules
+.next
+dist
+dist-ssr
+playwright-report
+test-results
+coverage
+.env
+.env.*
+README.md
+
+# lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
