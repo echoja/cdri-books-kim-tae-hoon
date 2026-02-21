@@ -1,14 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { fallback, zodSearchValidator } from "@tanstack/router-zod-adapter";
 import { z } from "zod";
 import { SearchPage } from "@/features/search/search-page";
 
 const searchSchema = z.object({
-  query: z.string().catch(""),
-  page: z.coerce.number().int().positive().catch(1),
-  target: z.enum(["title", "person", "publisher"]).catch("title"),
+  query: fallback(z.string(), ""),
+  page: fallback(z.coerce.number().int().positive(), 1),
+  target: fallback(z.enum(["title", "person", "publisher"]), "title"),
 });
 
 export const Route = createFileRoute("/search")({
-  validateSearch: (search) => searchSchema.parse(search),
+  validateSearch: zodSearchValidator(searchSchema),
   component: SearchPage,
 });

@@ -104,7 +104,7 @@ export function SearchPage() {
   const setSearchParams = (next: { query: string; target: SearchTarget; page: number }) => {
     void navigate({
       to: "/search",
-      search: (prev) => ({
+      search: (prev: Record<string, unknown>) => ({
         ...prev,
         ...next,
       }),
@@ -112,6 +112,10 @@ export function SearchPage() {
   };
 
   const executeSearch = (keyword: string, nextTarget: SearchTarget, nextPage = 1) => {
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement) {
+      activeElement.blur();
+    }
     const trimmed = keyword.trim();
 
     if (!trimmed) {
