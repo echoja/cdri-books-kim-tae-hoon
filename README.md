@@ -75,12 +75,15 @@ src/
   lib/             # query client, persistence 유틸
 ```
 
-## 라이브러리 선택 이유
+## 라이브러리
 
 - `TanStack Router`: 타입 안전한 파일 기반 라우팅
 - `TanStack Query`: 서버 상태 캐시/재시도/prefetch
 - `Dexie`: IndexedDB 추상화와 스키마 관리
 - `@radix-ui/*`: 접근성 있는 popover/select 구현
+- `lucide-react`: 경량 아이콘 라이브러리. tree-shaking으로 사용한 아이콘만 번들에 포함
+- `sonner`: 경량 토스트 알림. unstyled 모드로 프로젝트 디자인에 맞게 커스터마이징
+- `react-error-boundary`: 선언적 에러 바운더리로 런타임 에러 격리
 - `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 ESLint + Prettier를 선택했다.
 - `knip`: 미사용 파일/의존성/export 탐지로 코드베이스 청결 유지
 - `Playwright`: 실제 사용자 플로우 E2E 검증
@@ -102,20 +105,18 @@ src/
 
 ### 문서
 - `docs/mission.md`는 기준 문서로 고정하며 수정하지 않습니다.
-- 작업 중 확정된 요구사항/유의사항/에셋 정보는 `docs/requirements.md`에 누적 관리합니다.
-- 디자인 상 참고사항/논의사항은 `docs/notes.md`에서 별도 관리합니다.
+- Figma에서 정리된 기획/디자인 사항은 `docs/requirements.md`에서 관리합니다.
+- 참고사항/논의사항은 `docs/notes.md`에서 별도 관리합니다.
 
 ### 코드 스타일
 - 코드 주석은 JSDoc(`/** */`) 형식으로 작성합니다.
 - `==`, `!=` 금지. 항상 `===`, `!==` 사용 (`eqeqeq` 규칙).
 - `curly` 규칙 적용 — `if`/`else`/`for`/`while` 등에 항상 중괄호를 사용합니다.
-- Prettier 설정: `semi: true`, `singleQuote: false`.
 - Tailwind 클래스는 canonical 값을 사용합니다 (예: `gap-[6px]` → `gap-1.5`).
 - `className`에 template literal 금지 — `cva()`/`cn()`을 사용합니다.
 - `cva()` variant 타입은 `VariantProps<typeof xxxVariants>`로 추출하고, props 인터페이스에 `extends`합니다.
 - `local/max-classname-line-length` 규칙으로 한 줄 `className="..."`가 100컬럼을 넘으면 경고합니다. 긴 클래스는 `cn("...", "...")`로 분리합니다.
-- 컴포넌트 props는 `ComponentProps<"...">` 기반으로 선언합니다. DOM props/ref 전달은 `...props`로 처리하고, `ref`를 별도 props로 명시하지 않습니다.
-- `AnchorHTMLAttributes` 등 `*HTMLAttributes` 타입 사용을 금지합니다.
+- 컴포넌트 props는 `ComponentProps<"...">` 기반으로 선언합니다. DOM props/ref 전달은 `...props`로 처리하고, `ref`를 별도 props로 명시하지 않습니다. (Ref 선언 등에 사용되는 `AnchorHTMLAttributes` 등 `*HTMLAttributes` 타입 사용을 금지합니다.)
 - `clsx`, `tailwind-merge`, `class-variance-authority` 직접 import 금지 — `@/lib/class-name`을 사용합니다.
 
 ### 임포트
@@ -140,4 +141,4 @@ src/
 ### 아키텍처
 - 무조건 CSR(SPA)이므로 `typeof window === "undefined"` 체크를 하지 않습니다.
 - 외부 API 클라이언트의 파라미터 인터페이스는 실제 API 스펙에 맞춰 정의합니다 (내부 타입과 분리).
-- `knip`으로 미사용 의존성을 검증합니다 (`npm run knip`).
+- Repository는 외부 의존성(API 클라이언트, SyncAdapter 등)을 생성자 주입으로 받습니다. 모듈 간 직접 import 결합을 제거하고, 사용처(feature 계층)에서 조립합니다.
