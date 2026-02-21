@@ -47,6 +47,9 @@ const kakaoResponseSchema = z.object({
   documents: z.array(kakaoDocumentSchema),
 });
 
+/** Kakao 도서 검색 API 응답 타입. 테스트 mock에서 사용. */
+export type KakaoSearchResponse = z.infer<typeof kakaoResponseSchema>;
+
 /** Kakao 도서 문서를 내부 Book 타입으로 변환한다. */
 function toBook(doc: z.infer<typeof kakaoDocumentSchema>): Book {
   const isbn = doc.isbn.trim().split(" ").find(Boolean);

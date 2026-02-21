@@ -1,35 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-
-function createResponse(page: number, keyword = "고양이") {
-  return {
-    meta: {
-      total_count: 12,
-      pageable_count: 12,
-      is_end: page >= 2,
-    },
-    documents: Array.from({ length: page === 1 ? 10 : 2 }, (_, index) => {
-      const seed = (page - 1) * 10 + index + 1;
-
-      return {
-        title: `${keyword} 도서 ${seed}`,
-        contents: `${keyword} 소개 ${seed}`,
-        url: `https://example.com/book/${seed}`,
-        isbn: `isbn-${seed}`,
-        datetime: "2026-01-01T00:00:00.000Z",
-        authors: ["작가명"],
-        publisher: "출판사",
-        thumbnail: "",
-        price: 16000,
-        sale_price: 13500,
-      };
-    }),
-  };
-}
-
-async function gotoReady(page: Page) {
-  await page.goto("/");
-  await page.waitForSelector("h1");
-}
+import { expect, test } from "@playwright/test";
+import { createResponse, gotoReady } from "./test-utils";
 
 test.beforeEach(async ({ page }) => {
   await page.route("https://dapi.kakao.com/v3/search/book**", async (route) => {
