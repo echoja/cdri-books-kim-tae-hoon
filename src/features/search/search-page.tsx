@@ -158,6 +158,7 @@ export function SearchPage() {
 
   const handleHistorySelect = (record: SearchHistoryRecord) => {
     executeSearch(record.keyword, record.target ?? "title");
+    (document.activeElement as HTMLElement | null)?.blur();
   };
 
   const handlePageChange = (nextPage: number) => {
@@ -180,31 +181,37 @@ export function SearchPage() {
         <div className="mt-4 flex items-center gap-4">
           <form
             className={cn(
-              "h-search-input-height rounded-pill bg-palette-light-gray relative m-0",
-              "group flex w-120 items-center gap-2.75 px-4.5",
+              "rounded-pill bg-palette-light-gray relative m-0",
+              "group h-search-input-height w-120 flex-col items-center gap-2.75 px-4.5",
             )}
             onSubmit={(event) => {
               event.preventDefault();
               executeSearch(keywordInputRef.current?.value ?? "", search.target);
             }}
           >
-            <img src={searchIcon} width={30} height={30} alt="" aria-hidden />
-            <input
-              ref={keywordInputRef}
-              defaultValue={search.query}
-              placeholder="검색어 입력"
-              className={cn(
-                "text-caption text-text-primary placeholder:text-text-subtitle flex-1 border-none bg-transparent",
-                "focus-visible:outline-palette-primary outline-none",
-                "focus-visible:outline-2 focus-visible:outline-offset-2",
-              )}
-              onChange={(event) => {
-                setDetailKeyword(event.target.value);
-              }}
-            />
+            <div className="relative z-20 flex items-center gap-2.75">
+              <img src={searchIcon} width={30} height={30} alt="" aria-hidden />
+              <input
+                ref={keywordInputRef}
+                defaultValue={search.query}
+                placeholder="검색어 입력"
+                className={cn(
+                  "text-caption text-text-primary placeholder:text-text-subtitle flex-1 border-none bg-transparent",
+                  "focus-visible:outline-palette-primary h-search-input-height outline-none",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2",
+                )}
+                onChange={(event) => {
+                  setDetailKeyword(event.target.value);
+                }}
+              />
+            </div>
             {historyRecords.length > 0 ? (
               <SearchHistoryLayer
-                className="absolute top-13.25 left-0 z-20 hidden group-focus-within:block"
+                className={cn(
+                  "absolute top-6 left-0 z-10 pt-10 pl-14.5",
+                  "pointer-events-none -translate-y-1 opacity-0 transition duration-200",
+                  "group-focus-within:pointer-events-auto group-focus-within:translate-y-0 group-focus-within:opacity-100",
+                )}
                 records={historyRecords}
                 onSelect={handleHistorySelect}
                 onRemove={(key) => removeHistory.mutate(key)}

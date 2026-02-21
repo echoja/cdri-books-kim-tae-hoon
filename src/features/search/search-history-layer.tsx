@@ -19,8 +19,8 @@ export function SearchHistoryLayer({
   return (
     <section
       className={cn(
-        "rounded-pill bg-palette-light-gray",
-        "max-h-38.25 min-h-38.25 w-120 overflow-y-auto px-5 py-4",
+        "rounded-b-pill bg-palette-light-gray",
+        "w-full overflow-y-auto px-5 py-4",
         className,
       )}
       aria-label="검색 기록"
@@ -32,7 +32,7 @@ export function SearchHistoryLayer({
             <button
               type="button"
               className={cn(
-                "text-body-2 text-text-primary",
+                "text-text-subtitle text-caption",
                 "cursor-pointer border-none bg-transparent",
               )}
               onMouseDown={(event) => event.preventDefault()}
