@@ -1,5 +1,5 @@
 import { type ComponentProps, useMemo, useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import lineHeart from "@/assets/icons/line.svg";
 import fillHeart from "@/assets/icons/fill.svg";
 import emptyBookIcon from "@/assets/icons/icon_book.png";
@@ -56,136 +56,131 @@ export function BookListItem({
 
   return (
     <article className={cn("w-full", className)} {...props}>
-      <div
-        className={cn(
-          "overflow-hidden transition-[max-height,opacity,transform] duration-220 ease-out",
-          "flex min-h-25 items-center px-4 py-4 pl-12",
-          "max-md:flex-wrap max-md:gap-y-3 max-md:p-4",
-          expanded
-            ? "pointer-events-none max-h-0 -translate-y-1 opacity-0"
-            : "max-h-40 translate-y-0 opacity-100 max-md:max-h-80",
-        )}
-      >
-        <div className="relative mr-12 w-12 min-w-12 max-md:mr-5">
-          <img
-            className={cn(
-              "h-book-thumb-small-height w-book-thumb-small-width",
-              "bg-palette-light-gray-soft object-cover",
-            )}
-            src={thumbnailSrc}
-            alt={`${book.title} 표지`}
-          />
-          <button
-            type="button"
-            className={favoriteBadgeVariants({ size: "collapsed" })}
-            onClick={() => onToggleFavorite(book, !isFavorite)}
-            disabled={favoriteDisabled}
-            aria-label={isFavorite ? "찜 해제" : "찜 추가"}
-          >
-            <img src={isFavorite ? fillHeart : lineHeart} width={16} height={16} alt="" />
-          </button>
-        </div>
-
+      <div className={cn("px-4 py-4 pl-12 transition-[padding] duration-300", "max-md:p-4")}>
         <div
           className={cn(
-            "mr-layout-gap-5 flex w-102 items-center gap-4",
-            "max-md:mr-0 max-md:w-[calc(100%-68px)]",
-            "max-md:flex-col max-md:items-start max-md:gap-1.5",
+            "flex transition-[gap,min-height] duration-300 ease-out",
+            expanded ? "min-h-40 items-start gap-8" : "min-h-25 items-center gap-12",
+            "max-md:flex-wrap max-md:gap-x-5 max-md:gap-y-3",
           )}
         >
-          <p className="text-title-3 text-text-primary m-0 line-clamp-1">{book.title}</p>
-          <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
-        </div>
-
-        <div
-          className={cn(
-            "ml-auto flex shrink-0 items-center gap-14",
-            "max-md:ml-0 max-md:w-full",
-            "max-md:justify-between max-md:gap-4",
-          )}
-        >
-          <p className="text-title-3 text-text-primary m-0 text-right">
-            {formatPrice(getCollapsedDisplayPrice(book))}
-          </p>
-          <div className="flex items-center gap-2 max-md:gap-1.5">
-            <LinkButton
-              variant="primary"
-              className="w-28 px-0"
-              href={book.url || "#"}
-              target="_blank"
-              rel="noreferrer"
-              disabled={!book.url}
-            >
-              구매하기
-            </LinkButton>
-            <Button variant="secondary" className="w-28 px-0" onClick={toggleExpanded}>
-              상세보기
-              <ChevronDown size={20} />
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div
-        className={cn(
-          "grid transition-[grid-template-rows,opacity] duration-280 ease-out",
-          expanded
-            ? "pointer-events-auto grid-rows-[1fr] opacity-100"
-            : "pointer-events-none grid-rows-[0fr] opacity-0",
-        )}
-      >
-        <div className="min-h-0 overflow-hidden">
           <div
             className={cn(
-              "flex max-h-130 min-h-86 items-start overflow-hidden px-4 py-6 pl-13.5",
-              "max-md:max-h-160 max-md:flex-col max-md:gap-4",
-              "max-md:overflow-y-auto max-md:px-4 max-md:py-5",
+              "relative shrink-0 transition-[width] duration-300",
+              expanded
+                ? "min-w-book-thumb-large-width w-book-thumb-large-width"
+                : "min-w-book-thumb-small-width w-book-thumb-small-width",
             )}
+          >
+            <img
+              className={cn(
+                "bg-palette-light-gray-soft object-cover transition-[width,height] duration-300",
+                expanded
+                  ? "h-book-thumb-large-height w-book-thumb-large-width"
+                  : "h-book-thumb-small-height w-book-thumb-small-width",
+              )}
+              src={thumbnailSrc}
+              alt={`${book.title} 표지`}
+            />
+            <button
+              type="button"
+              className={favoriteBadgeVariants({ size: expanded ? "expanded" : "collapsed" })}
+              onClick={() => onToggleFavorite(book, !isFavorite)}
+              disabled={favoriteDisabled}
+              aria-label={isFavorite ? "찜 해제" : "찜 추가"}
+            >
+              <img
+                src={isFavorite ? fillHeart : lineHeart}
+                className={cn(
+                  "transition-[width,height] duration-300",
+                  expanded ? "h-6 w-6" : "h-4 w-4",
+                )}
+                alt=""
+              />
+            </button>
+          </div>
+
+          <div
+            className={cn("flex min-w-0 flex-1 items-start gap-6", "max-md:w-full max-md:flex-col")}
           >
             <div
               className={cn(
-                "transition-[opacity,transform] duration-300 ease-out",
-                expanded
-                  ? "translate-x-0 scale-100 opacity-100"
-                  : "-translate-x-2 scale-95 opacity-0",
-                "min-w-book-thumb-large-width w-book-thumb-large-width relative mr-8",
-                "max-md:mr-0",
+                "mr-layout-gap-5 flex min-w-0 flex-1 items-center gap-4",
+                "max-md:mr-0 max-md:w-full",
+                "max-md:flex-col max-md:items-start max-md:gap-1.5",
               )}
             >
-              <img
+              <p
                 className={cn(
-                  "h-book-thumb-large-height w-book-thumb-large-width",
-                  "bg-palette-light-gray-soft object-cover",
+                  "text-title-3 text-text-primary m-0 transition-all duration-200",
+                  expanded ? "line-clamp-2" : "line-clamp-1",
                 )}
-                src={thumbnailSrc}
-                alt={`${book.title} 표지 확대`}
-              />
-              <button
-                type="button"
-                className={favoriteBadgeVariants({ size: "expanded" })}
-                onClick={() => onToggleFavorite(book, !isFavorite)}
-                disabled={favoriteDisabled}
-                aria-label={isFavorite ? "찜 해제" : "찜 추가"}
               >
-                <img src={isFavorite ? fillHeart : lineHeart} width={24} height={24} alt="" />
-              </button>
+                {book.title}
+              </p>
+              <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
             </div>
 
-            <section
+            <aside
               className={cn(
-                "transition-[opacity,transform] delay-75 duration-260 ease-out",
-                expanded ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
-                "mr-40.75 flex w-81 flex-col gap-4",
-                "max-xl:mr-12",
-                "max-md:mr-0 max-md:w-full",
+                "ml-auto flex shrink-0 items-center gap-4",
+                "max-md:ml-0 max-md:w-full",
+                "max-md:justify-between max-md:gap-4",
               )}
             >
-              <div className="flex items-center gap-4">
-                <p className="text-title-3 text-text-primary m-0 line-clamp-2">{book.title}</p>
-                <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
+              <p className="text-title-3 text-text-primary m-0 text-right">
+                {formatPrice(getCollapsedDisplayPrice(book))}
+              </p>
+              <div className="flex items-center gap-2 max-md:gap-1.5">
+                <LinkButton
+                  variant="primary"
+                  className="w-28 px-0"
+                  href={book.url || "#"}
+                  target="_blank"
+                  rel="noreferrer"
+                  disabled={!book.url}
+                >
+                  구매하기
+                </LinkButton>
+                <Button
+                  variant="secondary"
+                  className="w-28 px-0"
+                  onClick={toggleExpanded}
+                  aria-expanded={expanded}
+                >
+                  상세보기
+                  <ChevronDown
+                    size={20}
+                    className={cn("transition-transform duration-240", expanded && "rotate-180")}
+                  />
+                </Button>
               </div>
-
-              <section className="flex flex-col gap-3">
+            </aside>
+          </div>
+        </div>
+        <div
+          className={cn(
+            "grid transition-[grid-template-rows,opacity,margin-top] duration-300 ease-out",
+            expanded
+              ? "mt-6 grid-rows-[1fr] opacity-100"
+              : "pointer-events-none mt-0 grid-rows-[0fr] opacity-0",
+          )}
+        >
+          <div className="min-h-0 overflow-hidden">
+            <div className={cn("flex items-start gap-8", "max-md:flex-col max-md:gap-4")}>
+              <div
+                className={cn(
+                  "shrink-0 transition-[width] duration-300",
+                  expanded ? "w-book-thumb-large-width" : "w-book-thumb-small-width",
+                  "max-md:hidden",
+                )}
+              />
+              <section
+                className={cn(
+                  "flex min-w-0 flex-1 flex-col gap-3 transition-[opacity,transform] duration-260 ease-out",
+                  expanded ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
+                )}
+              >
                 <h3 className="text-body-2 text-text-secondary m-0 leading-4.5 font-bold">
                   책 소개
                 </h3>
@@ -198,52 +193,32 @@ export function BookListItem({
                   {book.contents || "책 소개 정보가 없습니다."}
                 </p>
               </section>
-            </section>
 
-            <aside
-              className={cn(
-                "ml-auto flex h-full min-w-45 flex-col items-end justify-between gap-4",
-                "max-md:w-full max-md:min-w-0 max-md:items-stretch",
-              )}
-            >
-              <Button variant="secondary" className="w-28 px-0" onClick={toggleExpanded}>
-                상세보기
-                <ChevronUp size={20} />
-              </Button>
-
-              <div
+              <aside
                 className={cn(
-                  "transition-[opacity,transform] delay-100 duration-240 ease-out",
+                  "w-45 shrink-0 transition-[opacity,transform] delay-75 duration-260 ease-out",
                   expanded ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0",
-                  "flex w-45 flex-col gap-2 max-md:w-full",
+                  "max-md:w-full",
                 )}
               >
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-small text-text-subtitle">원가</span>
-                  <strong className="text-title-3 text-text-primary">
-                    {formatPrice(book.price)}
-                  </strong>
-                </div>
-                {hasSalePrice(book) ? (
+                <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="text-small text-text-subtitle">할인가</span>
+                    <span className="text-small text-text-subtitle">원가</span>
                     <strong className="text-title-3 text-text-primary">
-                      {formatPrice(book.salePrice ?? 0)}
+                      {formatPrice(book.price)}
                     </strong>
                   </div>
-                ) : null}
-                <LinkButton
-                  variant="primary"
-                  className="w-28 justify-center px-0"
-                  href={book.url || "#"}
-                  target="_blank"
-                  rel="noreferrer"
-                  disabled={!book.url}
-                >
-                  구매하기
-                </LinkButton>
-              </div>
-            </aside>
+                  {hasSalePrice(book) ? (
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-small text-text-subtitle">할인가</span>
+                      <strong className="text-title-3 text-text-primary">
+                        {formatPrice(book.salePrice ?? 0)}
+                      </strong>
+                    </div>
+                  ) : null}
+                </div>
+              </aside>
+            </div>
           </div>
         </div>
       </div>
