@@ -109,70 +109,73 @@ export function BookListItem({
 
   return (
     <article className={cn("w-full", className)} {...props}>
-      <div
-        className={cn(
-          "flex min-h-25 items-center px-4 py-4 pl-12",
-          "max-md:flex-wrap max-md:gap-y-3 max-md:p-4",
-        )}
-      >
-        <div className="relative mr-12 w-12 min-w-12 max-md:mr-5">
-          <img
-            className={cn(
-              "h-book-thumb-small-height w-book-thumb-small-width",
-              "bg-palette-light-gray-soft object-cover",
-            )}
-            src={thumbnailSrc}
-            alt={`${book.title} 표지`}
-          />
-          <button
-            type="button"
-            className={favoriteBadgeVariants({ size: "collapsed" })}
-            onClick={() => onToggleFavorite(book, !isFavorite)}
-            disabled={favoriteDisabled}
-            aria-label={isFavorite ? "찜 해제" : "찜 추가"}
-          >
-            <img src={isFavorite ? fillHeart : lineHeart} width={16} height={16} alt="" />
-          </button>
-        </div>
-
+      {!expanded && !renderExpanded ? (
         <div
           className={cn(
-            "mr-layout-gap-5 flex w-102 items-center gap-4",
-            "max-md:mr-0 max-md:w-[calc(100%-68px)]",
-            "max-md:flex-col max-md:items-start max-md:gap-1.5",
+            "flex min-h-25 items-center px-4 py-4 pl-12",
+            "max-md:flex-wrap max-md:gap-y-3 max-md:p-4",
           )}
         >
-          <p className="text-title-3 text-text-primary m-0 line-clamp-1">{book.title}</p>
-          <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
-        </div>
-
-        <div
-          className={cn(
-            "ml-auto flex shrink-0 items-center gap-14",
-            "max-md:ml-0 max-md:w-full",
-            "max-md:justify-between max-md:gap-4",
-          )}
-        >
-          <p className="text-title-3 text-text-primary m-0 text-right">
-            {formatPrice(getCollapsedDisplayPrice(book))}
-          </p>
-          <div className="flex items-center gap-2 max-md:gap-1.5">
-            <LinkButton
-              variant="primary"
-              href={book.url || "#"}
-              target="_blank"
-              rel="noreferrer"
-              disabled={!book.url}
+          <div className="relative mr-12 w-12 min-w-12 max-md:mr-5">
+            <img
+              className={cn(
+                "h-book-thumb-small-height w-book-thumb-small-width",
+                "bg-palette-light-gray-soft object-cover",
+              )}
+              src={thumbnailSrc}
+              alt={`${book.title} 표지`}
+            />
+            <button
+              type="button"
+              className={favoriteBadgeVariants({ size: "collapsed" })}
+              onClick={() => onToggleFavorite(book, !isFavorite)}
+              disabled={favoriteDisabled}
+              aria-label={isFavorite ? "찜 해제" : "찜 추가"}
             >
-              구매하기
-            </LinkButton>
-            <Button variant="secondary" className="min-w-28.75" onClick={toggleExpanded}>
-              상세보기
-              <ChevronDown size={16} />
-            </Button>
+              <img src={isFavorite ? fillHeart : lineHeart} width={16} height={16} alt="" />
+            </button>
+          </div>
+
+          <div
+            className={cn(
+              "mr-layout-gap-5 flex w-102 items-center gap-4",
+              "max-md:mr-0 max-md:w-[calc(100%-68px)]",
+              "max-md:flex-col max-md:items-start max-md:gap-1.5",
+            )}
+          >
+            <p className="text-title-3 text-text-primary m-0 line-clamp-1">{book.title}</p>
+            <p className="text-body-2 text-text-secondary m-0 line-clamp-1">{authors}</p>
+          </div>
+
+          <div
+            className={cn(
+              "ml-auto flex shrink-0 items-center gap-14",
+              "max-md:ml-0 max-md:w-full",
+              "max-md:justify-between max-md:gap-4",
+            )}
+          >
+            <p className="text-title-3 text-text-primary m-0 text-right">
+              {formatPrice(getCollapsedDisplayPrice(book))}
+            </p>
+            <div className="flex items-center gap-2 max-md:gap-1.5">
+              <LinkButton
+                variant="primary"
+                className="w-[115px] px-0"
+                href={book.url || "#"}
+                target="_blank"
+                rel="noreferrer"
+                disabled={!book.url}
+              >
+                구매하기
+              </LinkButton>
+              <Button variant="secondary" className="w-[115px] px-0" onClick={toggleExpanded}>
+                상세보기
+                <ChevronDown size={20} />
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      ) : null}
 
       {renderExpanded ? (
         <div ref={panelRef} className="min-h-86" style={{ display: expanded ? "block" : "none" }}>
@@ -241,9 +244,9 @@ export function BookListItem({
                 "max-md:w-full max-md:min-w-0 max-md:items-stretch",
               )}
             >
-              <Button variant="secondary" className="min-w-28.75" onClick={toggleExpanded}>
+              <Button variant="secondary" className="w-[115px] px-0" onClick={toggleExpanded}>
                 상세보기
-                <ChevronUp size={16} />
+                <ChevronUp size={20} />
               </Button>
 
               <div className="flex w-45 flex-col gap-2 max-md:w-full">
@@ -263,7 +266,7 @@ export function BookListItem({
                 ) : null}
                 <LinkButton
                   variant="primary"
-                  className="w-full justify-center"
+                  className="w-[115px] justify-center px-0"
                   href={book.url || "#"}
                   target="_blank"
                   rel="noreferrer"
