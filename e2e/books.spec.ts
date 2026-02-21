@@ -75,7 +75,8 @@ test("검색기록 드롭다운 표시 및 항목 클릭 검색", async ({ page 
   await searchInput.press("Enter");
   await expect(page.getByText("기록검색 도서 1", { exact: true })).toBeVisible();
 
-  await searchInput.focus();
+  await page.locator("h1").click();
+  await searchInput.click();
   await expect(page.getByRole("button", { name: "기록검색", exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "기록검색", exact: true }).click();
@@ -90,12 +91,14 @@ test("검색기록 개별 삭제", async ({ page }) => {
   await searchInput.press("Enter");
   await expect(page.getByText("삭제테스트 도서 1", { exact: true })).toBeVisible();
 
-  await searchInput.focus();
+  await page.locator("h1").click();
+  await searchInput.click();
   await expect(page.getByRole("button", { name: "삭제테스트", exact: true })).toBeVisible();
 
   await page.getByLabel("삭제테스트 기록 삭제").click();
 
-  await searchInput.focus();
+  await page.locator("h1").click();
+  await searchInput.click();
   await expect(page.getByRole("button", { name: "삭제테스트", exact: true })).not.toBeVisible();
 });
 
