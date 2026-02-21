@@ -60,20 +60,17 @@ export function BookListItem({
         <div
           className={cn(
             "flex",
-            expanded ? "min-h-40 items-start gap-8" : "min-h-25 items-center gap-12",
+            expanded ? "min-h-40 items-start gap-8 py-6.5" : "min-h-25 items-center gap-12",
           )}
         >
           <div
-            className="relative shrink-0 transition-[width,min-width] duration-300 ease-in-out"
+            className="relative shrink-0"
             style={{ width: expanded ? 210 : 48, minWidth: expanded ? 210 : 48 }}
           >
             <img
               width={expanded ? 210 : 48}
               height={expanded ? 280 : 68}
-              className={cn(
-                "bg-palette-light-gray-soft object-cover",
-                "transition-[width,height] duration-300 ease-in-out",
-              )}
+              className={cn("bg-palette-light-gray-soft object-cover")}
               src={thumbnailSrc}
               alt={`${book.title} 표지`}
             />
@@ -122,15 +119,15 @@ export function BookListItem({
             <aside
               className={cn(
                 "ml-auto shrink-0",
-                expanded ? "flex w-45 flex-col gap-4" : "flex gap-4",
+                expanded ? "flex w-45 flex-col gap-4" : "flex items-center gap-4",
               )}
             >
-              <div className={cn("flex gap-2", expanded ? "w-full justify-end" : "justify-end")}>
-                {!expanded ? (
-                  <p className="text-title-3 text-text-primary m-0 text-right whitespace-nowrap">
-                    {formatPrice(book.salePrice ?? book.price)}
-                  </p>
-                ) : null}
+              {!expanded ? (
+                <p className="text-title-3 text-text-primary m-0 mr-8 text-right whitespace-nowrap">
+                  {formatPrice(book.salePrice ?? book.price)}
+                </p>
+              ) : null}
+              <div className={cn("flex items-center justify-end gap-2", expanded && "w-full")}>
                 {!expanded ? (
                   <LinkButton
                     variant="primary"
@@ -151,10 +148,7 @@ export function BookListItem({
                 >
                   상세보기
                   <span
-                    className={cn(
-                      "inline-flex transition-transform duration-200 ease-in-out",
-                      expanded ? "rotate-180" : "",
-                    )}
+                    className={cn("inline-flex transition-transform", expanded ? "rotate-180" : "")}
                   >
                     <ChevronDown size={20} />
                   </span>

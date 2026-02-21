@@ -2,14 +2,14 @@ import type { ComponentProps } from "react";
 import { cn, cva } from "@/lib/class-name";
 
 const buttonVariants = cva(
-  "inline-flex cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-button border border-transparent text-caption text-text-title transition-colors duration-160 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
+  "inline-flex h-12 cursor-pointer items-center justify-center gap-1 whitespace-nowrap rounded-button border border-transparent text-caption text-text-title transition-colors duration-160 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-palette-primary disabled:pointer-events-none disabled:cursor-not-allowed",
   {
     variants: {
       variant: {
         primary:
-          "bg-palette-primary px-7 py-4 text-palette-white hover:bg-palette-primary-hover disabled:bg-palette-light-gray-disabled aria-disabled:bg-palette-light-gray-disabled",
+          "bg-palette-primary  text-palette-white hover:bg-palette-primary-hover disabled:bg-palette-light-gray-disabled aria-disabled:bg-palette-light-gray-disabled",
         secondary:
-          "bg-palette-light-gray px-5 py-4 text-text-secondary hover:bg-palette-light-gray-hover disabled:bg-palette-light-gray-disabled disabled:text-icon-muted aria-disabled:bg-palette-light-gray-disabled aria-disabled:text-icon-muted [&_svg]:text-icon-muted",
+          "bg-palette-light-gray text-text-secondary hover:bg-palette-light-gray-hover disabled:bg-palette-light-gray-disabled disabled:text-icon-muted aria-disabled:bg-palette-light-gray-disabled aria-disabled:text-icon-muted [&_svg]:text-icon-muted",
         outline:
           "bg-palette-white px-2.5 py-1.25 text-text-subtitle border-text-subtitle hover:bg-palette-light-gray disabled:border-palette-divider disabled:text-icon-muted aria-disabled:border-palette-divider aria-disabled:text-icon-muted",
       },
