@@ -3,11 +3,11 @@ import type { SearchParams, SearchResultPayload } from "@/domain/types";
 
 const CACHE_MAX_COUNT = 60;
 
-export function createSearchCacheKey(params: SearchParams): string {
+function createSearchCacheKey(params: SearchParams): string {
   return `${params.target ?? "title"}:${params.query.trim().toLowerCase()}:p${params.page}`;
 }
 
-export class SearchCacheRepository {
+class SearchCacheRepository {
   async get(params: SearchParams): Promise<SearchResultPayload | null> {
     const key = createSearchCacheKey(params);
     const entry = await appDb.searchCache.get(key);

@@ -1,6 +1,6 @@
 import type { FavoriteRecord, SyncAdapter } from "@/domain/types";
 
-export class NoopSyncAdapter implements SyncAdapter {
+class NoopSyncAdapter implements SyncAdapter {
   async pushFavorites(_changes: FavoriteRecord[]): Promise<void> {
     return Promise.resolve();
   }

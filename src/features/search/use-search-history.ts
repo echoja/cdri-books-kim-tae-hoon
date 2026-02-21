@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { searchHistoryRepository } from "@/repositories/search-history-repository";
 import type { SearchTarget } from "@/domain/types";
 
-export const SEARCH_HISTORY_QUERY_KEY = ["search-history"] as const;
+const SEARCH_HISTORY_QUERY_KEY = ["search-history"] as const;
 
 export function useSearchHistory() {
   return useQuery({

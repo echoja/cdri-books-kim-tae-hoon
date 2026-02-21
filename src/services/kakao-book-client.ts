@@ -10,7 +10,7 @@ import type { Book, SearchResultPayload } from "@/domain/types";
  *
  * @see https://developers.kakao.com/docs/latest/ko/daum-search/dev-guide#search-book-request
  */
-export interface KakaoBookSearchOptions {
+interface KakaoBookSearchOptions {
   /** 검색을 원하는 질의어 (필수). */
   query: string;
   /** 결과 문서 정렬 방식. 기본값 `"accuracy"` (정확도순). */
@@ -130,7 +130,7 @@ async function parseResponse(response: Response): Promise<SearchResultPayload> {
 }
 
 /** Kakao 도서 검색 API 클라이언트. */
-export class KakaoBookClient {
+class KakaoBookClient {
   private readonly apiKey: string;
 
   constructor(apiKey: string | undefined) {

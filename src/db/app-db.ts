@@ -6,11 +6,11 @@ import type {
   SearchResultPayload,
 } from "@/domain/types";
 
-export interface FavoriteEntity extends FavoriteRecord {}
+interface FavoriteEntity extends FavoriteRecord {}
 
-export interface SearchHistoryEntity extends SearchHistoryRecord {}
+interface SearchHistoryEntity extends SearchHistoryRecord {}
 
-export interface SearchCacheEntity {
+interface SearchCacheEntity {
   key: string;
   query: string;
   page: number;
@@ -19,7 +19,7 @@ export interface SearchCacheEntity {
   updatedAt: string;
 }
 
-export interface KeyValueEntity {
+interface KeyValueEntity {
   key: string;
   value: string;
   updatedAt: string;

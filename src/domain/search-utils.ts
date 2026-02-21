@@ -8,7 +8,7 @@ export const SEARCH_TARGET_OPTIONS: Array<{ label: string; value: SearchTarget }
   { label: "출판사", value: "publisher" },
 ];
 
-export function createSearchHistoryKey(keyword: string, target?: SearchTarget): string {
+function createSearchHistoryKey(keyword: string, target?: SearchTarget): string {
   return `${target ?? "title"}:${keyword.trim().toLowerCase()}`;
 }
 

@@ -5,8 +5,8 @@ import type { Book, FavoriteRecord } from "@/domain/types";
 import { favoritesRepository } from "@/repositories/favorites-repository";
 import { syncAdapter } from "@/adapters/sync-adapter";
 
-export const FAVORITES_QUERY_KEY = ["favorites"] as const;
-export const FAVORITE_IDS_QUERY_KEY = ["favorite-ids"] as const;
+const FAVORITES_QUERY_KEY = ["favorites"] as const;
+const FAVORITE_IDS_QUERY_KEY = ["favorite-ids"] as const;
 
 export function useFavoriteRecords() {
   return useQuery({
@@ -45,10 +45,11 @@ export function useToggleFavorite() {
     mutationFn: async ({ book, willFavorite }) => {
       if (willFavorite) {
         await favoritesRepository.upsert(book);
-        await syncAdapter.pushFavorites(await favoritesRepository.list());
       } else {
         await favoritesRepository.remove(book.isbn);
       }
+
+      await syncAdapter.pushFavorites(await favoritesRepository.list());
     },
     onMutate: async ({ book, willFavorite }) => {
       await queryClient.cancelQueries({ queryKey: FAVORITES_QUERY_KEY });
@@ -75,13 +76,7 @@ export function useToggleFavorite() {
         previousFavoriteIds,
       };
     },
-    onSuccess: (_data, { book, willFavorite }) => {
-      console.log("[favorite] updated", {
-        action: willFavorite ? "add" : "remove",
-        isbn: book.isbn,
-        title: book.title,
-      });
-
+    onSuccess: (_data, { willFavorite }) => {
       toast.success(willFavorite ? "찜에 추가했어요." : "찜을 해제했어요.");
     },
     onError: (_error, variables, context) => {

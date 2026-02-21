@@ -1,7 +1,7 @@
 import { appDb } from "@/db/app-db";
 import type { Book, FavoriteRecord } from "@/domain/types";
 
-export class FavoritesRepository {
+class FavoritesRepository {
   async list(): Promise<FavoriteRecord[]> {
     return appDb.favorites.orderBy("updatedAt").reverse().toArray();
   }

@@ -1,4 +1,4 @@
-export type AppErrorCode =
+type AppErrorCode =
   | "API_KEY_MISSING"
   | "UNAUTHORIZED"
   | "RATE_LIMIT"
