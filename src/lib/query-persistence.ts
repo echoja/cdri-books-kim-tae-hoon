@@ -22,10 +22,6 @@ const asyncStorage: AsyncStorage<string> = {
 };
 
 export function createQueryPersister() {
-  if (typeof window === "undefined") {
-    return createAsyncStoragePersister({ storage: undefined });
-  }
-
   return createAsyncStoragePersister({
     storage: asyncStorage,
     key: QUERY_CACHE_KEY,

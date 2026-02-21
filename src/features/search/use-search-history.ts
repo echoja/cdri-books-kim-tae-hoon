@@ -4,15 +4,10 @@ import type { SearchTarget } from "@/domain/types";
 
 export const SEARCH_HISTORY_QUERY_KEY = ["search-history"] as const;
 
-function isClient(): boolean {
-  return typeof window !== "undefined";
-}
-
 export function useSearchHistory() {
   return useQuery({
     queryKey: SEARCH_HISTORY_QUERY_KEY,
     queryFn: () => searchHistoryRepository.list(),
-    enabled: isClient(),
     initialData: [],
     staleTime: 0,
     refetchOnMount: "always",

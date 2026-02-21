@@ -4,16 +4,8 @@ import type { SearchHistoryRecord, SearchTarget } from "@/domain/types";
 
 const STORAGE_KEY = "cdri:search-history";
 
-function canUseLocalStorage(): boolean {
-  return typeof window !== "undefined" && typeof window.localStorage !== "undefined";
-}
-
 function readLocalHistory(): SearchHistoryRecord[] {
-  if (!canUseLocalStorage()) {
-    return [];
-  }
-
-  const raw = window.localStorage.getItem(STORAGE_KEY);
+  const raw = localStorage.getItem(STORAGE_KEY);
 
   if (!raw) {
     return [];
@@ -28,11 +20,7 @@ function readLocalHistory(): SearchHistoryRecord[] {
 }
 
 function writeLocalHistory(records: SearchHistoryRecord[]): void {
-  if (!canUseLocalStorage()) {
-    return;
-  }
-
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
 }
 
 export class SearchHistoryRepository {
