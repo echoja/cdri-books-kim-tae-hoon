@@ -1,3 +1,6 @@
+import { useEffect, useRef } from 'react'
+import { stagger } from 'animejs'
+import { toUserMessage } from '@/domain/errors'
 import { EmptyState } from '@/components/empty-state'
 import { BookList } from '@/features/books/book-list'
 import {
@@ -5,14 +8,36 @@ import {
   useFavoriteRecords,
   useToggleFavorite,
 } from '@/features/favorites/use-favorites'
+import { motionDuration, safeAnimate } from '@/lib/animation'
 
 export function FavoritesPage() {
   const favoritesQuery = useFavoriteRecords()
   const favoriteIdsQuery = useFavoriteIds()
   const toggleFavorite = useToggleFavorite()
+  const listRef = useRef<HTMLDivElement | null>(null)
 
   const records = favoritesQuery.data ?? []
   const books = records.map((record) => record.book)
+
+  useEffect(() => {
+    if (!listRef.current || books.length === 0) {
+      return
+    }
+
+    const items = listRef.current.querySelectorAll('article')
+
+    if (items.length === 0) {
+      return
+    }
+
+    safeAnimate(items, {
+      opacity: [0, 1],
+      translateY: [12, 0],
+      duration: motionDuration(300),
+      delay: stagger(50),
+      ease: 'outQuad',
+    })
+  }, [books.length])
 
   return (
     <section className="w-full">
@@ -26,21 +51,35 @@ export function FavoritesPage() {
         </div>
       </div>
 
-      {books.length > 0 ? (
-        <BookList
-          books={books}
-          favoriteIds={favoriteIdsQuery.data ?? []}
-          favoriteDisabled={toggleFavorite.isPending}
-          onToggleFavorite={(book, willFavorite) =>
-            toggleFavorite.mutate({
-              book,
-              willFavorite,
-            })
-          }
-        />
-      ) : (
+      {favoritesQuery.isError ? (
+        <p className="text-body-small text-text-error mt-5">
+          {toUserMessage(favoritesQuery.error)}
+        </p>
+      ) : null}
+
+      {favoritesQuery.isLoading ? (
+        <p className="text-body-small mt-5">찜한 책을 불러오는 중입니다...</p>
+      ) : null}
+
+      {!favoritesQuery.isLoading && books.length > 0 ? (
+        <div ref={listRef}>
+          <BookList
+            books={books}
+            favoriteIds={favoriteIdsQuery.data ?? []}
+            favoriteDisabled={toggleFavorite.isPending}
+            onToggleFavorite={(book, willFavorite) =>
+              toggleFavorite.mutate({
+                book,
+                willFavorite,
+              })
+            }
+          />
+        </div>
+      ) : null}
+
+      {!favoritesQuery.isLoading && !favoritesQuery.isError && books.length === 0 ? (
         <EmptyState message="찜한 책이 없습니다" />
-      )}
+      ) : null}
     </section>
   )
 }
