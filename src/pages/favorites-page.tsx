@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toUserMessage } from "@/lib/errors";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
@@ -11,16 +11,13 @@ export function FavoritesPage() {
   const favoritesQuery = useFavoriteRecords();
   const favoriteIdsQuery = useFavoriteIds();
   const toggleFavorite = useToggleFavorite();
-  const [page, setPage] = useState(1);
+  const [rawPage, setPage] = useState(1);
 
   const records = favoritesQuery.data ?? [];
   const books = records.map((record) => record.book);
   const totalPages = books.length === 0 ? 1 : Math.ceil(books.length / PAGE_SIZE);
+  const page = Math.min(rawPage, totalPages);
   const pageBooks = books.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-
-  useEffect(() => {
-    setPage((current) => Math.min(current, totalPages));
-  }, [totalPages]);
 
   const handlePageChange = (nextPage: number) => {
     if (nextPage < 1 || nextPage > totalPages) {
