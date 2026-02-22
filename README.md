@@ -78,7 +78,7 @@ npm run test:e2e
 ## 필수 요건
 
 - `React` + `TypeScript`
-- `TanStack Query`: 서버 상태 캐시/재시도/prefetch 
+- `TanStack Query`: API 요청 및 캐싱 
 
 ## 그외 라이브러리 선택 이유
 
