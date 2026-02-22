@@ -125,7 +125,6 @@ Updated `.github/workflows/ci.yml` with:
 | Empty state: icon_book.png 80x80 + text               | OK     |
 | Button styles (primary/secondary/outline)             | OK     |
 | Favorites heart icons (line.svg/fill.svg)             | OK     |
-| Responsive breakpoints (1280/768/767)                 | OK     |
 | Color tokens                                          | OK     |
 | Keyboard accessibility (tab/enter/ESC, focus-visible) | OK     |
 | Network error -> cache fallback with badge            | OK     |

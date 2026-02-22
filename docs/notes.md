@@ -32,10 +32,10 @@
 - `상세보기` chevron은 현재 `lucide-react`(`ChevronDown`, `ChevronUp`)로 통일해 사용 중입니다.
 - 디자인 가이드에 별도 아이콘 컴포넌트가 정리되면 해당 기준으로 맞출 수 있습니다.
 
-### 8. 색상 토큰 임의 추가 (`Text/Title`, `Text/Default`)
+### 8. 색상 토큰 추가 (`Text/Title`, `Text/Default`)
 
-- 현재 구현에서 `Text/Title`, `Text/Default`를 사용하고 있습니다.
-- 적용값은 `Text/Title=#1A1E27`, `Text/Default=#353C49`입니다.
+- Figma 개별 요소에서 `Text/Title`, `Text/Default`가 사용되고 있지만 디자인 가이드에 추가되어 있지 않습니다.
+- Figma 정의대로 `Text/Title=#1A1E27`, `Text/Default=#353C49`로 하여 색상 토큰을 추가했습니다.
 
 ### 9. BookListItem 버튼 폭 클래스 정리 (`w-[115px]` -> `w-28`)
 

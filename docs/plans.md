@@ -1,4 +1,4 @@
-# `docs/plans.md` 최종 계획안 (TanStack Start SPA + 견고한 fallback)
+# `docs/plans.md` 1차 계획안 (TanStack Start SPA + 견고한 fallback)
 
 ## 요약
 
