@@ -1,15 +1,34 @@
+import { useEffect, useState } from "react";
 import { toUserMessage } from "@/lib/errors";
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
+import { PaginationControls } from "@/components/pagination-controls";
 import { useFavoriteIds, useFavoriteRecords, useToggleFavorite } from "@/hooks/use-favorites";
+
+const PAGE_SIZE = 10 as const;
 
 export function FavoritesPage() {
   const favoritesQuery = useFavoriteRecords();
   const favoriteIdsQuery = useFavoriteIds();
   const toggleFavorite = useToggleFavorite();
+  const [page, setPage] = useState(1);
 
   const records = favoritesQuery.data ?? [];
   const books = records.map((record) => record.book);
+  const totalPages = books.length === 0 ? 1 : Math.ceil(books.length / PAGE_SIZE);
+  const pageBooks = books.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+
+  useEffect(() => {
+    setPage((current) => Math.min(current, totalPages));
+  }, [totalPages]);
+
+  const handlePageChange = (nextPage: number) => {
+    if (nextPage < 1 || nextPage > totalPages) {
+      return;
+    }
+
+    setPage(nextPage);
+  };
 
   return (
     <section className="w-full">
@@ -34,7 +53,7 @@ export function FavoritesPage() {
       {!favoritesQuery.isLoading && books.length > 0 ? (
         <div>
           <BookList
-            books={books}
+            books={pageBooks}
             favoriteIds={favoriteIdsQuery.data ?? []}
             favoriteDisabled={toggleFavorite.isPending}
             onToggleFavorite={(book, willFavorite) =>
@@ -43,6 +62,13 @@ export function FavoritesPage() {
                 willFavorite,
               })
             }
+          />
+
+          <PaginationControls
+            page={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            aria-label="찜한 책 페이지 이동"
           />
         </div>
       ) : null}

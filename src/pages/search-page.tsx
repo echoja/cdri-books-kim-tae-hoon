@@ -7,10 +7,10 @@ import type { BookSearchParams, SearchHistoryRecord, SearchTarget } from "@/lib/
 import { EmptyState } from "@/components/empty-state";
 import { BookList } from "@/components/book-list";
 import { DetailSearchPanel } from "@/components/detail-search-panel";
+import { PaginationControls } from "@/components/pagination-controls";
 import { SearchHistoryLayer } from "@/components/search-history-layer";
 import { useToggleFavorite, useFavoriteIds } from "@/hooks/use-favorites";
 import { bookSearchQueryOptions, useBookSearch } from "@/hooks/use-book-search";
-import { Button } from "@/components/ui/button";
 import {
   useRemoveSearchHistory,
   useSearchHistory,
@@ -227,30 +227,12 @@ export function SearchPage() {
             }
           />
 
-          <nav
-            className="mt-5 flex items-center justify-center gap-3"
+          <PaginationControls
+            page={page}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
             aria-label="검색 결과 페이지 이동"
-          >
-            <Button
-              variant="secondary"
-              className="gap-0 px-4.5 py-2.5"
-              disabled={page <= 1}
-              onClick={() => handlePageChange(page - 1)}
-            >
-              이전
-            </Button>
-            <span>
-              {page} / {totalPages}
-            </span>
-            <Button
-              variant="secondary"
-              className="gap-0 px-4.5 py-2.5"
-              disabled={page >= totalPages}
-              onClick={() => handlePageChange(page + 1)}
-            >
-              다음
-            </Button>
-          </nav>
+          />
         </div>
       ) : null}
 
