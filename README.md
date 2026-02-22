@@ -82,22 +82,26 @@ npm run test:e2e
 
 ## 그외 라이브러리 선택 이유
 
-- `TailwindCSS`: 유틸리티 클래스 기반 빠른 스타일링과 일관된 디자인 시스템 구현. CSS Modules나 styled-components 대비 별도 파일/런타임 없이 마크업 안에서 스타일을 완결할 수 있어 개발 속도가 빠르다.
-- `TanStack Router`: 타입 안전한 파일 기반 라우팅. React Router 대비 URL params·search params에 대한 end-to-end 타입 추론이 내장되어 있어 런타임 파싱 오류를 줄인다.
-- `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `eslint-plugin-react-hooks`, `eslint-plugin-react-refresh`, `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 ESLint + Prettier를 선택했다.
-- `Dexie`: IndexedDB 추상화와 스키마 관리. 저수준 `idb` 래퍼 대비 선언적 스키마 버전 관리와 라이브 쿼리를 기본 제공하며, localForage 대비 인덱스 기반 복합 쿼리를 지원한다.
-- `@radix-ui/*`: 접근성 있는 popover/select 구현. Headless UI 대비 제공 컴포넌트 종류가 풍부하고, 스타일이 포함된 MUI/Ant Design과 달리 unstyled 원시 요소만 제공해 Tailwind와 자연스럽게 결합된다.
-- `lucide-react`: 경량 아이콘 라이브러리. tree-shaking으로 사용한 아이콘만 번들에 포함. react-icons는 아이콘 세트 전체가 하나의 엔트리로 묶여 tree-shaking이 불완전하고, heroicons는 아이콘 수가 제한적이다.
-- `sonner`: 경량 토스트 알림. unstyled 모드로 프로젝트 디자인에 맞게 커스터마이징. react-toastify 대비 번들 크기가 작고, react-hot-toast 대비 큐잉·스와이프 해제 등 기본 UX가 충실하다.
-- `cva` + `clsx` + `tailwind-merge`: 컴포넌트 정의할 때 Tailwind 클래스 관리를 편하게 진행할 수 있음. `cva`로 컴포넌트별 variant 정의, `clsx`로 조건부 클래스 조합, `tailwind-merge`로 클래스 충돌 해결. Stitches·vanilla-extract 같은 CSS-in-JS variant 솔루션 대비 런타임 비용이 없고 Tailwind 생태계와 직접 호환된다.
-- `React Compiler`: 빌드 타임 자동 메모이제이션으로 수동 useMemo/useCallback 제거. Million.js 같은 외부 최적화 도구와 달리 React 공식 프로젝트로 장기 호환성이 보장된다.
-- `knip`: 미사용 파일/의존성/export 탐지로 코드베이스 청결 유지 (AI Agents가 코드를 탐색할 때의 비용 감소). depcheck은 의존성만 검사하지만, knip은 파일·export·타입까지 포괄 분석한다.
-- `Playwright`: 실제 사용자 플로우 E2E 검증. Cypress 대비 멀티 브라우저(Chromium·Firefox·WebKit) 지원과 네이티브 `async/await` 기반 API로 병렬 실행이 용이하다.
+- `TailwindCSS`: 유틸리티 클래스 기반 빠른 스타일링과 일관된 디자인 시스템 구현.
+- `TanStack Router`: 타입 안전한 파일 기반 라우팅. URL params·search params에 대한 타입 추론이 내장되어 있어 런타임 파싱 오류를 줄인다.
+- `ESLint` + `Prettier`: 여전히 가장 널리 사용되는 린트/포매터 조합으로, 생태계 지원(플러그인, IDE 통합, 커뮤니티 문서)이 가장 풍부하다. Biome 같은 올인원 도구도 성장 중이나, 프로젝트에서 사용하는 `prettier-plugin-tailwindcss` 등 기존 플러그인 생태계와의 호환성이 확보된 라이브러리를 선택함.
+- `Dexie`: IndexedDB 추상화와 스키마 관리. localStorage 대비 현대적인 브라우저 스토리지 API를 활용하면서도, low-level API의 복잡성을 줄여준다.
+- `@radix-ui/*`: 컴포넌트 종류가 풍부하고, unstyled 원시 요소만 제공해 Tailwind와 자연스럽게 결합된다.
+- `lucide-react`: 경량 아이콘 라이브러리. 일관되고 심플한 아이콘 셋 제공됨.
+- `sonner`: 기본 UX가 충실한 경량 토스트 알림. unstyled 모드로 프로젝트 디자인에 맞게 커스터마이징 가능.
+- `cva` + `clsx` + `tailwind-merge`: 컴포넌트 정의할 때 Tailwind 클래스 관리를 편하게 진행할 수 있음. `cva`로 컴포넌트별 variant 정의, `clsx`로 조건부 클래스 조합, `tailwind-merge`로 클래스 충돌 해결.
+- `React Compiler`: 빌드 타임 자동 메모이제이션으로 손쉽게 성능 최적화를 달성할 수 있는 가성비 좋은 솔루션.
+- `knip`: 미사용 파일/의존성/export 탐지로 코드베이스 청결 유지 (AI Agents가 코드를 탐색할 때의 비용 감소).
+- `Playwright`: 실제 사용자 플로우 E2E 검증.
 
 ## 강조 기능
 
-- 검색 기록 `최대 8개` 유지 + 중복 최신화
 - 찜하기 `optimistic update` + 실패 시 롤백
+- `React Compiler` 빌드 타임 자동 메모이제이션
+- 다음 페이지 `prefetch` + `keepPreviousData`로 깜빡임 없는 페이지 전환
+- 찜 목록 `Dexie(IndexedDB)`에 저장 및 `SyncAdapter` 패턴으로 원격 동기화 확장 준비
+- 커스텀 ESLint 규칙으로 코드 스타일과 아키텍처 일관성 유지
+- `E2E 테스트`(Playwright) — 검색·페이지네이션·찜·기록 등 주요 플로우 검증
 
 ## 프로젝트 규칙
 
