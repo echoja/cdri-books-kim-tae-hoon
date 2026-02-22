@@ -4,7 +4,7 @@ import fillHeart from "@/assets/icons/fill.svg";
 import { cn, cva, type VariantProps } from "@/lib/class-name";
 
 const favoriteBadgeVariants = cva(
-  "absolute inline-flex items-center justify-center rounded-full border-none bg-transparent p-0",
+  "absolute inline-flex cursor-pointer items-center justify-center rounded-full border-none bg-transparent p-0 transition-transform hover:scale-125 active:scale-95",
   {
     variants: {
       size: {
