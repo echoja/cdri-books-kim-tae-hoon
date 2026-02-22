@@ -34,7 +34,7 @@ export function PaginationControls({
       >
         이전
       </Button>
-      <span>
+      <span aria-live="polite" aria-atomic="true">
         {page} / {totalPages}
       </span>
       <Button

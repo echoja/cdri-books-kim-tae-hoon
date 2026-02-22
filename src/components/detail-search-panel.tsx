@@ -120,6 +120,7 @@ export function DetailSearchPanel({
                 )}
                 data-testid="detail-search-keyword"
                 name="keyword"
+                aria-label="상세 검색어"
                 defaultValue=""
                 placeholder="검색어 입력"
               />

@@ -61,14 +61,14 @@ export function BookListItem({
           <div className="flex min-w-0 flex-1 gap-12">
             <div className="mt-4 flex min-w-0 flex-col gap-4">
               <div className="flex min-w-0 items-center gap-4">
-                <p
+                <h2
                   className={cn(
                     "text-title-3 text-text-primary m-0",
                     expanded ? "line-clamp-4 leading-6" : "line-clamp-1",
                   )}
                 >
                   {book.title}
-                </p>
+                </h2>
                 <p
                   className={cn(
                     "text-body-2 text-text-subtitle m-0",

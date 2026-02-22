@@ -36,7 +36,10 @@ export function RootLayout() {
     <AppProviders>
       <ErrorBoundary
         fallbackRender={() => (
-          <section className="flex min-h-80 w-full flex-col items-center justify-center gap-2">
+          <section
+            role="alert"
+            className="flex min-h-80 w-full flex-col items-center justify-center gap-2"
+          >
             <h1 className="text-title-3 text-text-title m-0">오류가 발생했습니다.</h1>
             <p className="text-body-2 text-text-secondary m-0">
               페이지를 새로고침한 뒤 다시 시도해 주세요.
@@ -44,8 +47,17 @@ export function RootLayout() {
           </section>
         )}
       >
+        <a
+          href="#main-content"
+          className={cn(
+            "sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50",
+            "rounded-button bg-palette-primary text-palette-white px-4 py-2",
+          )}
+        >
+          본문으로 건너뛰기
+        </a>
         <AppHeader />
-        <main className="flex w-full justify-center pb-15">
+        <main id="main-content" className="flex w-full justify-center pb-15">
           <div
             className={cn(
               "max-w-page-content mt-20",

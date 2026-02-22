@@ -40,11 +40,15 @@ export function FavoritesPage() {
       </div>
 
       {favoritesQuery.isError ? (
-        <p className="text-body-2 text-palette-red mt-5">{toUserMessage(favoritesQuery.error)}</p>
+        <p role="alert" className="text-body-2 text-palette-red mt-5">
+          {toUserMessage(favoritesQuery.error)}
+        </p>
       ) : null}
 
       {favoritesQuery.isLoading ? (
-        <p className="text-body-2 mt-5">찜한 책을 불러오는 중입니다...</p>
+        <p aria-live="polite" className="text-body-2 mt-5">
+          찜한 책을 불러오는 중입니다...
+        </p>
       ) : null}
 
       {!favoritesQuery.isLoading && books.length > 0 ? (

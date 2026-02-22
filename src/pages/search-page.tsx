@@ -163,6 +163,7 @@ export function SearchPage() {
               <input
                 ref={keywordInputRef}
                 defaultValue={search.query}
+                aria-label="도서 검색어"
                 placeholder="검색어 입력"
                 className={cn(
                   "text-caption text-text-primary placeholder:text-text-subtitle flex-1 border-none bg-transparent",
@@ -206,11 +207,15 @@ export function SearchPage() {
       </div>
 
       {searchQuery.error ? (
-        <p className="text-body-2 text-palette-red mt-5">{toUserMessage(searchQuery.error)}</p>
+        <p role="alert" className="text-body-2 text-palette-red mt-5">
+          {toUserMessage(searchQuery.error)}
+        </p>
       ) : null}
 
       {searchQuery.isFetching && hasSearched ? (
-        <p className="text-body-2 mt-5">검색 중입니다...</p>
+        <p aria-live="polite" className="text-body-2 mt-5">
+          검색 중입니다...
+        </p>
       ) : null}
 
       {!searchQuery.isFetching && books.length > 0 ? (

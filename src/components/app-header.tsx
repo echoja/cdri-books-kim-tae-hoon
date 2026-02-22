@@ -32,6 +32,7 @@ export function AppHeader() {
                 active && "border-palette-primary",
               )}
               to={item.to}
+              aria-current={active ? "page" : undefined}
             >
               {item.label}
             </Link>
